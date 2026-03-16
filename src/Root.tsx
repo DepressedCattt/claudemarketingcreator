@@ -28,6 +28,7 @@ import { NovaSkinAd } from "./compositions/NovaSkinAd";
 import { SolaceAd } from "./compositions/SolaceAd";
 import { TrailBlazeAd } from "./compositions/TrailBlazeAd";
 import { VeridianAd as VeridianAdComp } from "./compositions/VeridianAd";
+import { AudioEditor, AudioEditorDefaultProps } from "./compositions/AudioEditor";
 import { activeAd } from "./data/activeAd";
 import { getTotalDuration } from "./utils/timing";
 
@@ -96,6 +97,18 @@ export const RemotionRoot: React.FC = () => {
       <Composition id="trailblaze"        component={TrailBlazeAd}      durationInFrames={450} fps={30} width={1920} height={1080} defaultProps={{}} />
       {/* VeridianAd — 9:16, 15s */}
       <Composition id="veridian"          component={VeridianAdComp}    durationInFrames={450} fps={30} width={1080} height={1920} defaultProps={{}} />
+
+      {/* ── Audio Editor ─────────────────────────────────────────────────── */}
+      {/* 16:9, 60s scrubbing range — set audioSrc + props in the Props panel */}
+      <Composition
+        id="audio-editor"
+        component={AudioEditor as React.ComponentType<Record<string, unknown>>}
+        durationInFrames={1800}
+        fps={30}
+        width={1920}
+        height={1080}
+        defaultProps={AudioEditorDefaultProps as unknown as Record<string, unknown>}
+      />
     </>
   );
 };

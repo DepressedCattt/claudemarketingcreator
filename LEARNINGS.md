@@ -1353,3 +1353,94 @@ Start training it to **stage attention over time**.
 The ad is not a showcase of animations. It is a sequence of moments, each one handing off the viewer's attention to the next with clarity and intention.
 
 ---
+
+## Rhythm, Timing Grids, and Music-Aware Editing
+
+*Added after discussion on audio workflow and music-aware ad production.*
+
+### Core Principle
+
+Every ad has a hidden rhythm grid. Visual transitions should align to musical landmarks — beats, bars, phrase boundaries — but not every motion must be locked rigidly to the beat. Major visual events snap to strong rhythmic points; secondary motion remains fluid between them.
+
+### The Workflow (for this project)
+
+We produce audio externally after the first cut. That means the agent's job is to build a **timing-first, music-aware structure** — then audio is sourced or generated to fit that grid.
+
+**Do not:**
+- Animate randomly then throw music under it
+- Force visuals to chase an existing song with no pre-planned structure
+
+**Do:**
+1. Decide total duration, target BPM range, and where key transitions land — before animating
+2. Assign scene lengths in bars, not arbitrary frame counts
+3. Export the first cut, then source/generate audio at the matching BPM
+4. Drop audio into the studio and sync to beat markers
+
+### BPM Math Reference
+
+| BPM | 1 beat | 1 bar (4 beats) | 2 bars | 4 bars |
+|-----|--------|-----------------|--------|--------|
+| 100 | 0.60s  | 2.40s           | 4.80s  | 9.60s  |
+| 110 | 0.545s | 2.18s           | 4.36s  | 8.73s  |
+| 120 | 0.50s  | 2.00s           | 4.00s  | 8.00s  |
+| 128 | 0.469s | 1.875s          | 3.75s  | 7.50s  |
+
+**Premium SaaS ad range: 100–122 BPM.** 120 BPM is a useful default — clean math, 1 bar = 2 seconds.
+
+### Scene Length Template (120 BPM)
+
+A strong repeatable structure for ~16-second ads:
+
+| Scene | Bars | Duration |
+|-------|------|----------|
+| Hook | 2 bars | 4s |
+| Problem / Setup | 2 bars | 4s |
+| Product Reveal | 2 bars | 4s |
+| Feature / Expansion | 2 bars | 4s |
+| CTA | 2 bars | 4s |
+
+Total: 10 bars / 20s — trim hook or feature to hit 15–16s.
+
+### Hard Sync vs Soft Sync
+
+**Hard sync these** (must land on beat 1 of a bar, or a strong beat):
+- Scene transitions / cuts
+- Major text reveals (headline copy)
+- Object impacts / landings
+- CTA entrance
+- Major wipes or motion bridges
+
+**Soft sync these** (can float between beats — keeps the ad feeling human):
+- Blur resolves
+- Drift motion
+- Subtle camera push
+- Secondary UI elements
+- Background parallax
+- Ambient motion
+
+> Over-quantizing everything makes the ad feel robotic. The rule is: strong structural moments snap to rhythm, everything else breathes around it.
+
+### Ad Rhythm Layers (build in this order)
+
+1. **Ad structure** — decide the visual story (hook → feature → payoff → CTA)
+2. **Timing grid** — assign BPM, bar lengths, transition points
+3. **Animate** — build scenes against the grid, with hard/soft sync in mind
+4. **Audio selection** — source or generate music at the target BPM
+5. **Micro-sync** — add hits, whooshes, risers, UI clicks, impact sounds, mutes, swells
+
+### What the Agent Should Do When Building a New Ad
+
+- State the target BPM at the start of composition planning
+- Assign each scene a bar count, not just a frame count
+- Confirm that major visual events (scene changes, text reveals, CTA) land on bar starts or beat 1
+- Allow secondary motion (drift, blur, ambient) to live between beats
+- Note the total bar count so audio can be matched externally
+
+### Timeline Feature Goals (studio implementation)
+
+- Show BPM beat and bar markers on the ruler
+- Snap-to-beat toggle for audio clip positioning
+- Scene blocks labelled with their bar length
+- Phrase boundary markers at 2-bar and 4-bar intervals
+
+---
