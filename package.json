@@ -1,0 +1,37 @@
+{
+  "name": "ad-engine",
+  "version": "1.0.0",
+  "description": "Remotion-based ad generation engine for short-form marketing videos",
+  "scripts": {
+    "preview": "npx remotion studio",
+    "start": "npx remotion studio",
+    "render": "npx remotion render src/index.ts VerticalAd out/ad.mp4",
+    "render:square": "npx remotion render src/index.ts SquareAd out/ad-square.mp4",
+    "still": "npx remotion still src/index.ts VerticalAd out/still.png --frame=30",
+    "upgrade": "npx remotion upgrade"
+  },
+  "dependencies": {
+    "@react-three/drei": "^9.122.0",
+    "@react-three/fiber": "^8.18.0",
+    "@react-three/postprocessing": "^2.19.1",
+    "@remotion/cli": "4.0.290",
+    "@remotion/lottie": "^4.0.434",
+    "@remotion/three": "^4.0.290",
+    "@remotion/zod-types": "^4.0.290",
+    "@types/three": "^0.183.1",
+    "postprocessing": "^6.38.3",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "remotion": "4.0.290",
+    "three": "^0.183.2",
+    "zod": "^3.22.3"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.28",
+    "@types/react-dom": "^18.3.7",
+    "typescript": "5.4.5"
+  },
+  "remotion": {
+    "entryPoint": "src/index.ts"
+  }
+}

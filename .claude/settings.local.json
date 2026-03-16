@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python \"C:\\\\Users\\\\chrsb\\\\Desktop\\\\generate_safe.py\")"
+    ]
+  }
+}
