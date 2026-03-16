@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useStudio }       from "../store/useStudio";
 import { getComp }         from "../registry";
 import { renderComp }      from "../api";
+import { buildCueSheet, downloadText } from "../utils/exportCues";
 
 const Btn: React.FC<React.ButtonHTMLAttributes<HTMLButtonElement> & { accent?: boolean }> = ({
   accent, style, ...rest
@@ -34,9 +35,18 @@ export const Header: React.FC = () => {
 
   const [rendering,   setRendering]   = useState(false);
   const [renderMsg,   setRenderMsg]   = useState("");
+  const [cueFlash,    setCueFlash]    = useState(false);
 
   const fps = comp?.fps ?? 30;
   const sec = (frame / fps).toFixed(2);
+
+  const handleExportCues = () => {
+    if (!comp) return;
+    const text = buildCueSheet(comp);
+    downloadText(`${comp.id}-cues.txt`, text);
+    setCueFlash(true);
+    setTimeout(() => setCueFlash(false), 2000);
+  };
 
   const handleRender = async () => {
     if (!comp) return;
@@ -122,6 +132,20 @@ export const Header: React.FC = () => {
       </div>
 
       <div style={{ width: 1, height: 20, background: "#333" }} />
+
+      {/* Export Cues button — only shown if the active comp has cues defined */}
+      {comp?.cues && comp.cues.length > 0 && (
+        <Btn
+          onClick={handleExportCues}
+          title={`Export ${comp.cues.length} animation cue events as a text file for music/SFX sync`}
+          style={{
+            borderColor: cueFlash ? "#8b5cf6" : undefined,
+            color:       cueFlash ? "#a78bfa" : undefined,
+          }}
+        >
+          {cueFlash ? "✓ Saved" : "♩ Export Cues"}
+        </Btn>
+      )}
 
       {/* Render button */}
       <Btn accent onClick={handleRender} disabled={rendering || !serverOnline}>

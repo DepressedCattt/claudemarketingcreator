@@ -1,4 +1,5 @@
 import type React from "react";
+export type { CueEvent, CueEventType, CueIntensity } from "@utils/cueTypes";
 
 // ─── Composition registry ────────────────────────────────────────────────────
 
@@ -22,6 +23,8 @@ export type CompMeta = {
   defaultProps:     Record<string, unknown>;
   format:           "9:16" | "1:1" | "16:9";
   sequences?:       SequenceMeta[];
+  /** Optional animation cue sheet for music/SFX export. */
+  cues?:            import("@utils/cueTypes").CueEvent[];
 };
 
 // ─── Audio ───────────────────────────────────────────────────────────────────

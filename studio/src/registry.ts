@@ -4,6 +4,7 @@
  * richer metadata (sequences, labels, format) for the timeline UI.
  */
 
+import { PulseAd, PulseAdCues } from "@comps/PulseAd";
 import { FormaAd2 }            from "@comps/FormaAd2";
 import { ArcflowAd }           from "@comps/ArcflowAd";
 import { CrestAd }             from "@comps/CrestAd";
@@ -29,6 +30,27 @@ const CLR = {
 };
 
 export const REGISTRY: CompMeta[] = [
+  // ── PulseAd ───────────────────────────────────────────────────────────────
+  {
+    id:               "pulse-v1",
+    label:            "Pulse",
+    component:        PulseAd,
+    durationInFrames: 540,
+    fps:              30,
+    width:            1080,
+    height:           1080,
+    format:           "1:1",
+    defaultProps:     {},
+    sequences: [
+      { id: "s1", label: "Hook",     from: 0,   durationInFrames: 120, color: CLR.hook     },
+      { id: "s2", label: "Demo",     from: 120, durationInFrames: 120, color: CLR.product  },
+      { id: "s3", label: "Features", from: 240, durationInFrames: 120, color: CLR.features },
+      { id: "s4", label: "Metrics",  from: 360, durationInFrames: 60,  color: CLR.metrics  },
+      { id: "s5", label: "CTA",      from: 420, durationInFrames: 120, color: CLR.cta      },
+    ],
+    cues: PulseAdCues,
+  },
+
   // ── FormaAd2 ─────────────────────────────────────────────────────────────
   {
     id:               "forma2-v1",

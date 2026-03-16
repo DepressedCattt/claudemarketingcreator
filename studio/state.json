@@ -9,6 +9,16 @@
         "volume": 1,
         "loop": false
       }
+    ],
+    "pulse-v1": [
+      {
+        "src": "/audio/Feel_The_Pulse_2026-03-16T121045.mp3",
+        "startFrom": 0,
+        "endAt": 517,
+        "offset": 0,
+        "volume": 1,
+        "loop": false
+      }
     ]
   }
 }

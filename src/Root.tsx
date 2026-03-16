@@ -28,6 +28,7 @@ import { NovaSkinAd } from "./compositions/NovaSkinAd";
 import { SolaceAd } from "./compositions/SolaceAd";
 import { TrailBlazeAd } from "./compositions/TrailBlazeAd";
 import { VeridianAd as VeridianAdComp } from "./compositions/VeridianAd";
+import { PulseAd } from "./compositions/PulseAd";
 import { AudioEditor, AudioEditorDefaultProps } from "./compositions/AudioEditor";
 import { activeAd } from "./data/activeAd";
 import { getTotalDuration } from "./utils/timing";
@@ -73,6 +74,9 @@ export const RemotionRoot: React.FC = () => {
 
       {/* FormaAd2 — 1:1 square, 17.3s */}
       <Composition id="forma2-v1"         component={FormaAd2}          durationInFrames={519} fps={30} width={1080} height={1080} defaultProps={{}} />
+
+      {/* PulseAd — 1:1, 16s, 120 BPM */}
+      <Composition id="pulse-v1" component={PulseAd} durationInFrames={540} fps={30} width={1080} height={1080} defaultProps={{}} />
 
       {/* ── Existing compositions ─────────────────────────────────────────── */}
       {/* ArcflowAd — 16:9, 20s */}
