@@ -18,6 +18,38 @@
         "offset": 0,
         "volume": 1,
         "loop": false
+      },
+      {
+        "src": "/audio/Create_a_high-end_op__3-1773708566541.wav",
+        "startFrom": 4,
+        "endAt": 56,
+        "offset": 0,
+        "volume": 1,
+        "loop": false
+      },
+      {
+        "src": "/audio/Create_a_premium_tra__3-1773708640550.wav",
+        "startFrom": 0,
+        "endAt": 174,
+        "offset": 114,
+        "volume": 1,
+        "loop": false
+      },
+      {
+        "src": "/audio/Create_a_polished_tr__1-1773708670766.wav",
+        "startFrom": 0,
+        "endAt": 311,
+        "offset": 251,
+        "volume": 1,
+        "loop": false
+      },
+      {
+        "src": "/audio/Create_a_final_premi__2-1773708738628.wav",
+        "startFrom": 0,
+        "endAt": 496,
+        "offset": 466,
+        "volume": 1,
+        "loop": false
       }
     ]
   }

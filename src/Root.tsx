@@ -29,9 +29,33 @@ import { SolaceAd } from "./compositions/SolaceAd";
 import { TrailBlazeAd } from "./compositions/TrailBlazeAd";
 import { VeridianAd as VeridianAdComp } from "./compositions/VeridianAd";
 import { PulseAd } from "./compositions/PulseAd";
+import { ApexAd } from "./compositions/ApexAd";
+import { ApexAd3D } from "./compositions/ApexAd3D";
+import { Dimension3DAd } from "./compositions/Dimension3DAd";
+import { IPhoneAd } from "./compositions/IPhoneAd";
+import { VelourAd } from "./compositions/VelourAd";
+import { BloomAd } from "./compositions/BloomAd";
+import { MaisonCielAd } from "./compositions/MaisonCielAd";
+import { ElumeAd } from "./compositions/ElumeAd";
+import { HavenAd } from "./compositions/HavenAd";
+import { LumenAd } from "./compositions/LumenAd";
+import { AuraSalonAd } from "./compositions/AuraSalonAd";
+import { SeriAd }      from "./compositions/SeriAd";
+import { SharedSalonFinalAd } from "./compositions/SharedSalonFinalAd";
+import { SharedSalonOneShot }   from "./compositions/SharedSalonOneShot";
+import { SharedSalonKineticAd } from "./compositions/SharedSalonKineticAd";
+import { SharedSalonCinemaAd }  from "./compositions/SharedSalonCinemaAd";
+import { CinemaRevealAd }       from "./compositions/CinemaRevealAd";
+import { AwesomeAd }            from "./compositions/AwesomeAd";
 import { AudioEditor, AudioEditorDefaultProps } from "./compositions/AudioEditor";
+import { withAudio } from "./components/AudioLayer";
 import { activeAd } from "./data/activeAd";
 import { getTotalDuration } from "./utils/timing";
+
+// Audio-wrapped variants — accept audioTracks prop at render time via --props
+const PulseAdWithAudio  = withAudio(PulseAd);
+const FormaAd2WithAudio = withAudio(FormaAd2);
+const ApexAdWithAudio   = withAudio(ApexAd);
 
 // Remotion's Composition component requires a loosely-typed component reference.
 // We cast to any here to satisfy the generic constraint while keeping
@@ -73,10 +97,49 @@ export const RemotionRoot: React.FC = () => {
        */}
 
       {/* FormaAd2 — 1:1 square, 17.3s */}
-      <Composition id="forma2-v1"         component={FormaAd2}          durationInFrames={519} fps={30} width={1080} height={1080} defaultProps={{}} />
+      <Composition id="forma2-v1" component={FormaAd2WithAudio} durationInFrames={519} fps={30} width={1080} height={1080} defaultProps={{ audioTracks: [] }} />
 
-      {/* PulseAd — 1:1, 16s, 120 BPM */}
-      <Composition id="pulse-v1" component={PulseAd} durationInFrames={540} fps={30} width={1080} height={1080} defaultProps={{}} />
+      {/* PulseAd — 1:1, 18s, 120 BPM */}
+      <Composition id="pulse-v1"  component={PulseAdWithAudio}  durationInFrames={540} fps={30} width={1080} height={1080} defaultProps={{ audioTracks: [] }} />
+
+      {/* ApexAd — 1:1, 18s, 120 BPM — SaaS CRM "Close faster." */}
+      <Composition id="apex-v1"   component={ApexAdWithAudio}   durationInFrames={540} fps={30} width={1080} height={1080} defaultProps={{ audioTracks: [] }} />
+      {/* ApexAd3D — 1:1, 18s — same as apex-v1 but with real Three.js GlassCard + Bloom */}
+      <Composition id="apex-3d-v1" component={ApexAd3D}         durationInFrames={540} fps={30} width={1080} height={1080} defaultProps={{}} />
+      {/* Dimension3DAd — 1:1, 15s — 5-scene showcase of new 3D capabilities */}
+      <Composition id="dimension-3d-v1" component={Dimension3DAd} durationInFrames={450} fps={30} width={1080} height={1080} defaultProps={{}} />
+      {/* IPhoneAd — 1:1, 15s — realistic iPhone 17 Pro product reveal */}
+      <Composition id="iphone-v1" component={IPhoneAd} durationInFrames={450} fps={30} width={1080} height={1080} defaultProps={{}} />
+
+      {/* ── Beauty Industry Ads ───────────────────────────────────────────── */}
+      {/* VelourAd — 9:16, 18s — luxury barbershop/salon, editorial dark gold */}
+      <Composition id="velour-v1" component={VelourAd} durationInFrames={540} fps={30} width={1080} height={1920} defaultProps={{}} />
+      {/* BloomAd — 1:1, 18s — bespoke floral design studio, cream/forest green */}
+      <Composition id="bloom-v1"  component={BloomAd}  durationInFrames={540} fps={30} width={1080} height={1080} defaultProps={{}} />
+      {/* MaisonCielAd — 16:9, 18s — fashion boutique, deep navy/champagne */}
+      <Composition id="maison-ciel-v1" component={MaisonCielAd} durationInFrames={540} fps={30} width={1920} height={1080} defaultProps={{}} />
+      {/* ElumeAd — 9:16, 18s — luxe social transformation, silk black + champagne + rose-gold */}
+      <Composition id="elume-v1" component={ElumeAd} durationInFrames={540} fps={30} width={1080} height={1920} defaultProps={{}} />
+      {/* HavenAd — 9:16, 18s — warm trust-building, ivory + terracotta + espresso */}
+      <Composition id="haven-v1" component={HavenAd} durationInFrames={540} fps={30} width={1080} height={1920} defaultProps={{}} />
+      {/* LumenAd — 9:16, 18s — kinetic one-shot, clip-path match transitions, copper */}
+      <Composition id="lumen-v1" component={LumenAd} durationInFrames={540} fps={30} width={1080} height={1920} defaultProps={{}} />
+      {/* AuraSalonAd — 9:16, 18s — kinetic object-based transitions, salon journey */}
+      <Composition id="aura-salon-v1" component={AuraSalonAd} durationInFrames={540} fps={30} width={1080} height={1920} defaultProps={{}} />
+      {/* SeriAd — 9:16, 18s — layered motion design, masks/wipes/parallax, dusty mauve */}
+      <Composition id="seri-v1" component={SeriAd} durationInFrames={540} fps={30} width={1080} height={1920} defaultProps={{}} />
+      {/* SharedSalonFinalAd — 9:16, 26s — premium product commercial, Apple-style cinematography, 120 BPM */}
+      <Composition id="shared-salon-final" component={SharedSalonFinalAd} durationInFrames={780} fps={30} width={1080} height={1920} defaultProps={{}} />
+      {/* SharedSalonOneShot — 9:16, 26s — true one-shot, element-driven transitions, no cuts */}
+      <Composition id="shared-salon-oneshot" component={SharedSalonOneShot} durationInFrames={780} fps={30} width={1080} height={1920} defaultProps={{}} />
+      {/* SharedSalonKineticAd — 9:16, 25s — playful camera: tilt-up, dutch, orbital arc, tracking shot */}
+      <Composition id="shared-salon-kinetic" component={SharedSalonKineticAd} durationInFrames={756} fps={30} width={1080} height={1920} defaultProps={{}} />
+      {/* SharedSalonCinemaAd — 9:16, 4s (Seq 1) — 3D iPhone camera rise + dimensional pull-back */}
+      <Composition id="shared-salon-cinema" component={SharedSalonCinemaAd} durationInFrames={120} fps={30} width={1080} height={1920} defaultProps={{}} />
+      {/* CinemaRevealAd — 9:16, 10s — simulated cinematography reference: depth tiers + parallax */}
+      <Composition id="cinema-reveal" component={CinemaRevealAd} durationInFrames={480} fps={30} width={1080} height={1920} defaultProps={{}} />
+      {/* AwesomeAd — 9:16, 5s — Scene 1: camera rises up the phone face then pulls back to full reveal */}
+      <Composition id="awesome-ad" component={AwesomeAd} durationInFrames={150} fps={30} width={1080} height={1920} defaultProps={{}} />
 
       {/* ── Existing compositions ─────────────────────────────────────────── */}
       {/* ArcflowAd — 16:9, 20s */}

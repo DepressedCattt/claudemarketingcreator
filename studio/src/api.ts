@@ -68,9 +68,92 @@ export async function saveAudioTracks(
 }
 
 // ─── Render ───────────────────────────────────────────────────────────────────
+
+export interface RenderOptions {
+  compId:         string;
+  outFile?:       string;
+  quality?:       "normal" | "hq";
+  /** WebGL canvas pixel multiplier. 1 = native, 2 = 2× resolution. */
+  scale?:         number;
+  /** H.264/H.265 CRF. Lower = better quality. 0 = lossless. */
+  crf?:           number;
+  /** JPEG quality for PNG→JPEG frame encoding (0–100). */
+  jpegQuality?:   number;
+  /** Output codec: h264 | h265 | vp8 | vp9 | prores */
+  codec?:         string;
+  /** Render every N-th frame (2 = half speed, useful for draft previews). */
+  everyNthFrame?: number;
+  /** Inclusive start frame for partial renders. */
+  startFrame?:    number;
+  /** Inclusive end frame for partial renders. */
+  endFrame?:      number;
+}
+
 export async function renderComp(
-  compId:    string,
-  outFile:   string,
-): Promise<{ started: boolean; message: string }> {
-  return post("/render", { compId, outFile });
+  compId:  string,
+  outFile: string,
+): Promise<{ started: boolean; jobId: string; message: string }> {
+  return post("/render", { compId, outFile, quality: "normal" });
+}
+
+export async function startRender(
+  opts: RenderOptions,
+): Promise<{ started: boolean; jobId: string; message: string }> {
+  return post("/render", opts);
+}
+
+export async function renderCompHQ(
+  compId:  string,
+  outFile: string,
+): Promise<{ started: boolean; jobId: string; message: string }> {
+  return post("/render", { compId, outFile, quality: "hq" });
+}
+
+export interface RenderStatus {
+  done:        boolean;
+  failed:      boolean;
+  frames:      number;
+  totalFrames: number;
+  pct:         number;
+  elapsed:     number;
+  output:      string;
+}
+
+export async function getRenderStatus(jobId: string): Promise<RenderStatus> {
+  return get<RenderStatus>(`/render-status/${jobId}`);
+}
+
+/** URL to stream a rendered video file from out/ directory. */
+export function previewUrl(filename: string): string {
+  return `/api/preview/${encodeURIComponent(filename.replace(/^out\//, ""))}`;
+}
+
+// ─── Render history ───────────────────────────────────────────────────────────
+
+export interface RenderHistoryEntry {
+  id:              string;
+  compId:          string;
+  startedAt:       string;
+  finishedAt:      string;
+  durationSec:     number;
+  success:         boolean;
+  settings: {
+    scale:         number;
+    crf:           number;
+    jpegQuality:   number;
+    codec:         string;
+    everyNthFrame: number;
+    preset:        string;
+    startFrame?:   number;
+    endFrame?:     number;
+  };
+  outputFile:      string;
+  outputSizeBytes: number | null;
+  totalFrames:     number;
+  framesPerSec:    number | null;
+  exitCode:        number;
+}
+
+export async function getRenderHistory(): Promise<RenderHistoryEntry[]> {
+  return get<RenderHistoryEntry[]>("/render-history");
 }

@@ -5,6 +5,135 @@ Updated after every critique session.
 
 ---
 
+## LEGEND — What's In This File & Where To Find It
+
+*Use this before reading the rest. Jump directly to the section you need.*
+
+---
+
+### CATEGORY A — Design Principles & Rules *(Start here for any new ad)*
+
+| Section | Line | What it covers |
+|---|---|---|
+| **Running Principles** | 253 | Distilled rules: motion, copy, composition, pacing. The core vocabulary. |
+| **What to Always Do / Never Do** | ~280 | Concrete dos and don'ts per principle area. |
+| **Reference Ad: `meridian-v1` ⭐** | 300 | The quality benchmark. Scene-by-scene breakdown. Key numbers/specs. |
+| **Pre-Ship Visual Audit Checklist** | 613 | Mandatory self-audit before shipping any composition. |
+| **Commercial Direction System** | 1572 | Ad must sell, not just impress. Product-first, copy, hierarchy, platform safety. |
+
+---
+
+### CATEGORY B — Motion & Animation Techniques
+
+| Section | Line | What it covers |
+|---|---|---|
+| **Premium Motion Principles** | 385 | Easing rules, arc motion, blur-resolve, float, depth de-emphasis, typography motion. |
+| **Motion Library — `premiumMotion.ts`** | 396 | All hooks/exports with usage guide (`useCinematicTextReveal`, `useArcEntry`, etc.). |
+| **Space Utilisation — The Real Rule** | 490 | Focal clarity vs. pixel-filling. Code patterns for centering. |
+| **Element Centering & Proportions** | 570 | Critical CSS centering rules. 9:16 layout zones. |
+| **Pattern: Hero Component Expansion** | 877 | 1→4 card burst transition. 7 things that make it premium. |
+| **Camera Motion Wrapper** | 945 | Scale + rotateZ + translate on scene root. Linear, not eased. |
+| **Layout-Aware Blur Reveal Typography** | 1011 | Premium word-by-word reveal where the layout reacts. `<WordReveal>` component. |
+| **Round 5 Iteration Log** | 1150 | 6 specific problems fixed: stop-start, flexbox reflow, gap sizing, etc. |
+| **Clip-Path Match-Cut Transitions** | 1745 | Brush sweep, vertical wipe, diagonal slash, iris close. Code for all four. |
+| **Horizontal Light Sweep** | 1801 | Studio-light sweep effect for hook scenes. |
+| **Abstract Hair Texture Visuals** | 1829 | Gradient-ellipse hair strands for beauty ads. No photos needed. |
+| **Simulated Cinematography** | 2458 | Depth tier system, parallax multipliers, camera vocabulary, shot spec format. |
+
+---
+
+### CATEGORY C — Pacing, Timing & Commercial Theory
+
+| Section | Line | What it covers |
+|---|---|---|
+| **Pacing & Composition Theory** | 1237 | The 3 layers of a strong ad. Attention beats. Stage attention over time. |
+| **Pacing Theory — Attention Beats** | 1258 | Hook / Explain / Expand / Proof / Resolution beat types. |
+| **Composition Theory** | 1296 | Center vs. rule-of-thirds vs. split. When to use each. |
+| **Screen-Space Theory** | 1331 | Why empty space is not wasted space. The removal mindset. |
+| **Camera Theory** | 1345 | Camera move types and when each is appropriate. |
+| **Hierarchy Theory** | 1378 | Three levels always: primary / secondary / tertiary. |
+| **Scene Composition Checklist** | 1394 | 6 questions to answer before building every scene. |
+| **What Makes an Ad Feel Expensive** | 1421 | Side-by-side expensive vs. cheap ad attributes. |
+| **The Motion Director Checklist** | 1441 | Per-shot decision framework (focal, composition, pacing, camera). |
+| **Rhythm, Timing Grids & Music** | 1481 | BPM math table, beat grids, hard vs. soft sync, 120 BPM scene template. |
+
+---
+
+### CATEGORY D — 3D / Three.js Techniques
+
+| Section | Line | What it covers |
+|---|---|---|
+| **3D Layer Architecture** | 1916 | Why we moved to real 3D. Two-layer DOM pattern (CSS → ThreeCanvas → text). |
+| **ThreeScene Wrapper** | 1985 | `<ThreeScene>` usage, fov/cameraZ defaults, coordinate system, PPU conversions. |
+| **GlassCard Material System** | 2006 | `<GlassCard>` props, material presets (smoked glass, aluminium, plastic, crystal). |
+| **ParticleField — InstancedMesh** | 2034 | `<ParticleField>` ambient + burst modes. GPU particles, per-instance opacity workaround. |
+| **Post-Processing Chain (Bloom)** | 2077 | Bloom calibration values, luminanceThreshold, mipmapBlur. |
+| **Constructive 3D Product Models** | 2129 | Build phones/devices from primitives — no GLTF needed. Geometry vocabulary. |
+| **Geometry Vocabulary** | 2140 | Primitive shapes for phones, modules, lenses, buttons, ports. |
+| **Proportional Scaling System** | 2159 | Derive all dimensions from real product specs. iPhone example. |
+| **Material Presets — Product Surfaces** | 2185 | Titanium, mirror metal, lens glass, screen glass, matte. |
+| **Canvas 2D Screen Texture Pattern** | 2215 | `THREE.CanvasTexture`, colorSpace, emissiveMap, flipY behavior. |
+| **Product Photography Lighting Rig** | 2262 | Key + fill + rim light positions. Animated reveal sweep. |
+| **Product Turn Animation** | 2292 | Pacing rule (90–125f), easeInOut, post-turn oscillation. |
+| **Constructive vs GLTF Decision Matrix** | 2317 | When to build vs. import. |
+| **Dimension3DAd — 3D vs CSS Proof** | 2336 | 5 capability comparisons. Single persistent ThreeScene pattern. |
+| **CSS fails for camera-travel shots** | ~2645 | Hard lesson: why CSS 3D rotations are fake. When to use Three.js. |
+
+---
+
+### CATEGORY E — GLB / Model Loading & iPhone Production
+
+| Section | Line | What it covers |
+|---|---|---|
+| **GLB / Spline Model Loading — Failure Chain** | 2681 | 5 failure modes documented. `useGLTF`+`Suspense` silently broken in Remotion. |
+| **Correct GLB Pattern** | 2695 | `delayRender`/`continueRender` in DOM context. `fitModelToTarget()` normalizer. |
+| **Spline Export Problems** | 2720 | Material stripping, 100× scale bug, embedded lights, duplicate geometry. |
+| **Phone Screen Realism (3 layers)** | 2792 | Content plane + Canvas glass specular + `MeshPhysicalMaterial` glass overlay. |
+| **Black iPhone Material Overrides** | 2842 | Orange-phone fix, React Fast Refresh `useEffect` trap, metalness-based detection. |
+| **Phone Screen Text Legibility** | 2880 | Mipmap blur root cause. Fix: `LinearFilter` + 2× canvas resolution. |
+| **iPhone 3D Scene Code Map** | 2922 | Symbol index for `CinemaRevealAd.tsx`. What's at which line. Copy-paste patterns. |
+| **Preview vs. Render Quality** | 3014 | `isRendering` gate pattern. Cost table per setting. Always-redraw rule. |
+| **Screen Plane Sizing — Bezel Calibration** | ~3125 | Calibrated `SCREEN_PLANE_WIDTH/HEIGHT` values. How to adjust. |
+
+---
+
+### CATEGORY F — Ad Production History *(Background context — skim unless reviewing a specific round)*
+
+| Section | Line | What it covers |
+|---|---|---|
+| **Round 1 — Baseline Test** | 132 | NovaSkin, FlowDesk, TrailBlaze. Screen space and element sizing first identified. |
+| **Round 2 — V2 Iteration Fixes** | 188 | What changed. FlowDesk redesign. NovaSkin ingredient hero cards. |
+| **Round 3 — Shared Salon Real Brand** | 229 | Venue / Freelancer / Brand ads. Three audience cuts. |
+| **Round 4 — Premium Motion Showcase** | 368 | Arcflow, Luminary, Meridian. `premiumMotion.ts` library created. |
+| **Session: Hero Expansion Ad** | 653 | Iterative build log. 3D perception, directional drift, prism rim, camera motion. |
+| **Round 5 — Layout-Aware Typography** | 1011 | `kinetic-typography-v1`. Blur-reveal word system. Iteration problems log. |
+| **Round 6 — Beauty Salon Ads** | 1732 | Élume, Haven, Lumen. Clip-path transitions. Palette differentiation. |
+| **Round 7 — SharedSalonFinalAd** | 2361 | 26s product commercial. CSS iPhone frame, CameraWrap, panel flip, `sceneFade`. |
+
+---
+
+### QUICK REFERENCE — Most-Used Code Patterns
+
+| Pattern | Where to find it |
+|---|---|
+| Camera motion wrapper (scale + roll + pan) | Line 945 (Technique: Camera Motion Wrapper) |
+| `useCinematicTextReveal` / all motion hooks | Line 396 (Motion Library table) |
+| `prismEdgeShadow()` — 3D card rim technique | Line ~753 (Hero Expansion session) |
+| 0×0 absolute anchor for kinetic layouts | Line ~1192 |
+| Clip-path transitions (brush, wipe, iris) | Line 1745 |
+| `depthDeemphasis` — background recede | Line ~410 (motion library) |
+| `sceneFade()` utility | Line ~2411 |
+| `fitModelToTarget()` — GLB normalizer | Line 2751 |
+| Single `camT` parallax system | Line ~2496 |
+| `isRendering` quality gate | Line 3014 |
+| Appointment card design pattern | Line 1890 |
+| 9:16 vertical layout zones | Line ~591 |
+| CSS iPhone frame component | Line ~2380 (Round 7) |
+| Three.js coord system / PPU conversions | Line 1968 |
+| BPM math + 120 BPM scene template | Line 1502 |
+
+---
+
 ## Round 1 — Baseline Test
 
 **Ads produced:**
@@ -1442,5 +1571,1586 @@ Total: 10 bars / 20s — trim hook or feature to hit 15–16s.
 - Snap-to-beat toggle for audio clip positioning
 - Scene blocks labelled with their bar length
 - Phrase boundary markers at 2-bar and 4-bar intervals
+
+---
+
+## Commercial Direction System
+
+*Added after external review. The existing file covers motion craft well. This section adds the advertising layer that sits above craft: the ad must sell, not just impress.*
+
+---
+
+### Operating Checklist — Run This Before Every Ad
+
+**Commercial**
+- Start with the product, the pain, or the payoff immediately
+- Make the product legible early; do not let the ad become abstract mood
+- Sell one core promise per ad
+- Brand through palette, type, shape language, and product surfaces from the start — not just the final logo lock
+
+**Copy**
+- Use short, scannable text
+- One concept per beat
+- Prefer concrete claims, real metrics, and realistic use cases over generic hype
+
+**Hierarchy**
+- One primary focal point per frame
+- One secondary support element maximum
+- Everything else must recede, blur, dim, shrink, or exit
+
+**Motion**
+- Motion must clarify continuity, hierarchy, and transformation — not just look slick
+- Existing elements should make room for incoming elements
+- Every transition should preserve object permanence
+- Remove or de-emphasize unimportant elements when a new hero arrives
+
+**Composition**
+- Choose center, thirds, or split layout intentionally
+- Use negative space to isolate the hero
+- Keep key content inside safe zones for the target placement
+- Pick aspect ratio based on delivery context, not taste alone
+
+**Timing**
+- Hook fast
+- Slow slightly as information density increases
+- Let major reveals settle before the next element arrives
+- Hard-sync structural moments; soft-sync ambient motion
+
+**Audio**
+- Use sound to reinforce scene boundaries and hero actions
+- Keep music out of the way of reading moments
+- Avoid excessive flashing or aggressive sound clutter during dense text moments
+
+**QA**
+- Preview on-device and in-placement, not just on canvas
+- Check the first 2 seconds muted: is the proposition already visually interesting?
+- Check the CTA frame with platform UI overlays mentally applied
+- Blur your eyes: is the focal point still obvious?
+
+---
+
+### Commercial Layer — The Ad Must Sell, Not Just Impress
+
+#### 1. Product-First Rule
+If it is a product demo ad, the product must be visible early and often enough that the viewer can connect the motion to the offer. Think with Google's ABCD framework explicitly recommends hooking people from the start and, for action-oriented ads, making the product the ad and keeping it visible throughout. Do not let beautiful motion bury the product.
+
+#### 2. One Promise Per Ad
+Each ad should sell one core promise, not three. Supporting points can exist, but the viewer should be able to answer "what is this ad really about?" in one sentence. If you cannot state that sentence, the ad needs to be cut down.
+
+#### 3. Show, Then Label
+Whenever possible, reveal the visual proof first, then add the copy that explains it. This aligns with the existing "text arrives last" rule and with motion-as-clarification principles. Motion should reveal functionality and spatial logic, not decorate after the fact.
+
+#### 4. Brand Early, But Elegantly
+Do not save all branding for the final CTA. The ad should feel unmistakably branded from the opening palette, shape language, typography, or product surface — even if the logo itself is restrained. Early brand recognition reduces cognitive load on the viewer and anchors the entire ad.
+
+---
+
+### Copy Layer — Premium Ads Are Usually Simpler Than You Think
+
+#### 5. Scannability Over Cleverness
+For the agent, that means:
+- **Hero line:** 2–6 words
+- **Support line:** one idea only
+- **CTA:** direct, literal, easy to process
+
+Resist the urge to be clever. Clarity converts better than wit.
+
+#### 6. Read-Time Rule
+Never introduce more text than the scene duration can support. If the viewer has to decode copy while the layout is still moving, the ad is overloaded. The rule: text should land on a resolved frame, not a moving one.
+
+#### 7. Concrete Language Beats Abstract Hype
+"2.4× deeper focus" is stronger than "work better." "Save 3 hours a day" is stronger than "be more productive." Specificity signals confidence and credibility.
+
+---
+
+### Motion Theory Addendum
+
+These rules extend the existing motion pattern library. Apply them in addition to the existing core editorial principles.
+
+#### 8. Transitions Must Preserve Object Permanence
+Every transition should answer: what survived, what transformed, what moved, and why? If the viewer cannot track continuity across a cut or transform, the transition may look slick but still feel cheap. The brain should be able to follow the object, not just admire the effect.
+
+#### 9. Use Motion to Remove Unimportant Elements
+When a new hero arrives, something else must recede, blur, dim, shrink, or exit. Motion can guide focus by turning surfaces into focal points and removing unimportant elements — it should not just add new things while old things hang around fighting for attention.
+
+#### 10. Duration Discipline
+Timing sanity checks by scale of change:
+- **Micro transitions** (state changes, small reveals): feel quick and controlled — 150–250ms range
+- **Bigger reconfigurations** (layout shifts, component swaps): need a touch more time — 300–500ms range
+- **Long travel distance**: should never snap — motion should ease across the full path
+
+Over-short durations for large changes feel cheap. Over-long durations for small changes feel sluggish. Match duration to the perceptual weight of the change.
+
+---
+
+### Composition and Platform Layer
+
+#### 11. Safe-Zone Rule
+For vertical ads, all crucial text, logos, and CTA elements must sit inside safe zones so platform UI does not obscure them. This is a hard constraint, not a final polish pass. Meta explicitly documents safe-zone concerns for Stories and Reels placements. Treat the bottom ~20% and top ~15% of vertical frames as potentially obscured by UI chrome — keep primary content out of these regions.
+
+#### 12. Placement-Aware Composition
+Aspect ratio is a delivery decision, not an aesthetic one:
+- **9:16** — vertical placements: Reels, Stories, Audience Network vertical
+- **1:1** — feed placements: Facebook Feed, Instagram Feed
+- **16:9** — in-stream/horizontal: YouTube pre-roll, in-stream video
+
+Choose based on the target placement first. Composing in the wrong ratio and then cropping is not the same as composing for the ratio.
+
+#### 13. Color Has a Job
+Accent color should indicate hierarchy or action, not just decorate random elements. Use color judiciously to enhance communication, provide continuity, communicate status, and help people understand information. When every element uses an accent color, nothing has accent priority.
+
+---
+
+### Audio Layer Addendum
+
+These rules extend the existing beat-grid system.
+
+#### 14. Audio Must Reinforce Hierarchy
+Sound should not wallpaper the ad. Use it to mark scene boundaries, product interactions, headline impacts, and CTA clarity. The beat-grid system is the right foundation — audio accents should support only the top one or two visual priorities per moment. If two things happen simultaneously, only the more important one gets a sound accent.
+
+#### 15. Don't Let Music Compete With Reading
+If copy density rises, instrumentation should thin. If the visual is carrying the emotional payoff, the music should not also try to do a giant climax. The viewer cannot process a dense text block and a music swell simultaneously — one will lose.
+
+#### 16. Audio Accessibility
+- Avoid overly busy high-frequency sound stacks during dense text moments
+- Avoid rapid flashing in central large screen regions
+- Avoid repeated intense flashes above safe thresholds
+- Background music should not overpower UI sound accents — the mix should be led by the structural hits, with music underneath
+
+---
+
+### Testing Layer
+
+#### 17. Preview in Placement, Not Just on Canvas
+Treat previewing as part of the production loop, not as optional QA. Check how the ad looks with platform UI overlays applied — profile picture, username, caption text, action buttons. These UI elements eat real estate and can obscure copy, CTAs, or the product itself.
+
+#### 18. The First-2-Seconds Test
+This is a hard test that must pass before an ad is considered done:
+
+1. **Muted at 2 seconds** — is the proposition already visually interesting? Can a viewer tell what the ad is about with no audio and less than 2 seconds of runtime?
+2. **Small on mobile** — is the hero still obvious? Does the primary focal point survive at 375px width?
+
+If either of these fails, the hook needs to be redesigned. Most ad drop-off happens in the first 2–3 seconds. The ad cannot earn the back half if it loses people at the front.
+
+---
+
+## Round 6 — Three Beauty Salon Ads (Prompt-Driven Creative Direction)
+
+**Date:** March 2026
+**Compositions created:**
+
+| ID | Brand | Format | Duration | Core Innovation |
+|---|---|---|---|---|
+| `elume-v1` | Élume | 9:16 | 18s | Dark silk luxury editorial — horizontal light sweep, rose-gold palette |
+| `haven-v1` | Haven | 9:16 | 18s | Warm trust-building — light ivory hook, appointment card, espresso CTA |
+| `lumen-v1` | Lumen | 9:16 | 18s | Kinetic one-shot — clip-path match-cut transitions between every scene |
+
+---
+
+### New Technique: Clip-Path Match-Cut Transitions
+
+**What it is:**
+Instead of standard opacity fade-outs, each entering scene uses a `clipPath` CSS property on its `AbsoluteFill` root to create a visually motivated reveal. The clip-path expands or sweeps as a direct style property — no extra transition component needed for most cases.
+
+**Why it's premium:**
+It creates the impression of a "continuous camera move" rather than a series of disconnected cuts. Each reveal is motivated by a real-world object or motion in the salon world.
+
+**Four transition types implemented in LumenAd:**
+
+```tsx
+// 1. Circular brush sweep (S1 → S2) — like a round brush swept left to right
+const brushT = easeOut5(clamp(frame / 26, 0, 1));
+const brushW  = brushT * 220;           // 0% → 220% width
+const brushX  = -15 + brushT * 65;     // center moves right
+const clipPath = `ellipse(${brushW}% 75% at ${brushX}% 50%)`;
+
+// 2. Vertical hair sweep upward (S2 → S3) — like hair lifted by a blow-dryer
+const sweepT = easeOut4(clamp(frame / 24, 0, 1));
+const insetTop = (1 - sweepT) * 108; // 108% → 0%
+const clipPath = `inset(${insetTop}% 0 0 0)`;
+
+// 3. Diagonal slash from top-left (S3 → S4) — like a mirror edge wipe
+// DIAG_SLANT = 55 (for 9:16 aspect ratio, produces a visually 45° diagonal)
+const slashT = easeOut5(clamp(frame / 26, 0, 1));
+const rawTop = slashT * (100 + DIAG_SLANT);
+const topX   = Math.min(100, rawTop);
+const botX   = Math.max(0, rawTop - DIAG_SLANT);
+const clipPath = `polygon(0% 0%, ${topX}% 0%, ${botX}% 100%, 0% 100%)`;
+
+// 4. Iris close (S4 → S5) — black disc growing from center
+// Implemented as a separate <Sequence> root-level element (renders above all scenes):
+const t = easeInOut3(clamp(frame / 22, 0, 1));
+const size = t * 220; // 0% → 220%
+// Rendered as: <AbsoluteFill style={{ background: '#080808', clipPath: `circle(${size}% at 50% 50%)` }} />
+```
+
+**Implementation rules:**
+- Apply `clipPath` AND `WebkitClipPath` on the scene's `AbsoluteFill` root for cross-browser support
+- The iris close is a separate `<Sequence>` element at the root-level camera wrapper, NOT inside any scene
+- For the iris close, use `zIndex: 99` on the element to ensure it renders above everything
+- Content in the scene entering behind the iris should begin animating at ~frame 16 (after the iris clears)
+- Vary transition type every scene — never use the same clip-path pattern twice
+
+**The diagonal wipe math for 9:16:**
+```
+DIAG_SLANT = 55  (empirical for 9:16 — produces visually diagonal sweep)
+rawTop = enterT * (100 + DIAG_SLANT)  // 0 → 155
+topX   = min(100, rawTop)             // top edge of polygon
+botX   = max(0, rawTop - DIAG_SLANT) // bottom edge of polygon
+// At enterT=0: nothing visible (degenerate polygon)
+// At enterT=1: full frame covered (topX=100, botX=100)
+```
+
+---
+
+### New Technique: Horizontal Light Sweep
+
+**What it is:**
+A thin translucent beam that sweeps left-to-right in the first frames of a hook scene, simulating a studio light passing across the frame. Used in ElumeAd to signal the "shine" motif before any text appears.
+
+```tsx
+// Runs over first ~22 frames of the hook
+const sweepT = easeOut5(clamp(frame / 22, 0, 1));
+const sweepX = -15 + sweepT * 115; // -15% → 100%
+
+<div style={{
+  position: "absolute",
+  top: 0, bottom: 0,
+  left: `${sweepX}%`,
+  width: "28%",
+  background: `linear-gradient(90deg, transparent, rgba(240,230,211,0.055), transparent)`,
+  transform: "skewX(-6deg)",  // slight skew makes it feel like angled light
+}} />
+```
+
+**Calibration:**
+- Opacity of the beam: 0.04–0.07 (too visible reads as an effect, not a signal)
+- Width: 20–35% of canvas width
+- Skew: -4° to -10° for the angled-light feel
+- Duration: 18–26 frames (fast sweep is more elegant)
+
+---
+
+### New Technique: Abstract Hair Texture Visuals
+
+**What it is:**
+Instead of photos, use layered gradient ellipses at consistent angles to simulate the look of dimensional, glossy hair. Combined with a narrow gloss sweep overlay, this reads as a premium hair texture visualization.
+
+```tsx
+// Diagonal hair strand layers — graduated, dimensional
+{[
+  { y: -20, w: 900, h: 70, rot: -14, op: 0.22, c: '#B97C56' },
+  { y: 20,  w: 800, h: 55, rot: -11, op: 0.16, c: '#E8C89A' },
+  // ... more layers
+].map((layer, i) => (
+  <div style={{
+    position: "absolute",
+    width: layer.w, height: layer.h,
+    left: -20, top: layer.y,
+    borderRadius: `${layer.h * 0.5}px`,  // pill shape = strand
+    background: layer.c,
+    opacity: layer.op,
+    transform: `rotate(${layer.rot}deg)`,
+  }} />
+))}
+
+// Gloss streak overlay
+<div style={{
+  position: "absolute",
+  top: 0, bottom: 0,
+  left: "28%", width: "12%",
+  background: `linear-gradient(90deg, transparent, rgba(255,255,255,0.16), transparent)`,
+  transform: "skewX(-12deg)",
+}} />
+```
+
+**Rules for convincing hair texture:**
+- All strands should angle in the SAME general direction (±5° variation)
+- Use 5–8 layers with increasing opacity variation
+- Strand heights: 50–80px (narrow ellipses look like hair strands)
+- Strand widths: 780–950px (extends beyond canvas edges for seamless feel)
+- Rotation range: -8° to -18° for a natural downward hair angle
+- Gloss streak should be narrow (8–14%) and skewed (-8° to -15°)
+- Two gloss streaks at different positions look more dimensional than one
+
+---
+
+### Palette Differentiation — Beauty Ads
+
+Three visually distinct beauty salon palettes that don't clash with each other:
+
+| Brand | Primary | Accent | Background | Mood |
+|---|---|---|---|---|
+| Élume | Near-black `#0C0A0D` | Rose-gold `#C9837A` | Silk black | High-fashion editorial luxury |
+| Haven | Warm ivory `#FAF7F3` | Terracotta `#BC7558` | Warm espresso CTA | Welcoming, human, trustworthy |
+| Lumen | Architectural white `#F9F9F8` | Burnished copper `#B97C56` | Jet black `#080808` | Precision, cinema, Scandinavian |
+
+**Why these work together:**
+- All use a copper/warm-metal accent family but expressed differently (rose-gold vs terracotta vs copper)
+- Background strategies are opposite: Élume = dark throughout, Haven = light throughout, Lumen = light→dark transition
+- Haven is the only one that uses a LIGHT hook — consistent with the "warm trust" positioning
+
+---
+
+### Appointment Card Design Pattern
+
+A warm, human-detailed booking card communicates "personalised service" better than any testimonial quote. Key elements:
+
+1. **Confirmed status dot** — green pulsing indicator signals "active, bookable salon"
+2. **Date/time block** — real specificity (Saturday, 11:00am) is more believable than generic
+3. **Stylist profile** — avatar initial + name + years experience = instant trust signal
+4. **First visit note** — proactively addressing hesitation in the card itself ("First visit? We'll take care of everything.")
+5. **Service label** — not just the service name, but the category ("Cut & Color Consultation" not "Haircut")
+
+---
+
+### The Missing Mindset
+
+The existing file covers motion craft. This addendum adds the commercial direction layer. The combined question to ask about every ad is not just:
+
+> "Does this animation look premium?"
+
+But:
+
+> "Does this communicate the offer clearly, early, memorably, and safely in a real ad placement?"
+
+Both must be true. A technically excellent ad that buries the product, confuses the offer, or gets clipped by platform UI has failed — regardless of how good the motion is.
+
+---
+
+## 3D Layer Architecture — Real Three.js in Remotion
+
+### Why We Moved to Real 3D
+
+The CSS `rotateX/Y` "3D" technique used in earlier compositions hit a hard ceiling:
+
+```
+filter: blur() or drop-shadow() on a parent element ALWAYS breaks
+transform-style: preserve-3d on all descendants.
+→ Every CSS 3D card was actually flat. Depth was an illusion via boxShadow math.
+```
+
+The prism rim `boxShadow` technique (see §603–656) was a workaround. Real Three.js removes the limitation entirely. What we now get for free:
+
+- **Real environment map reflections** on card surfaces (IBL via `<Environment>` from drei)
+- **MeshPhysicalMaterial**: roughness, metalness, transmission (glass refraction)
+- **GPU-accelerated particles**: InstancedMesh handles 500–2000 particles at the same cost as 22 CSS divs
+- **Post-processing Bloom**: real light bleed on emissive surfaces, not `box-shadow` approximations
+- **No `preserve-3d` constraints**: lights, shadows, and materials work correctly regardless of parent filters
+
+### All Dependencies Already Installed
+
+No new installs required — these were already in `package.json`:
+
+| Package | Role |
+|---|---|
+| `@remotion/three` | ThreeCanvas — connects R3F to Remotion's frame system |
+| `@react-three/fiber` | React renderer for Three.js inside ThreeCanvas |
+| `@react-three/drei` | Helpers: Environment, PerspectiveCamera, RoundedBox |
+| `@react-three/postprocessing` | EffectComposer, Bloom, DepthOfField |
+| `three` | Core engine |
+
+### The Two-Layer Architecture
+
+Every composition using 3D follows this DOM order (later = on top):
+
+```
+<AbsoluteFill background>          ← Layer 1: CSS backgrounds, glow gradients
+<ThreeScene alpha=true>            ← Layer 2: 3D objects (transparent BG)
+  <GlassCard />
+  <ParticleField />
+  <pointLight />
+</ThreeScene>
+<div text overlays>                ← Layer 3: all text, UI, buttons
+```
+
+DOM order is the z-ordering mechanism. No explicit `z-index` needed.
+The ThreeCanvas `alpha: true` makes the canvas background transparent — Layer 1 CSS elements
+behind it show through the transparent areas (around 3D objects).
+
+**Critical rule:** All text/UI JSX must come AFTER the ThreeScene element in the JSX tree.
+
+### Coordinate System
+
+Camera defaults: `fov=40`, `cameraZ=6`, vertical FOV.
+
+| Canvas size | Frustum height at z=0 | PPU (pixels per world unit) |
+|---|---|---|
+| 1080 × 1080 | 4.37 units | 247 px/unit |
+| 1080 × 1920 | 4.37 units | 439 px/unit (both axes) |
+
+Converting CSS pixel offsets (from canvas centre) to world units:
+```ts
+worldX =  cssOffsetX / PPU;  // X axis: same direction as CSS
+worldY = -cssOffsetY / PPU;  // Y axis: INVERTED (Three.js Y is up, CSS Y is down)
+```
+
+Use `canvasPosToWorld(canvasX, canvasY, width, height, PPU)` from `src/utils/three`.
+
+### ThreeScene Wrapper
+
+```tsx
+import { ThreeScene } from "../utils/three";
+
+// Inside any composition — takes width/height from useVideoConfig() automatically
+<ThreeScene
+  fov={40}
+  cameraZ={6}
+  environment="studio"    // 'studio', 'sunset', 'warehouse', etc.
+  enableBloom={true}
+  bloomIntensity={0.9}
+  bloomThreshold={0.35}
+>
+  {/* R3F content here */}
+</ThreeScene>
+```
+
+**Performance constraint:** Set `gl={{ antialias: false }}` (the default) — disabling MSAA on the WebGL context saves ~30% render cost. Bloom compensates visually for aliasing.
+Limit to ≤ 2 post-processing passes per composition.
+
+### GlassCard Material System
+
+`GlassCard` from `src/utils/three` replicates the full ApexAd DealCard entry animation in 3D:
+
+```tsx
+<GlassCard
+  entryFrame={0}           // Local Sequence frame when card enters
+  fromX={-110}             // Arc entry offset in CSS px (same values as CSS version)
+  fromY={150}
+  exitFrame={120}          // Local frame when card fades out
+  deemphasizeFrame={120}   // Optional: card shifts right + recedes (for Features scene)
+  accentColor="#F97316"
+  roughness={0.06}         // 0 = mirror, 0.06 = glass-smooth, 1 = matte
+  metalness={0.1}          // Slight metalness adds reflective sheen
+  transmission={0.20}      // 0 = opaque, 0.20 = dark smoked glass
+  envMapIntensity={2.0}    // IBL reflection strength — higher = more mirror-like
+/>
+```
+
+The same `useArcEntry`, `useHeroFloatDelayed`, `depthDeemphasis` hooks from `premiumMotion.ts`
+drive the animation — pixel values are divided by PPU to get world units.
+
+**Material presets:**
+- `roughness: 0.06, metalness: 0.1, transmission: 0.20` — dark smoked glass (default)
+- `roughness: 0.02, metalness: 0.8, transmission: 0.0` — brushed aluminium
+- `roughness: 0.4,  metalness: 0.3, transmission: 0.0` — matte soft plastic
+- `roughness: 0.05, metalness: 0.1, transmission: 0.85` — clear crystal glass
+
+### ParticleField — InstancedMesh System
+
+Replaces inline `<div>` particle arrays. GPU-accelerated — 500 particles costs less than 22 CSS div radial-gradient particles.
+
+```tsx
+import { ParticleField } from "../utils/three";
+
+// Ambient atmospheric particles (background atmosphere)
+<ParticleField
+  count={500}
+  mode="ambient"
+  spread={2.8}       // Radius in world units (2.8 ≈ 692px on 1080px canvas)
+  color="#F97316"
+  size={0.018}       // 0.018 ≈ 4.4px — sub-pixel dots
+  opacity={0.2}
+  speed={1.0}
+/>
+
+// Directed burst (blow dryer, spark jets, etc.)
+<ParticleField
+  count={350}
+  mode="burst"
+  emitterPos={[-0.09, 0.64, 0]}  // World-space emitter (use canvasPosToWorld)
+  burstAngle={Math.PI}            // Direction: Math.PI = going left (-X)
+  burstSpread={0.62}              // ±35° spread in radians
+  burstFrame={6}                  // Local frame when burst starts
+  burstDuration={52}              // Life of each particle in frames
+  burstDelayRange={22}            // Stagger range in frames
+  burstLoop={false}               // One-shot burst
+  burstVelocity={0.022}          // Units per frame (0.022 ≈ 9.6px/frame @ 439 PPU)
+  color="#FFF0D2"
+  size={0.024}
+  opacity={0.72}
+/>
+```
+
+**Per-instance opacity limitation:** InstancedMesh only supports per-instance color (RGB), not
+per-instance opacity. Fade effects are approximated via scale: life-cycle scale ramps `0→1→0`
+over a particle's `burstDuration`. This creates a visually equivalent fade without a custom shader.
+
+**Stable pseudo-random:** Uses golden ratio fractional sequence — no `Math.random()` during render.
+All positions are deterministic from seed, matching Remotion's frame-by-frame rendering model.
+
+### Post-Processing Chain
+
+```tsx
+// Inside ThreeScene, enableBloom activates EffectComposer:
+<ThreeScene enableBloom bloomIntensity={0.9} bloomThreshold={0.35}>
+  {/* Objects with emissive material or bright surfaces bloom */}
+  <mesh>
+    <meshStandardMaterial emissive="#F97316" emissiveIntensity={3.0} />
+  </mesh>
+</ThreeScene>
+```
+
+**Bloom calibration:**
+- `intensity: 0.6–0.9` — subtle premium glow (product quality)
+- `intensity: 1.0–1.5` — cinematic bloom (sci-fi / tech ads)
+- `intensity: > 2.0` — over-done, reads cheap
+- `luminanceThreshold: 0.3–0.4` — only very bright areas bloom (keeps dark surfaces clean)
+- `mipmapBlur: true` — always on; smoother falloff
+
+### Particle Upgrade Reference: AuraSalonAd
+
+**Before:** 22 inline `<div>` particles with CSS `radial-gradient`, rendered as styled divs.
+**After:** 510 InstancedMesh particles in two layers (350 primary + 160 secondary).
+
+The nozzle position for a 1080×1920 canvas (`NOZZLE_X=500, NOZZLE_Y=680`) converts to:
+```ts
+const AURA_PPU = 439;  // 1 world unit = 439px for 1080×1920 with fov=40, cameraZ=6
+const NOZZLE_WORLD = [-40 / AURA_PPU, 280 / AURA_PPU, 0]; // ≈ [-0.091, 0.638, 0]
+// CSS offset from centre: (500-540, 680-960) = (-40, -280) px
+// Three.js Y is up: negate the CSS Y offset
+```
+
+### What Stays CSS (Never Replace These)
+
+- All text entrances — `useCinematicTextReveal` stays CSS (`filter: blur`, `translateY`)
+- `clipPath` scene transitions — CSS only, ThreeCanvas can't do 2D clip paths
+- Camera motion wrapper (outer `scale + rotateZ + translateX/Y` div) — CSS transforms
+  work on the ThreeCanvas element exactly like any other HTML element
+- Scene backgrounds and gradient glows — CSS is cheaper and sufficient for 2D gradients
+
+### Reference Implementation
+
+`src/compositions/ApexAd3D.tsx` — registered as `id="apex-3d-v1"` in Root.tsx.
+
+Compare it side-by-side with `src/compositions/ApexAd.tsx` (`id="apex-v1"`) to see:
+- Scene 2 (Demo): CSS DealCard → GlassCard + ThreeScene
+- CSS glow div visible through transparent ThreeCanvas
+- Text/UI positioned after ThreeScene in DOM (renders on top automatically)
+- Scenes 1, 3, 4, 5: unchanged from CSS version
+
+---
+
+## Constructive 3D Product Models — No GLTF Required
+
+**Reference compositions:** `IPhoneAd.tsx` (`id="iphone-v1"`), `Dimension3DAd.tsx` (`id="dimension-3d-v1"`)
+
+The instinct when building a product-hero ad is to reach for a pre-made `.glb` model.
+That creates a hard dependency on external assets and async loading that fights Remotion's
+synchronous, frame-exact rendering model. The learnings below show how to build a
+convincingly realistic product from Three.js primitives alone.
+
+---
+
+### Geometry Vocabulary for Constructive Modelling
+
+A realistic complex object is assembled from a small number of primitive shapes. iPhone as example:
+
+| Part | Geometry | Key config |
+|---|---|---|
+| Body chassis | `<RoundedBox>` | `radius` ≈ 4–5% of height; `smoothness={6}` |
+| Screen bezel gap | Omit — body edge IS the bezel | Use `PW - 0.030` for screen width |
+| Camera module | `<RoundedBox>` | Slightly raised (`z` offset = protrusion amount) |
+| Camera lenses | `<cylinderGeometry>` | Rotate X by `π/2` so cap faces Z (back of phone) |
+| Lens rings | Two concentric cylinders, `LROUT` and `LR` | Outer = titanium ring, inner = glass |
+| Buttons | `<boxGeometry>` | Thin width, positioned at `±PW/2 + protrusion/2` |
+| Ports/grilles | `<boxGeometry>` | Flush at `y = -PH/2 + ε` for bottom edge |
+
+**Key principle:** Every part is a separate `<mesh>` in a `<group>`. The group handles shared
+position/rotation. Positioning is always relative to the body's world-space centre.
+
+---
+
+### Proportional Scaling System
+
+Never invent dimensions — derive everything from real product specs.
+For any rectangular device (phone, laptop, tablet, box):
+
+```ts
+// 1. Pick a world-unit height that looks right at your camera settings.
+//    At cameraZ=5, fov=36 on 1080×1080 canvas:
+//    1 world unit ≈ 332px → PHONE_H = 1.85 → ~615px ≈ 57% of frame height
+
+const REAL_H_MM = 163;      // iPhone 16 Pro
+const PHONE_H   = 1.85;     // chosen scale
+
+// 2. Derive all other dims from real aspect ratios
+const PHONE_W = PHONE_H * (77.6  / 163);  // real width / real height
+const PHONE_D = PHONE_H * (8.25  / 163);  // real depth / real height
+
+// 3. Sub-components follow the same ratio
+const MODULE  = PHONE_H * (40.4  / 163);  // camera module square
+const LENS_R  = PHONE_H * (6.2   / 163);  // lens inner radius
+```
+
+This guarantees the model will look like the actual product regardless of world scale.
+
+---
+
+### Material Presets for Common Product Surfaces
+
+Calibrated for `environment="studio"` (IBL source). Different environments shift all values.
+
+```ts
+// Natural Titanium (iPhone Pro chassis, watches, aerospace parts)
+const titanium = { color: "#ABABAB", metalness: 0.88, roughness: 0.14, envMapIntensity: 2.0 };
+
+// Polished Mirror Metal (jewellery, lens rings)
+const mirror   = { color: "#C8C8C8", metalness: 0.98, roughness: 0.02, envMapIntensity: 2.8 };
+
+// Camera Lens Glass (dark, slight transmission)
+const lensGlass = { color: "#050507", roughness: 0.02, metalness: 0.08, transmission: 0.22, thickness: 0.05 };
+
+// Screen Glass (very slight transmission = realistic depth to screen)
+const screenGlass = { color: "#050506", roughness: 0.015, metalness: 0.0, transmission: 0.08, thickness: 0.06 };
+
+// Matte Plastic / Ceramic
+const matte = { color: "#18181B", metalness: 0.05, roughness: 0.80 };
+```
+
+**Stacking glass layers:** For a realistic screen, use TWO planes at slightly different Z:
+1. Screen texture plane (`map` + `emissiveMap`)
+2. Glass plane slightly in front (`transmission`, `envMapIntensity` for IBL reflections)
+
+The glass plane captures studio IBL reflections that slide across the screen as the phone
+rotates — exactly what real tempered glass does.
+
+---
+
+### Canvas 2D Screen Texture Pattern
+
+Use `THREE.CanvasTexture` to paint realistic UI content. This avoids async image loading
+and works perfectly in Remotion's synchronous rendering environment.
+
+```ts
+function buildScreenCanvas(): HTMLCanvasElement {
+  const W = 512, H = 1108;  // maintain device aspect ratio (390:844 = iPhone)
+  const c  = document.createElement("canvas");
+  c.width  = W;
+  c.height = H;
+  const ctx = c.getContext("2d")!;
+  // 1. Wallpaper: radial gradient aurora blobs
+  // 2. System chrome: Dynamic Island, status bar, home indicator
+  // 3. UI content: time, notification cards, dock
+  return c;
+}
+
+// In the R3F component:
+const screenTexture = useMemo(() => {
+  const t = new THREE.CanvasTexture(buildScreenCanvas());
+  t.colorSpace = THREE.SRGBColorSpace;  // critical — without this, colours are dim
+  return t;
+}, []);
+
+useEffect(() => () => { screenTexture.dispose(); }, [screenTexture]);
+
+// On the mesh:
+<meshStandardMaterial
+  map={screenTexture}
+  emissiveMap={screenTexture}           // same texture drives both colour AND glow
+  emissive={new THREE.Color(1, 1, 1)}
+  emissiveIntensity={0.45}              // 0.4–0.5 = realistic lit-from-within feel
+/>
+```
+
+**`colorSpace = THREE.SRGBColorSpace`** — without this, Canvas 2D colours are treated as
+linear, making them dim and washed out. Always set on canvas-generated textures.
+
+**`emissiveMap = screenTexture`** — makes the screen emit light that feeds into Bloom
+post-processing, creating the soft halo visible around a real phone screen in a dark room.
+
+**Canvas Y-axis:** `CanvasTexture` sets `flipY = true` by default, correcting Canvas 2D
+top-left origin to OpenGL bottom-left. Draw normally — it will appear the right way up.
+
+---
+
+### Product Photography Lighting Rig
+
+Three-point product lighting differs from the ambient fill used in graphic/brand ads:
+
+```tsx
+{/* Key — warm, strong, upper-right-front. Primary illumination. */}
+<pointLight position={[1.8, 2.2, 2.8]} color="#FFF8F0" intensity={5.5} distance={9} decay={1.5} />
+
+{/* Fill — cool, opposite side, lower. Opens up shadow side. */}
+<pointLight position={[-2.5, 0.4, 1.8]} color="#EEF4FF" intensity={2.0} distance={8} decay={2} />
+
+{/* Rim — from BEHIND the product. Creates the edge "catch" highlight. */}
+<pointLight position={[0.5, 0.8, -3.2]} color="#FFFFFF" intensity={4.0} distance={7} decay={1.8} />
+```
+
+**Animated reveal sweep** — a moving point light timed to the product's turn animation.
+Highest-impact single addition for product photography quality:
+
+```tsx
+const sweepX = interpolate(frame, [TURN_START, TURN_END], [-2.8, 2.8], {
+  extrapolateLeft: "clamp", extrapolateRight: "clamp",
+});
+<pointLight position={[sweepX, 1.5, 2.2]} color="#FFFFFF" intensity={peakAtCentre} />
+```
+
+**Rim light importance:** Position at `z = -(DEPTH/2 + 0.5)` to catch the back edge of a
+metallic chassis. This is what makes titanium read as titanium rather than painted plastic.
+
+---
+
+### Product Turn Animation — Pacing for Impact
+
+The back-to-front turn is the hero moment of any product reveal:
+
+```ts
+// Rule: 90–125 frames (3–4.2s) for an epic turn. Below 60f = cheap. Above 150f = boring.
+// Always easeInOut. Always born-moving (start angle slightly less than π).
+
+const TURN_FRAMES = 125;  // 4.17s — cinematic
+
+const t    = easeInOut3((frame - TURN_START) / TURN_FRAMES);
+const rotY = (1 - t) * Math.PI * 0.88;  // starts at 158°, decelerates to 0
+```
+
+**Post-turn oscillation:** Prevents snap-to-static feel after the turn lands:
+```ts
+const settle = easeOut4(Math.min(1, localFrame / 35));  // amplitude decays
+const rotY   = Math.sin(localFrame / 88 * Math.PI) * 0.065 * settle;
+```
+
+**Camera swing for back reveal:** After the front hero, tilt the phone back using two equal
+easeInOut segments (swing out + swing back). Return journey = same duration as forward.
+
+---
+
+### Constructive 3D vs Imported Models — Decision Matrix
+
+| Scenario | Approach |
+|---|---|
+| Clean geometric products (phones, laptops, tablets, bottles, boxes) | Constructive primitives ✓ |
+| Organic shapes (people, animals, cars, furniture) | GLTF import (manage async carefully) |
+| Abstract brand geometry | Always constructive |
+| Animated sub-components (folding, iris, opening) | Constructive — direct frame control |
+| Photo-real hero shot needing PBR textures | GLTF if available; constructive otherwise |
+
+**Constructive advantages over GLTF:**
+- No async loading — synchronous, works with Remotion frame-exact model
+- Full material control — any property animatable per-frame
+- Dimensions derived from real specs — guaranteed accurate proportions
+- Composable R3F sub-components (`<CameraModule />`, `<SideButtons />`)
+- No external file dependency — self-contained composition
+
+---
+
+### Dimension3DAd — 5 Proof Points for 3D vs CSS
+
+`src/compositions/Dimension3DAd.tsx` (`id="dimension-3d-v1"`) — use this as a reference
+when pitching the 3D approach or explaining the capability delta to collaborators.
+
+| Scene | 3D capability | CSS equivalent |
+|---|---|---|
+| Glass Orbits | 3 `MeshPhysicalMaterial` types on identical geometry under shared IBL | `box-shadow` pseudo-rim — cannot vary by material |
+| Particle Storm | 1,200 GPU particles with per-instance colour | ~22 CSS divs hard cap before jank |
+| Material Live | `roughness/metalness/transmission` animated simultaneously | Impossible — CSS has no material model |
+| Helix Depth | 800 particles with real perspective foreshortening in Z | `z-index` is binary, not physical |
+| Bloom Burst | Post-processing light bleed from emissive surfaces | `box-shadow`/`radial-gradient` fake shape only |
+
+**Single persistent ThreeScene pattern** — the correct architecture for multi-scene 3D
+compositions. All scenes share ONE `ThreeCanvas`; each component self-gates with `null`:
+
+```tsx
+<ThreeScene enableBloom>
+  <SceneOneContent />   {/* returns null outside f0–90 */}
+  <SceneTwoContent />   {/* returns null outside f90–180 */}
+</ThreeScene>
+```
+
+---
+
+## Round 7 — SharedSalonFinalAd: Premium 26-Second Product Commercial
+
+**Date:** March 2026
+**Composition:** `shared-salon-final` (`src/compositions/SharedSalonFinalAd.tsx`)
+**Format:** 9:16, 1080 × 1920, 780 frames @ 30fps (26 seconds)
+**Rhythm:** 120 BPM — 1 bar = 60f, major transitions hard-synced to bar boundaries
+
+### Scene Breakdown
+
+| Scene | Frames | Duration | Concept | Key Technique |
+|---|---|---|---|---|
+| S1 Phone Reveal | f0–119 | 4s | Hero device cinematic upward track | clipPath inset shrinks from bottom + scale dolly-back |
+| S2 UI Alive | f120–209 | 3s | Elements lift off screen into depth | Staggered floating divs with translateY + blur resolve |
+| S3 Card Flip | f210–329 | 4s | How it works — 3D card sequence | perspective + rotateX from 78° → 0° per card |
+| S4 Marketplace | f330–449 | 4s | Two-sided market panel reveal | CSS 3D `preserve-3d` panel with backfaceVisibility hidden |
+| S5 Create Listing | f450–569 | 4s | Venue owner journey — list & launch | Progress bar fill + checklist + button press animation |
+| S6 Payoff | f570–689 | 4s | Results — listing goes live | Booking cards, revenue counter, benefit statements |
+| S7 Brand Close | f690–779 | 3s | Premium CTA landing | SHARED SALON word slam + breathing glow button |
+
+### New Patterns Established
+
+**CSS iPhone Frame Component:**
+A reusable premium CSS-based iPhone (no Three.js). Key details:
+- `PH_W × PH_H = 412 × 870` at 77.6:163 aspect ratio (iPhone 16 Pro)
+- Titanium frame: `linear-gradient(160deg, #3A3D4A → #1C1E27 → #1A1C24 → #252830 → #2E313C)`
+- Edge highlights: thin left/right/top gradient overlays at 3–6% of phone width
+- Side buttons as `4px` wide absolute divs with matching metallic gradient
+- Dynamic Island: `128 × 34px` pill at `top: 13, centered`, `background: #0B0D14`
+- Screen inset: `10px LR, 16px top, 12px bottom`, `borderRadius: 42`
+- `boxShadow` with 6-layer shadow stack for convincing depth and ambient shadow
+- Gloss overlay: `linear-gradient(145deg)` diagonal reflection at ~3.5% opacity
+
+**CameraWrap component:**
+Generic camera motion wrapper usable on any scene. Accepts `zoom`, `rollRange`, `panX`, `panY`.
+Linear motion (not eased) per established principle. Default: 3% zoom, ±0.3° roll, ±8px pan.
+
+**AppScreen component (Shared Salon miniaturized UI):**
+A full CSS representation of the Shared Salon landing page at phone-screen scale (392 × 842px).
+Key elements: status bar, Dynamic Island space, nav, badge, 25px headline, CTA buttons, trust row, "Up & running" section with step cards, "Whether you cut or host" dual panels.
+Font sizes range from 8px (labels) to 25px (headline) — appropriate for phone-screen rendering.
+
+**3D Panel Flip (Scene 4):**
+Two-sided CSS 3D flip using `preserve-3d` + `backfaceVisibility: hidden`.
+- Parent: `perspective: 2200px, perspectiveOrigin: 50% 50%`
+- Container: `transformStyle: preserve-3d, rotateY(0→180deg)`
+- Front face: Stylist panel (blue gradient)
+- Back face: Venue panel (dark warm) — pre-rotated `rotateY(180deg)`
+- Energy midpoint glow: `interpolate(rotY, [60, 90, 120], [0, 1, 0])` driving a radial glow burst
+- Easing: `eio3` (ease-in-out cubic) for physical card flip feel
+
+**sceneFade utility:**
+```tsx
+function sceneFade(frame: number, dur: number, fadeLen = 12): number {
+  return interpolate(frame, [dur - fadeLen, dur], [1, 0], {
+    extrapolateLeft: "clamp", extrapolateRight: "clamp",
+  });
+}
+```
+Apply to the `opacity` of every scene's `AbsoluteFill`. Prevents jarring cuts.
+
+**120 BPM Phone Reveal (clipPath upward track):**
+```tsx
+// Camera track upward: clip inset shrinks from top
+const clipTop = (1 - trackT) * 70;  // 70% → 0%
+// Apply: clipPath: `inset(${clipTop}% 0 0 0 round ${PH_CR}px)`
+
+// Parallax: screen content starts scrolled down, rises to show full UI
+const scrollY = (1 - eo4(trackT)) * 380;  // 380px → 0px
+
+// Camera dolly-back: starts zoomed in, pulls to natural
+const camScale = 1.0 + (1 - eo4(pr(frame, 0, 80))) * 0.10;  // 1.10 → 1.0
+```
+
+### What Made It Work
+
+1. **The `clipPath inset` reveal**: Instead of moving the phone, clipping the viewport gives the impression of camera movement along a fixed subject. Much more cinematic than a simple translateY.
+
+2. **Parallax scrollY on screen content**: The app screen starts "scrolled down" and eases to zero scroll as the clip reveals. This means as the camera "rises," it sees increasingly higher parts of the screen — authentic parallax behavior.
+
+3. **3D card flip with `rotateX` from 78°→0°**: Each step card enters tilted back (nearly flat/hidden) and rotates to face-on. The `perspective: 1400px` + `transformOrigin: "top center"` creates a satisfying "flip forward" that matches the storyboard description.
+
+4. **Staggered booking cards in S6**: Left/right alternating entry directions (not just bottom-up) give the results scene a genuine "incoming" feeling.
+
+5. **The energy midpoint glow on panel flip**: Interpolating glow opacity from the `rotY` angle with `[60, 90, 120] → [0, 1, 0]` gives a natural energy burst at the exact midpoint of the flip.
+
+6. **CameraWrap on every scene**: Consistent 2–3% dolly-in + ±0.3° roll makes the entire 26s feel like a cohesive camera production, not isolated static scenes.
+
+### What to Use from This Ad
+
+- `IPhoneFrame` and `AppScreen` components: copy-paste ready for any phone-based ad
+- `CameraWrap` component: reusable across any future composition
+- `sceneFade()` utility: standard pattern — use everywhere
+- The clipPath phone reveal technique: for any "camera tracking upward" effect
+- The CSS 3D panel flip: for any two-sided marketplace or comparison reveal
+
+---
+
+## Simulated Cinematography — Depth Tiers, Parallax, and Virtual Cameras
+
+**Source:** Deliberate study session on translating real cinematography principles into a Remotion/CSS scene graph.
+**Reference composition:** `CinemaRevealAd` (`src/compositions/CinemaRevealAd.tsx`) — 9:16, 10s, gold luxury fragrance reveal.
+
+---
+
+### The Core Mental Shift
+
+Wrong way to think:
+> "Place 2D element on screen → animate transform properties."
+
+Right way to think:
+> "Build a composed 3D stage out of layered 2D planes → move a virtual camera through that stage."
+
+The one-sentence principle to encode:
+> **Do not animate objects on a screen. Build a layered world and move a camera through it.**
+
+Without this shift, even technically impressive animations read as *motion graphics*, not *cinematography*.
+
+---
+
+### The Depth Tier System
+
+Every scene must be blocked in depth before any animation is written. Assign each element to exactly one tier:
+
+| Tier | Name | Parallax multiplier | Notes |
+|------|------|---------------------|-------|
+| 0 | Background | 2–4% | Near-anchored; feels like a distant wall |
+| 1 | Mid-back | 6–10% | Ambient planes, glow blobs |
+| 2 | Midground | 18–25% | Feature cards, secondary UI, labels |
+| 3 | Hero | 0% | The camera's subject — stays centered |
+| 4 | Foreground | 45–70% | Blurred bokeh; can and should cross frame edges |
+
+**The differential between Tier 0 and Tier 4 is the proof of space.** If they move at the same rate, there is no space.
+
+---
+
+### The Single Camera Value Pattern
+
+All parallax should reference a **single camera travel variable** (`camT`), not individual per-element velocities. Each layer multiplies `camT` by its tier factor:
+
+```tsx
+// One value drives the entire world
+const camT = pr(frame, 0, totalFrames); // 0→1 over clip duration
+
+// Each depth tier uses a different multiplier
+const bgDrift         = camT * 0.02 * WORLD_HEIGHT;   // Tier 0 — almost anchored
+const midBackDrift    = camT * 0.07 * WORLD_HEIGHT;   // Tier 1
+const midgroundDrift  = camT * 0.20 * WORLD_HEIGHT;   // Tier 2
+// Hero (Tier 3) = 0 — camera tracks the hero
+const foregroundDrift = camT * 0.55 * WORLD_HEIGHT;   // Tier 4 — crosses frame
+```
+
+Apply as `top: baseY + drift` or `translateY(${drift}px)`. The background stays still; the foreground sweeps. That differential IS the depth.
+
+---
+
+### Camera Vocabulary — Build Blocks for Shots
+
+| Term | Description | CSS implementation |
+|------|-------------|-------------------|
+| **Pedestal up** | Camera moves vertically upward | `clipTop` 75%→0% + `scale` decrease + `rotateX` levels out |
+| **Dolly out** | Camera moves backward | `scale` 2.4→0.78 with easing |
+| **Orbit / pivot** | Camera arcs around subject | `rotateY` 0°→16° with `perspective` |
+| **Tilt up/down** | Camera rotates vertically | `rotateX` change |
+| **Parallax drift** | Depth proof via differential motion | `camT` × tier multipliers |
+| **Rack focus sim** | Emphasis shift between layers | `blur()` change on foreground vs hero |
+| **Hero reveal** | Movement ends on clear subject shot | Camera settles + text fades in |
+
+For the pedestal-up + dolly-back move specifically:
+```tsx
+// Phase 1: Camera Rise (f0–100)
+const clipTop = (1 - eo5(riseT)) * 74;    // 74% → 0%
+const rotX    = -20 + eo4(riseT) * 18;    // -20° → -2° (levels out)
+const scale   = 2.4 - eo4(riseT) * 0.85;  // 2.4 → 1.55
+
+// Phase 2: Pivot (f100–175)
+const rotY = eo5(pivotT) * 16; // 0° → 16° (3D dimensionality reveal)
+
+// Phase 3: Dolly Back (f175–300)
+const scale = 1.30 - eo4(revealT) * 0.52; // 1.30 → 0.78
+```
+
+---
+
+### The Shot Spec Format
+
+Write this as the header comment block of every cinematic composition before writing any animation code:
+
+```
+Shot Intent:    [What emotion or information does the move deliver?]
+Hero Object:    [What is the anchor?]
+
+Scene Layers:
+  foreground:   [Blurred/close elements]      — X% parallax
+  midground:    [Feature cards, secondary UI]  — X% parallax
+  hero:         [Main product/object]          — 0% (anchor)
+  mid-back:     [Ambient light, glow planes]   — X% parallax
+  background:   [Gradient, grid, environment]  — X% parallax
+
+Camera Path:
+  f0–N:    [Phase name] — transforms, direction, start→end values
+  fN–M:    [Phase name] — ...
+  fM–end:  [Phase name] — ...
+
+Depth Behavior:
+  Foreground drifts [X]px over clip. Background drifts [Y]px. Delta = proof of space.
+
+Composition Goal:
+  End frame — what the final composed shot looks like.
+```
+
+**Why this matters:** Writing the spec forces you to define layers before animating. If you can't fill in the depth behavior row, you don't understand the shot yet.
+
+---
+
+### Simulating 3D Volume Without Three.js
+
+A product object can feel three-dimensional using stacked CSS planes:
+
+```tsx
+// Backing shadow plane — implies depth exists behind the object
+<div style={{ background: "rgba(0,0,0,0.55)", filter: "blur(26px)", transform: "translateX(6px) translateY(10px)" }} />
+
+// Side face — revealed as rotateY increases, proves the object has thickness
+{sideVisible > 0.01 && (
+  <div style={{ width: sideW, opacity: sideVisible * 0.85 }} />
+)}
+
+// Front face — specular stripe shifts horizontally as camera pivots (fakes IBL reflection)
+const specularLeft = `${18 - sideVisible * 12}%`; // moves left as rotateY increases
+
+// Cap, label, engravings — complete the object's identity
+```
+
+The key: the **specular stripe shifts position** as `rotateY` increases. That movement = simulated environment reflection = volume without Three.js.
+
+---
+
+### Parallax Direction Reference
+
+When camera pedestals **up** or **pulls back**:
+- Near objects (high angular velocity) → appear to drift **down** in frame faster
+- Far objects (low angular velocity) → appear to barely move
+
+CSS implementation:
+```tsx
+// Camera rises → foreground top increases → orb moves DOWN (correct — proves it's close)
+top: baseY + camT * parallaxMultiplier * WORLD_HEIGHT
+
+// Background barely moves
+backgroundPosition: `0 ${camT * 4}px`  // 4px over entire clip = essentially anchored
+```
+
+**Sanity check at end of clip:** Foreground elements should have drifted significantly (possibly off frame). Background should look nearly identical to frame 0. If they've moved the same amount, there is no depth.
+
+---
+
+### When Camera Motion Feels Real vs. Fake
+
+**Reads as real camera work:**
+- Different layers move at different rates (parallax differential)
+- Motion is eased, not linear (eo4/eo5, not lerp)
+- Organic micro-drift on top of programmatic motion (handheld feel)
+- `clipPath` reveal instead of `translateY` reveal (viewport moves, object is still)
+- Text appears *after* the move settles, not during it
+- Foreground elements partially exit frame
+
+**Reads as motion graphics:**
+- All elements scale/translate at the same rate
+- Background is visually dead while hero moves
+- Text animates simultaneously with camera motion
+- Everything moves as if glued to one flat plane
+
+**The clipPath trick (most important):** `clipPath: inset(X% 0 0 0)` shrinking from top gives the impression the camera is *rising to see* the object, not that the object is sliding down. The object stays fixed in world space; only the viewport changes. This is the single best technique for faking camera motion with CSS.
+
+---
+
+### Five Rules — Always Apply
+
+1. **Block depth before animating.** Assign every element to a tier. Do not write animation code before this is done.
+2. **Use one `camT` value for all parallax.** Do not invent individual animation curves per element — they'll feel disconnected from each other.
+3. **The hero is the anchor.** Camera tracks the hero. The world moves around a centered hero.
+4. **Keep foreground blurred.** Foreground elements should always have `blur()`. Sharp foreground competes with the hero.
+5. **Text enters after the camera settles.** Motion = camera traveling. Text = camera has arrived. Never show both simultaneously.
+
+---
+
+### Why CSS Fails for Camera-Travel Shots (Hard Lesson)
+
+The first version of `CinemaRevealAd` attempted to simulate a "camera rising along a product" using CSS — `clipPath` opening from the top, `rotateX` leveling out, `scale` decreasing. It looked terrible. Specifically:
+
+**Problem 1: CSS side faces are a lie.** The "side face" was a separate div positioned next to the bottle with `sideVisible * 42px` width. It had no perspective, no shared lighting, no physical connection to the front face. It looked like a grey card stuck to the side of the bottle.
+
+**Problem 2: CSS `rotateX/Y/Z` is fake rotation.** When you rotate a 2D element in CSS 3D, only one face gets lighter/darker based on ambient rules. There are no real normals, no real material response. You can't simulate IBL (image-based lighting) with CSS gradients.
+
+**Problem 3: There is no camera in CSS.** `clipPath` + `scale` simulate what a camera *at a fixed angle* might see at different zoom levels. But a camera that *travels through space* requires that every object in the scene responds with its own correct perspective shift as the camera moves past it. CSS applies all transforms to one DOM subtree uniformly — there is no Z-axis that all objects share.
+
+**The specific failure:** A pedestal-up shot requires that the camera physically rises in 3D space, and every object in the scene shows parallax proportional to its Z depth. Objects in front appear to move faster; objects behind appear to move slower. This is only possible if there is a shared 3D coordinate system with real depth.
+
+**Rule:** For any shot where the camera *travels through space relative to a solid object*, use Three.js. CSS is only appropriate for flat layer animations where depth is an illusion, not a requirement.
+
+---
+
+### What Was Built
+
+**`CinemaRevealAd` v2** — `src/compositions/CinemaRevealAd.tsx` — 9:16 portrait, 300 frames (10s), registered as `cinema-reveal`.
+
+A Three.js product reveal with a real animated camera (not CSS tricks). Generic phone slab device, `CameraRig` physically moves `camera.position` and `camera.lookAt()` each frame, 3-tier particle system at different Z depths for real parallax.
+
+The v1 CSS version (fragrance bottle) demonstrating all five principles:
+- 5-tier depth system (bg grid → mid-back blobs → midground cards → hero bottle → foreground bokeh)
+- Pedestal rise (clipPath + rotateX + scale) → 3D pivot (rotateY) → dolly back (scale)
+- Single `camT` driving all parallax — multipliers ranging from 0.02 to 0.70
+- CSS volume simulation: backing shadow plane + side face reveal + specular stripe shift
+- Handheld micro-drift (3 frequency components) on top of programmatic motion
+- Text enters only after camera settles at f208 — never during camera travel
+
+The end frame shows the full ecosystem: feature cards at left/right, background grid visible, bottle centered — a composed reveal shot where space has been proven by differential motion.
+
+---
+
+## GLB / Spline Model Loading in Remotion + React Three Fiber — Root Cause Analysis
+
+After an extended debugging session trying to render a Spline-exported GLB inside a Remotion + R3F (`@remotion/three`) composition, a complete failure chain was identified. Documented here so future sessions avoid every one of these traps.
+
+### The Failure Chain (in order of discovery)
+
+**1. `useGLTF` + `Suspense` inside `ThreeCanvas` is invisible to Remotion's renderer.**
+
+Remotion's headless frame-capture pipeline takes a screenshot the moment React finishes painting the DOM. It does not observe Suspense boundaries inside `ThreeCanvas` — those run inside R3F's separate React reconciler. When Remotion screenshots the frame, `<Suspense fallback={null}>` is still in the suspended/loading state, so nothing renders. There is no error; just a blank frame.
+
+`useGLTF.preload()` also does not help in headless renders — it fires an XHR but there is no guarantee it completes before the capture deadline.
+
+**Rule:** Never use `useGLTF` + `Suspense` inside `ThreeCanvas` in a Remotion composition. It works in interactive browser previews but fails silently in headless renders.
+
+---
+
+**2. The correct pattern: `delayRender`/`continueRender` in the DOM context (outside `ThreeCanvas`).**
+
+GLB loading must happen in a regular React component *above* the canvas, using Remotion's native async-gate mechanism:
+
+```tsx
+// The delayRender handle must be created synchronously at mount time
+const [handle] = useState(() => delayRender("Loading model"));
+
+useEffect(() => {
+  new GLTFLoader().loadAsync(url)
+    .then((gltf) => {
+      setScene(gltf.scene);
+      continueRender(handle);
+    })
+    .catch(() => continueRender(handle)); // always unblock, even on error
+}, []);
+```
+
+Key points:
+- `delayRender()` must be called inside the `useState(() => ...)` initializer — not inside `useEffect` — to guarantee it fires before the first render attempt.
+- This component lives in the DOM React tree (outside `ThreeCanvas`) so Remotion's capture pipeline sees the delay handle.
+- The loaded `THREE.Group` is passed down as a prop to the R3F component tree.
+
+---
+
+**3. Spline GLB exports have systematic material, scale, and node-transform problems.**
+
+| Problem | Cause | Fix |
+|---|---|---|
+| Model invisible or fully transparent | Spline's shader materials don't map to GLTF PBR; opacity/alphaMode is often wrong | After load, traverse all meshes and replace materials with `MeshStandardMaterial` |
+| Model 100× too large | Spline uses centimeters internally; GLTF/Three.js expects meters | Root node carries `scale = 0.01` to compensate — do not apply additional scale to the root |
+| Scene overexposed / blown out | Spline embeds its own `PointLight` / `DirectionalLight` nodes in the GLB | `gltf.scene.traverse(n => { if (n.isLight) { n.intensity = 0; n.visible = false; } })` |
+| Duplicate geometry | Spline scenes often contain multiple model copies | Use `getObjectByName` to identify and hide unwanted nodes |
+
+**Spline does NOT export:** Environment maps, post-processing, animation states, physics, or events. Anything relying on those is silently stripped.
+
+---
+
+**4. `getObjectByName` + `<primitive>` causes scale compounding and offset displacement.**
+
+If you extract a child node to render independently:
+- The child carries its *local-space* position offset (which can be hundreds of Spline units from the origin).
+- The parent's `scale = 0.01` correction is no longer applied. If you apply your own scale on top, it compounds the raw Spline units — making the model microscopic or enormous.
+- `Box3.setFromObject()` on an un-parented child gives incorrect world-space bounds unless `updateWorldMatrix(true, true)` is called first.
+
+**Rule:** Always work on `gltf.scene` (the root group), never on extracted child nodes.
+
+---
+
+**5. The correct approach: bounding-box normalization after load.**
+
+Do not assume known dimensions or node names. After loading, measure and normalize:
+
+```ts
+function fitModelToTarget(scene: THREE.Group, targetHeight: number): void {
+  scene.updateWorldMatrix(true, true);
+  const box    = new THREE.Box3().setFromObject(scene);
+  const size   = box.getSize(new THREE.Vector3());
+  const center = box.getCenter(new THREE.Vector3());
+
+  const scale = targetHeight / size.y;      // make phone targetHeight world-units tall
+  scene.scale.setScalar(scale);
+
+  // Re-measure after scaling, then offset to center at origin
+  box.setFromObject(scene);
+  box.getCenter(center);
+  scene.position.sub(center);               // centroid → world origin
+}
+```
+
+---
+
+### Why the Primitive Model Was Built Instead
+
+After hitting every one of the above failures, the decision was made to build the phone from Three.js primitives (`RoundedBox`, `cylinderGeometry`, canvas textures, `MeshPhysicalMaterial`). This is always the most reliable path in Remotion:
+- No external asset dependency — no GLB parsing, node-name guessing, or scale archaeology
+- Full control over material properties, UV layout, and lighting response
+- Zero async loading — no `delayRender` needed
+- Renders identically in studio preview and headless render
+
+### When to Use a GLB in Remotion (Future Sessions)
+
+GLBs are worth using for complex organic geometry. The pattern that works:
+
+1. Load in DOM context with `delayRender`/`continueRender` in `useState` initializer
+2. Traverse and strip all embedded lights: `n.isLight → n.intensity = 0; n.visible = false`
+3. Replace all materials with known `MeshStandardMaterial` properties
+4. Run `fitModelToTarget` to normalize scale and centering on `gltf.scene` (the root)
+5. Pass resolved `gltf.scene` as a prop into `ThreeCanvas`
+6. Render as `<primitive object={scene} />` — never extract child nodes
+
+For Spline exports specifically, always prefer primitives unless the geometry is truly irreplaceable.
+
+---
+
+## Phone Screen Realism in Three.js / Remotion
+
+*Added after CinemaRevealAd iPhone 17 Pro Max session.*
+
+A real phone screen has three distinct optical layers that must all be simulated for a convincing result:
+
+### Layer 1 — Content plane (`MeshBasicMaterial`)
+The animated canvas texture. `MeshBasicMaterial` is correct here — self-lit, unaffected by scene lights. Using `MeshStandardMaterial` causes the screen to go dark or oversaturated depending on scene lighting.
+
+```tsx
+<meshBasicMaterial map={canvasTexture} transparent depthWrite={false} toneMapped={false} />
+```
+
+### Layer 2 — Screen glass specular (Canvas 2D)
+Drawn directly on the canvas, above the content but below the Dynamic Island/home indicator overlays. An angled `createLinearGradient` from top-left → bottom-right at ~18 % opacity. Breathing the opacity slowly (`sin(frame/180 * π)`) prevents it from looking frozen.
+
+```ts
+const breathe = 0.55 + 0.45 * Math.abs(Math.sin(frame / 180 * Math.PI));
+const grad = ctx.createLinearGradient(0, 0, W * 0.65, H * 0.35);
+grad.addColorStop(0,    `rgba(255,255,255,${0.18 * breathe})`);
+grad.addColorStop(0.45, `rgba(255,255,255,${0.07 * breathe})`);
+grad.addColorStop(1,    "rgba(255,255,255,0)");
+ctx.fillStyle = grad;
+ctx.fillRect(0, 0, W, H * 0.38);
+```
+
+### Layer 3 — Glass gloss plane (`MeshPhysicalMaterial`)
+A second `<mesh>` plane 2 mm in front of the content plane. `clearcoat=1` is the key property — it simulates the thin-film glass-on-OLED effect you see on real iPhones under studio lights. `envMapIntensity=0.55` drives the IBL reflection visible when the camera orbits.
+
+```tsx
+<mesh position={[SCREEN_X - 0.002, 0, 0]} rotation={[0, -Math.PI/2, 0]} renderOrder={2}>
+  <planeGeometry args={[W, H]} />
+  <meshPhysicalMaterial
+    color="#F0F5FF"        // very subtle cool tint — matches iPhone OLED
+    transparent opacity={0.10}
+    roughness={0.04}       // nearly mirror
+    metalness={0}
+    envMapIntensity={0.55}
+    clearcoat={1.0}
+    clearcoatRoughness={0.03}
+    depthWrite={false}
+    toneMapped={false}
+  />
+</mesh>
+```
+
+**Why this matters:** Without the glass layer, the screen looks like a sticker on plastic. With all three layers, the specular changes as the camera orbits, and the glass picks up environment colour — exactly as it would in a product shoot.
+
+---
+
+## Black iPhone Material Overrides — Lessons Learned
+
+### The orange-phone problem
+GLB files from Sketchfab and similar sources bake the original product colours (often a warm copper/orange) into `baseColorFactor`. Simply loading the model gives you a Halloween-orange phone. The fix is to traverse all meshes after load and override `m.color`.
+
+### React Fast Refresh skips `useEffect([], [])`
+React Fast Refresh (Vite HMR) does "soft updates" — re-renders without unmounting. This means `useEffect([], [])` does NOT re-fire after a hot reload. Any material overrides placed only inside that effect will be silently skipped.
+
+**Pattern that works:** apply overrides in the **render body** gated by a `useRef` version check:
+
+```tsx
+const colorAppliedRef = useRef(-1);
+// In render body (not in useEffect):
+if (scene && colorAppliedRef.current !== CACHE_VER) {
+  colorAppliedRef.current = CACHE_VER;
+  scene.traverse(child => { /* apply colors */ });
+}
+```
+
+Bump `CACHE_VER` whenever you change material values. This is O(1) per frame (only traverses once per version).
+
+### Differentiate materials by original metalness
+Without knowing exact mesh names (they vary by source file), read `m.metalness` *before* any override. The artist's original intent is encoded there:
+
+| Original metalness | Mesh type | Black Titanium treatment |
+|---|---|---|
+| > 0.65 | Frame / rails | `#252528`, metalness 0.88, roughness 0.20 — brushed metallic |
+| 0.25–0.65 | Body / back panel | `#1C1C1E`, metalness 0.45, roughness 0.48 — matte dark |
+| < 0.25 | Camera glass / sensors | `#111114`, metalness 0.10, roughness 0.08 — glossy dark |
+
+### envMapIntensity is the orange-blooming culprit
+`envMapIntensity` defaults to `1.0` in `MeshStandardMaterial`. On a near-black surface with the "city" HDRI, even 30 % IBL contribution looks orange. Keep it at `0.08–0.20` for phone body materials.
+
+### Name-agnostic is always safer
+Mesh names in Three.js come from GLTF node names, which vary by exporter and version. Never rely on exact name matching for material overrides in production. Use name fragments (`n.includes('glass')`) or property thresholds (`m.transparent && m.opacity < 0.5`) instead.
+
+---
+
+## Phone Screen Text Legibility — Texture Resolution & Filtering
+
+### Root cause: mipmap blur at near-1:1 scale
+When a `CanvasTexture` is rendered at a size close to but slightly smaller than the source canvas, Three.js trilinear filtering (`LinearMipmapLinearFilter`) interpolates between the full-resolution mipmap and the next (half-resolution) mipmap. At 90 % scale this blend is ~20 % of the blurry lower mip — enough to make small text illegible. This is especially visible on retina (2×) displays where the rendered texel size is half a CSS pixel.
+
+### Fix: disable mipmaps, double canvas resolution
+```ts
+// WRONG — mipmaps blur text at near-100% scale
+t.minFilter       = THREE.LinearMipmapLinearFilter;
+t.generateMipmaps = true;
+
+// RIGHT — full-resolution sampling, no mip interpolation
+t.minFilter       = THREE.LinearFilter;
+t.generateMipmaps = false;
+```
+Also increase `SCR_W`/`SCR_H` from `1024×2214` to `2048×4428`. At 2× canvas density the rendering is 2.3× oversampled relative to the output plane — even `LinearFilter` produces perfectly sharp text.
+
+### Scale all canvas draw coordinates
+When changing `SCR_W`, hard-coded pixel constants (corner radii, Dynamic Island, home indicator, status bar strip) must scale proportionally. Define:
+```ts
+const S = W / 1024; // scale factor, e.g. 2 at SCR_W=2048
+```
+Then multiply every canvas constant by `S`:
+```ts
+ctx.roundRect(0, 0, W, H, 175 * S);                          // clip radius
+ctx.roundRect((W - 448 * S) / 2, 28 * S, 448 * S, 80 * S, 40 * S); // Dynamic Island
+ctx.roundRect(W / 2 - 144 * S, H - 36 * S, 288 * S, 14 * S, 7 * S); // home bar
+ctx.fillRect(0, 0, W, 130 * S);                               // status bar strip
+```
+
+### Retina renderer support
+Add `dpr={[1, 2]}` to `ThreeCanvas` — Remotion's Three.js canvas will use the device pixel ratio (up to 2×) so it renders at native resolution on HiDPI screens.
+
+### HQ export scripts
+`--scale 2` in Remotion doubles the output resolution (e.g. 1080 → 2160) and renders all assets at 2× detail. `--crf 8` ensures minimal H.264 compression artefacts:
+```
+npm run render:iphone:hq   # 2× scale, CRF 8, 100% JPEG quality
+npm run still:iphone:hq    # single frame at 2× for inspection
+```
+
+---
+
+## iPhone 3D Scene — Code Map
+
+Everything needed to build a new iPhone scene lives in one file. **Do not recreate any of this — import or copy from there.**
+
+### Primary file
+`src/compositions/CinemaRevealAd.tsx` — 1121 lines
+
+### What's inside and where
+
+| Symbol | Line | What it is |
+|---|---|---|
+| `MODEL_URL` | 45 | `staticFile("models/iphone17.glb")` — GLB path |
+| `SCREEN_IMG_URL` | 56 | `staticFile("images/shared-salon.png")` — screen content |
+| `CACHE_VER` | 50 | Bump this integer to force a GLB material reload |
+| `cachedScene` | 52 | Module-level GLB cache — survives hot-reloads, shared in session |
+| `cachedScreenImg` | 53 | Module-level PNG cache |
+| `cl / eo3 / eo4 / eo5 / pr` | 59–63 | Easing helpers (clamp, ease-out-3/4/5, progress-range) |
+| `PH / PW / PD / CR` | 71–74 | Phone world-space dimensions (height 1.85 units) |
+| `PHONE_HALF_H` | 75 | `PH / 2 ≈ 0.925` — used to position floor and lights |
+| `SW / SH` | 78–79 | Screen area (minimal bezels) |
+| `SCR_W / SCR_H` | 94–95 | Canvas texture size: `2048 × 4428` |
+| `drawScreenFrame()` | 110 | Draws one frame of screen content to a 2D canvas context |
+| `GLBPhoneModel` | ~530 | R3F component — renders the loaded GLB + screen plane + glass overlay |
+| `IPhoneModel` | ~640 | Fallback placeholder shown while GLB is loading |
+| `StudioFloor` | 707 | Shadow-receiving plane for white studio look |
+| `ProductLighting` | ~670 | Directional + point lights tuned for white studio |
+| `bindScreenMat()` | 908 | Applies Black Titanium materials to all GLB meshes by metalness |
+| `CinemaRevealAd` (root) | 840 | Main component — holds delayRender, canvas, GLB loading, color patch |
+
+### Key patterns to reuse in every new iPhone scene
+
+**1. GLB + screen loading (copy the useState + useEffect block, lines 855–1003)**
+```tsx
+// Canvas texture
+const [screenCanvas, screenTexture] = useMemo(() => { ... }, []);
+// Image load with delayRender (60s timeout)
+const [imgHandle] = useState(() => cachedScreenImg ? null : delayRender("...", { timeoutInMilliseconds: 60_000 }));
+// GLB load with delayRender (120s timeout)
+const [handle] = useState(() => cachedScene ? null : delayRender("...", { timeoutInMilliseconds: 120_000 }));
+```
+
+**2. Render-body color patch (lines 1014–~1050)**  
+Must run in render body (not useEffect) gated by `colorAppliedRef.current !== CACHE_VER`. Traverses scene and applies Black Titanium by original metalness value.
+
+**3. Camera rig pattern**  
+Define a `CameraRig` component that calls `useThree()` to get `camera`, then sets `camera.position` and `camera.lookAt()` based on `useCurrentFrame()`. Use `eo4(pr(frame, start, duration))` for all easing.
+
+**4. Scene JSX template (with preview/render quality gate)**
+```tsx
+// At top of component, BEFORE useMemo:
+const { isRendering } = getRemotionEnvironment();
+const canvasW = isRendering ? SCR_W : SCR_W / 4;
+const canvasH = isRendering ? SCR_H : SCR_H / 4;
+
+// ThreeCanvas JSX:
+<ThreeCanvas
+  width={width} height={height}
+  shadows={isRendering ? { type: THREE.PCFShadowMap } : false}
+  dpr={isRendering ? [1, 2] : [1, 1]}
+  gl={{ antialias: isRendering, powerPreference: "high-performance", toneMapping: THREE.ACESFilmicToneMapping, toneMappingExposure: 0.82 }}
+>
+  <CameraRig />
+  <ambientLight intensity={0.40} color="#FFFFFF" />
+  <Environment preset="studio" resolution={isRendering ? 512 : 64} background={false} />
+  <ProductLighting />
+  <StudioFloor />
+  {phoneScene ? <GLBPhoneModel scene={phoneScene} texture={screenTexture} /> : <IPhoneModel />}
+  {isRendering && <EffectComposer multisampling={4}><SMAA /></EffectComposer>}
+</ThreeCanvas>
+```
+
+### Assets
+| File | Description |
+|---|---|
+| `public/models/iphone17.glb` | iPhone 17 Pro Max (Sketchfab, ~20 MB) |
+| `public/images/shared-salon.png` | Screen content screenshot |
+
+### Registry + Root entries
+- `src/Root.tsx` — add `<Composition id="..." component={...} ... />`
+- `studio/src/registry.ts` — add entry to `REGISTRY` array for studio timeline
+
+### Render commands
+```
+npm run render:iphone        # normal quality → out/cinema-reveal.mp4
+npm run render:iphone:hq     # 2× scale, CRF 8 → out/cinema-reveal-hq.mp4
+npm run still:iphone         # single frame still
+npm run still:iphone:hq      # single frame still at 2×
+```
+Or use the **⬆ Render…** button in the studio UI for full options.
+
+---
+
+## Preview vs. Render Quality — Two-Mode System
+
+Every 3D composition should gate expensive settings behind `getRemotionEnvironment().isRendering`.  
+`isRendering` is `false` in Remotion Studio (browser), `true` in headless Chrome (actual render).  
+It is **constant for the lifetime of the page** — safe to use in `useMemo` dep arrays.
+
+### Root cause of low preview FPS
+
+The main bottleneck is **CPU → GPU texture uploads**, not GPU render time itself.  
+Three.js uses WebGL (GPU), but uploading a 2048×4428 RGBA canvas texture costs ~36 MB **per frame** on the main thread. At 30fps that's ~1 GB/s — which tanks preview scrubbing.
+
+### Standard quality gate pattern
+
+```tsx
+import { getRemotionEnvironment } from "remotion";
+
+export const MyAd: React.FC = () => {
+  // Call BEFORE any useMemo/useState so canvas is sized correctly from creation.
+  // isRendering is constant per session — no stale closure issues.
+  const { isRendering } = getRemotionEnvironment();
+
+  // 4× smaller canvas in preview → 16× fewer pixels to upload per frame
+  const canvasW = isRendering ? SCR_W : SCR_W / 4;  // 2048 → 512
+  const canvasH = isRendering ? SCR_H : SCR_H / 4;  // 4428 → 1107
+
+  const [screenCanvas, screenTexture] = useMemo(() => {
+    const canvas = document.createElement("canvas");
+    canvas.width  = canvasW;
+    canvas.height = canvasH;
+    const t = new THREE.CanvasTexture(canvas);
+    t.minFilter       = THREE.LinearFilter;
+    t.generateMipmaps = false;
+    t.anisotropy      = isRendering ? 16 : 1;  // anisotropic filtering preview-off
+    return [canvas, t] as const;
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // ... inside JSX:
+  return (
+    <ThreeCanvas
+      shadows={isRendering ? { type: THREE.PCFShadowMap } : false}
+      dpr={isRendering ? [1, 2] : [1, 1]}
+      gl={{ antialias: isRendering, ... }}
+    >
+      <Environment resolution={isRendering ? 512 : 64} ... />
+      {isRendering && <EffectComposer multisampling={4}><SMAA /></EffectComposer>}
+    </ThreeCanvas>
+  );
+};
+```
+
+### Draw function — always use `ctx.canvas.width/height`, never hardcoded constants
+
+```tsx
+// ✅ Correct — works at any resolution
+function drawScreenFrame(ctx, frame, img) {
+  const W = ctx.canvas.width, H = ctx.canvas.height;
+  const S = W / 1024; // scale all authored-at-1024 constants proportionally
+  ...
+}
+
+// ❌ Wrong — breaks when canvas is smaller for preview
+function drawScreenFrame(ctx, frame, img) {
+  const W = SCR_W, H = SCR_H;  // hardcoded — ignores actual canvas size
+  ...
+}
+```
+
+### Static screen content — DO NOT try to skip redraws via useRef
+
+It's tempting to draw the canvas once and skip all subsequent `needsUpdate` calls using a `useRef(false)` flag. **Do not do this.** It breaks on React Fast Refresh hot-reloads:
+
+- `useMemo` re-runs on hot-reload → new **blank** canvas + new texture
+- `useRef` value is **preserved** across hot-reloads (not reset)
+- The flag stays `true` → draw is skipped → screen stays blank permanently
+
+The canvas size reduction (512px in preview) already makes the per-frame draw + upload cost negligible (~2.25 MB vs ~36 MB). Just always redraw:
+
+```tsx
+// ✅ Correct — always draw; canvas is small in preview, cost is low
+const screenCtx = screenCanvas.getContext("2d")!;
+drawScreenContent(screenCtx, screenImg);
+screenTexture.needsUpdate = true;
+
+// ❌ Wrong — ref survives hot-reload, new blank canvas never gets painted
+const screenReadyRef = useRef(false);
+if (!screenReadyRef.current) {
+  drawScreenContent(screenCtx, screenImg);
+  screenTexture.needsUpdate = true;
+  if (screenImg?.complete) screenReadyRef.current = true;
+}
+```
+
+### Summary of what each setting costs in preview
+
+| Setting | Preview cost | Final render |
+|---|---|---|
+| Canvas texture 2048×4428 | ~36 MB/frame upload | Needed for sharp text |
+| `dpr={[1, 2]}` | 4× more pixels to render | Needed for retina |
+| `antialias: true` | Extra GPU pass | Needed for clean edges |
+| `shadows` (PCFShadowMap) | Shadow map recompute/frame | Needed for studio floor |
+| `Environment resolution={512}` | Large IBL cube texture | Needed for accurate reflections |
+| `EffectComposer` SMAA + 4× MSAA | Extra render pass | Needed for edge quality |
+| `anisotropy={16}` | Anisotropic texture filter | Needed for oblique screen angles |
+
+### Files this is implemented in
+- `src/compositions/CinemaRevealAd.tsx` — animated scroll screen, 480 frames
+- `src/compositions/AwesomeAd.tsx` — static screen, 150 frames
+
+---
+
+## Screen Plane Sizing — Bezel Calibration
+
+The screen overlay plane should be **inset from the GLB screen mesh** so the Black Titanium frame shows clearly on all four sides. Sizing it to match the GLB mesh exactly makes the bezels invisible.
+
+### Phone world-space reference dimensions
+| Symbol | Value | What it is |
+|---|---|---|
+| `PW` | `0.880` | Phone width (world units) |
+| `PH` | `1.850` | Phone height (world units) |
+| GLB screen mesh | `0.853 × 1.827` | Original screen.001_0 mesh size (don't use this) |
+
+### Current calibrated values (both CinemaRevealAd + AwesomeAd)
+```ts
+const SCREEN_PLANE_WIDTH  = 0.816;   // side bezel gap = (0.880 - 0.816) / 2 = 0.032 per side
+const SCREEN_PLANE_HEIGHT = 1.778;   // top/btm gap   = (1.850 - 1.778) / 2 = 0.036 per side
+```
+
+### How to adjust
+Every `0.010` change in width shifts each side bezel by ~5.7mm equivalent in world scale.  
+- **Too thin (screen too large):** decrease both values  
+- **Too thick (screen too small):** increase both values  
+- Keep the width/height ratio at `0.816 / 1.778 ≈ 0.459` to stay proportional
+
+### Why not use the GLB mesh size
+The `screen.001_0` mesh in `iphone17.glb` extends almost to the phone frame edge. Using its exact dimensions (0.853 × 1.827) leaves only ~1.5% gap per side — invisible at most camera angles. The inset overlay approach gives full control over bezel width independent of the GLB.
 
 ---
