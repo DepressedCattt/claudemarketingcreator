@@ -1,0 +1,136 @@
+{
+  "compId": "langease-v1",
+  "iterN": 2,
+  "timestamp": "2026-03-20T04:33:26.765Z",
+  "referenceFile": "videoplayback _1_.mp4",
+  "renderedFile": "langease-v1.mp4",
+  "overallScore": 9,
+  "detectedProfile": "snappy-saas",
+  "categories": {
+    "colors": {
+      "score": 2,
+      "max": 20,
+      "note": "The color palette is entirely different. The attempt uses stark white, purple, and green, and ends on a dark theme, whereas the reference uses a consistent off-white background with a specific blue gradient and black text."
+    },
+    "motionTiming": {
+      "score": 1,
+      "max": 20,
+      "note": "Pacing is the single biggest issue. The attempt is extremely slow and static, while the reference is fast-paced, high-energy, and cut to a beat. Scene durations are too long and lack dynamic variation."
+    },
+    "typography": {
+      "score": 3,
+      "max": 20,
+      "note": "Text animations do not match. The reference uses a signature blur-in and slight scale-up for all text reveals, while the attempt uses simple, slow fades. Font weights and color treatments (e.g., the gradient on 'Turn' at 00:00) are incorrect."
+    },
+    "layout": {
+      "score": 2,
+      "max": 20,
+      "note": "The composition and scenes are fundamentally different and do not match the reference. Key sequences like the 'phone tunnel' (00:06) and dynamic UI grids are missing entirely, replaced by static, centered layouts."
+    },
+    "kineticEnergy": {
+      "score": 1,
+      "max": 20,
+      "note": "The attempt completely lacks the kinetic energy of the reference. There are no spring physics, no satisfying pops, no camera movement, and no sense of weight or momentum. The reference feels alive and responsive; the attempt feels like a slideshow."
+    }
+  },
+  "fixes": [
+    {
+      "priority": 1,
+      "category": "kineticEnergy",
+      "issue": "The video is static and lacks any physics-based motion. All animations feel linear and slow, failing to match the snappy, springy feel of the reference.",
+      "codeHint": "Replace all `useTiming` or linear `interpolate` calls with `useSpring`. A good starting point for the snappy feel is `spring({ stiffness: 200, damping: 25, mass: 1 })`."
+    },
+    {
+      "priority": 2,
+      "category": "motionTiming",
+      "issue": "The overall pacing is far too slow. Scenes linger, and transitions are gradual fades instead of the reference's quick cuts and dynamic wipes.",
+      "codeHint": "Shorten the duration of every scene significantly. For example, the initial text sequence (00:00-00:02 in reference) should happen in about 60 frames, not the 90+ frames it takes in the attempt. Match cuts to the beat of the reference's soundtrack."
+    },
+    {
+      "priority": 3,
+      "category": "typography",
+      "issue": "Text appears with a simple fade-in. The reference consistently uses a combined blur and scale effect for text reveals.",
+      "codeHint": "Implement a new text reveal technique. Animate `filter: blur()` from `10px` to `0px` and `transform: scale()` from `0.95` to `1` simultaneously over ~15-20 frames for each text element."
+    },
+    {
+      "priority": 4,
+      "category": "layout",
+      "issue": "Core visual sequences from the reference are completely absent, such as the 3D 'phone tunnel' (00:06-00:09) and the confetti-filled 'Done' screen (00:13).",
+      "codeHint": "These sequences must be built from scratch. For the phone tunnel, use a 3D camera and arrange phone screen assets in a cylindrical or tunnel formation, then animate the camera's Z-position through it. For the 'Done' screen, use a library like `react-confetti` triggered on the final frame of the progress bar animation."
+    },
+    {
+      "priority": 5,
+      "category": "colors",
+      "issue": "The background color is stark white (#FFFFFF) and a dark theme is introduced at the end. The reference uses a consistent, softer off-white/light grey background.",
+      "codeHint": "Change the main composition's background color from `#FFFFFF` to `#F7F7F9` or a similar very light grey to match the premium feel. Remove the dark-themed final scene entirely to maintain brand consistency with the reference."
+    }
+  ],
+  "parameterDeltas": [
+    {
+      "parameter": "spring.stiffness",
+      "level": "L1",
+      "current_estimated": "100",
+      "target_estimated": "220",
+      "confidence": 0.95,
+      "reasoning": "The reference animations have a very fast attack and settle quickly. The current animations are too soft and slow, indicating low stiffness. A higher value will create the required 'snap'."
+    },
+    {
+      "parameter": "technique.textReveal",
+      "level": "L5",
+      "current_estimated": "'fade'",
+      "target_estimated": "'blur-and-scale'",
+      "confidence": 1,
+      "reasoning": "The text reveal method is a core part of the reference video's visual identity. The current simple fade is a complete mismatch."
+    },
+    {
+      "parameter": "tempo.bpm",
+      "level": "L4",
+      "current_estimated": "60",
+      "target_estimated": "125",
+      "confidence": 0.9,
+      "reasoning": "The reference video's edits are timed to a fast, upbeat track. The attempt's pacing is slow and languid, as if timed to a much slower tempo."
+    },
+    {
+      "parameter": "color.background",
+      "level": "L3",
+      "current_estimated": "'#FFFFFF'",
+      "target_estimated": "'#F7F7F9'",
+      "confidence": 1,
+      "reasoning": "The reference uses a subtle off-white background to give a softer, more premium feel. The current stark white is harsh and looks less polished."
+    },
+    {
+      "parameter": "blur.textReveal",
+      "level": "L2",
+      "current_estimated": "0",
+      "target_estimated": "8",
+      "confidence": 0.95,
+      "reasoning": "The reference's text sharpens as it appears. This requires an initial blur value that animates to zero."
+    },
+    {
+      "parameter": "technique.camera",
+      "level": "L5",
+      "current_estimated": "'static'",
+      "target_estimated": "'dynamic-3d'",
+      "confidence": 1,
+      "reasoning": "The reference uses significant 3D camera movement to create depth and dynamism, especially in the phone tunnel scene (00:06). The attempt is entirely 2D and flat."
+    },
+    {
+      "parameter": "spring.damping",
+      "level": "L1",
+      "current_estimated": "20",
+      "target_estimated": "28",
+      "confidence": 0.85,
+      "reasoning": "To complement the higher stiffness, damping must be increased to prevent excessive oscillation and ensure animations settle crisply, as seen in the reference."
+    },
+    {
+      "parameter": "scale.textEntrance",
+      "level": "L2",
+      "current_estimated": "1",
+      "target_estimated": "0.95",
+      "confidence": 0.9,
+      "reasoning": "Text in the reference scales up slightly as it appears, adding to the popping effect. The animation should start from a slightly smaller scale."
+    }
+  ],
+  "iterationNote": "The single biggest gap to close is the complete lack of kinetic energy; the next iteration must replace all linear fades and movements with snappy, physics-based spring animations to begin matching the reference's feel.",
+  "rawGeminiText": "```json\n{\n  \"overallScore\": 9,\n  \"detectedProfile\": \"snappy-saas\",\n  \"categories\": {\n    \"colors\": {\n      \"score\": 2,\n      \"max\": 20,\n      \"note\": \"The color palette is entirely different. The attempt uses stark white, purple, and green, and ends on a dark theme, whereas the reference uses a consistent off-white background with a specific blue gradient and black text.\"\n    },\n    \"motionTiming\": {\n      \"score\": 1,\n      \"max\": 20,\n      \"note\": \"Pacing is the single biggest issue. The attempt is extremely slow and static, while the reference is fast-paced, high-energy, and cut to a beat. Scene durations are too long and lack dynamic variation.\"\n    },\n    \"typography\": {\n      \"score\": 3,\n      \"max\": 20,\n      \"note\": \"Text animations do not match. The reference uses a signature blur-in and slight scale-up for all text reveals, while the attempt uses simple, slow fades. Font weights and color treatments (e.g., the gradient on 'Turn' at 00:00) are incorrect.\"\n    },\n    \"layout\": {\n      \"score\": 2,\n      \"max\": 20,\n      \"note\": \"The composition and scenes are fundamentally different and do not match the reference. Key sequences like the 'phone tunnel' (00:06) and dynamic UI grids are missing entirely, replaced by static, centered layouts.\"\n    },\n    \"kineticEnergy\": {\n      \"score\": 1,\n      \"max\": 20,\n      \"note\": \"The attempt completely lacks the kinetic energy of the reference. There are no spring physics, no satisfying pops, no camera movement, and no sense of weight or momentum. The reference feels alive and responsive; the attempt feels like a slideshow.\"\n    }\n  },\n  \"fixes\": [\n    {\n      \"priority\": 1,\n      \"category\": \"kineticEnergy\",\n      \"issue\": \"The video is static and lacks any physics-based motion. All animations feel linear and slow, failing to match the snappy, springy feel of the reference.\",\n      \"codeHint\": \"Replace all `useTiming` or linear `interpolate` calls with `useSpring`. A good starting point for the snappy feel is `spring({ stiffness: 200, damping: 25, mass: 1 })`.\"\n    },\n    {\n      \"priority\": 2,\n      \"category\": \"motionTiming\",\n      \"issue\": \"The overall pacing is far too slow. Scenes linger, and transitions are gradual fades instead of the reference's quick cuts and dynamic wipes.\",\n      \"codeHint\": \"Shorten the duration of every scene significantly. For example, the initial text sequence (00:00-00:02 in reference) should happen in about 60 frames, not the 90+ frames it takes in the attempt. Match cuts to the beat of the reference's soundtrack.\"\n    },\n    {\n      \"priority\": 3,\n      \"category\": \"typography\",\n      \"issue\": \"Text appears with a simple fade-in. The reference consistently uses a combined blur and scale effect for text reveals.\",\n      \"codeHint\": \"Implement a new text reveal technique. Animate `filter: blur()` from `10px` to `0px` and `transform: scale()` from `0.95` to `1` simultaneously over ~15-20 frames for each text element.\"\n    },\n    {\n      \"priority\": 4,\n      \"category\": \"layout\",\n      \"issue\": \"Core visual sequences from the reference are completely absent, such as the 3D 'phone tunnel' (00:06-00:09) and the confetti-filled 'Done' screen (00:13).\",\n      \"codeHint\": \"These sequences must be built from scratch. For the phone tunnel, use a 3D camera and arrange phone screen assets in a cylindrical or tunnel formation, then animate the camera's Z-position through it. For the 'Done' screen, use a library like `react-confetti` triggered on the final frame of the progress bar animation.\"\n    },\n    {\n      \"priority\": 5,\n      \"category\": \"colors\",\n      \"issue\": \"The background color is stark white (#FFFFFF) and a dark theme is introduced at the end. The reference uses a consistent, softer off-white/light grey background.\",\n      \"codeHint\": \"Change the main composition's background color from `#FFFFFF` to `#F7F7F9` or a similar very light grey to match the premium feel. Remove the dark-themed final scene entirely to maintain brand consistency with the reference.\"\n    }\n  ],\n  \"parameterDeltas\": [\n    {\n      \"parameter\": \"spring.stiffness\",\n      \"level\": \"L1\",\n      \"current_estimated\": \"100\",\n      \"target_estimated\": \"220\",\n      \"confidence\": 0.95,\n      \"reasoning\": \"The reference animations have a very fast attack and settle quickly. The current animations are too soft and slow, indicating low stiffness. A higher value will create the required 'snap'.\"\n    },\n    {\n      \"parameter\": \"technique.textReveal\",\n      \"level\": \"L5\",\n      \"current_estimated\": \"'fade'\",\n      \"target_estimated\": \"'blur-and-scale'\",\n      \"confidence\": 1.0,\n      \"reasoning\": \"The text reveal method is a core part of the reference video's visual identity. The current simple fade is a complete mismatch.\"\n    },\n    {\n      \"parameter\": \"tempo.bpm\",\n      \"level\": \"L4\",\n      \"current_estimated\": \"60\",\n      \"target_estimated\": \"125\",\n      \"confidence\": 0.9,\n      \"reasoning\": \"The reference video's edits are timed to a fast, upbeat track. The attempt's pacing is slow and languid, as if timed to a much slower tempo.\"\n    },\n    {\n      \"parameter\": \"color.background\",\n      \"level\": \"L3\",\n      \"current_estimated\": \"'#FFFFFF'\",\n      \"target_estimated\": \"'#F7F7F9'\",\n      \"confidence\": 1.0,\n      \"reasoning\": \"The reference uses a subtle off-white background to give a softer, more premium feel. The current stark white is harsh and looks less polished.\"\n    },\n    {\n      \"parameter\": \"blur.textReveal\",\n      \"level\": \"L2\",\n      \"current_estimated\": \"0\",\n      \"target_estimated\": \"8\",\n      \"confidence\": 0.95,\n      \"reasoning\": \"The reference's text sharpens as it appears. This requires an initial blur value that animates to zero.\"\n    },\n    {\n      \"parameter\": \"technique.camera\",\n      \"level\": \"L5\",\n      \"current_estimated\": \"'static'\",\n      \"target_estimated\": \"'dynamic-3d'\",\n      \"confidence\": 1.0,\n      \"reasoning\": \"The reference uses significant 3D camera movement to create depth and dynamism, especially in the phone tunnel scene (00:06). The attempt is entirely 2D and flat.\"\n    },\n    {\n      \"parameter\": \"spring.damping\",\n      \"level\": \"L1\",\n      \"current_estimated\": \"20\",\n      \"target_estimated\": \"28\",\n      \"confidence\": 0.85,\n      \"reasoning\": \"To complement the higher stiffness, damping must be increased to prevent excessive oscillation and ensure animations settle crisply, as seen in the reference.\"\n    },\n    {\n      \"parameter\": \"scale.textEntrance\",\n      \"level\": \"L2\",\n      \"current_estimated\": \"1\",\n      \"target_estimated\": \"0.95\",\n      \"confidence\": 0.9,\n      \"reasoning\": \"Text in the reference scales up slightly as it appears, adding to the popping effect. The animation should start from a slightly smaller scale.\"\n    }\n  ],\n  \"iterationNote\": \"The single biggest gap to close is the complete lack of kinetic energy; the next iteration must replace all linear fades and movements with snappy, physics-based spring animations to begin matching the reference's feel.\"\n}\n```"
+}

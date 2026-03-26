@@ -1,0 +1,145 @@
+---
+description: Scope animation knowledge to the correct category when creating or editing compositions. Prevents overgeneralization by constraining parameter ranges, techniques, and spring configs to the composition's ad type.
+globs: src/compositions/*.tsx
+alwaysApply: false
+---
+
+# Scoped Animation Knowledge
+
+When creating or editing a Remotion composition, **always scope your animation
+decisions to the correct category**. Do not mix parameter ranges, techniques,
+or spring configs across categories.
+
+---
+
+## Step 1 — Identify the category
+
+Check the composition's `category` field in `studio/src/registry.ts`.
+If unset, determine the category from the composition's style and content.
+
+Available categories are defined in `src/data/categories/`. Currently:
+- `saas` — SaaS / Dashboard ads (snappy, critically damped, blue accents)
+
+---
+
+## Step 2 — Load the category JSON
+
+Read the matching category file (e.g. `src/data/categories/saas.json`).
+This contains:
+
+- **Subcategories** with parameter ranges (springs, easing, blur, scale, stagger)
+- **Technique references** — which `docs/recipes/` apply
+- **Example compositions** — to reference for patterns
+- **Color guidelines** — background, accent, text palettes
+- **Typography guidelines** — weight ranges, size ranges, letter spacing
+- **Temporal guidelines** — BPM, scene durations, transition types
+
+---
+
+## Step 3 — Constrain your parameters
+
+When setting spring configs, **use values within the subcategory's ranges**:
+
+| Element type | Look up subcategory | Spring preset key |
+|---|---|---|
+| Text reveals | `text-animation` | `text` |
+| UI cards, boards | `ui-elements` | `ui` |
+| Counters, stats | `data-viz` | `hero` |
+| Scene transitions | `transitions` | `fade` |
+| Blobs, circles, strokes | `background-effects` | `bg` |
+
+Example for SaaS text animation:
+```
+text spring: stiffness 120–200, damping 22–28, mass 0.7–0.9
+blur: 8–12px → 0
+scale: 0.92–0.98 → 1.0
+stagger: 3–8 frames between words
+```
+
+---
+
+## Step 4 — Apply composition guidelines (spatial, hierarchy, contrast)
+
+The category JSON includes a `compositionGuidelines` section with three
+critical subsystems. Violating these is the most common source of poor output.
+
+### Spatial Utilization
+- The focal element of each scene must occupy **30–60%** of canvas width/height
+- Cards and widgets should never look like thumbnails — size them proportionally
+- On 4K (3840×2160): UI cards ≥ 400px wide, stat widgets ≥ 40% of canvas width
+- Distribute elements across the full canvas, not just the center band
+
+### Visual Hierarchy
+- Identify the scene's **single purpose** first, then design around it
+- The focal element gets: largest size, center placement, highest contrast, first entrance
+- Text must NEVER overlap the primary visual — place it above/below as headline/subtitle
+- Supporting elements enter after the focal (via stagger) and are smaller/more muted
+
+### Color Contrast
+- **Never** white text on light backgrounds (#FDFDFE, #f2f2f2)
+- **Never** dark text on dark overlays (#08080e)
+- Background blobs/gradients must not wash out overlapping text
+- Minimum contrast ratio: **4.5:1**
+- Test readability: if text disappears at thumbnail size, increase contrast
+
+---
+
+## Step 5 — Only use listed techniques
+
+Each subcategory lists which `docs/recipes/` techniques are valid.
+Do NOT apply techniques from other categories or unlisted recipes.
+
+Recipes are organized in `docs/recipes/` by category:
+- `text/` — typography effects (blur-scale-reveal, kinetic-typography-cascade, etc.)
+- `motion/` — movement patterns (arc-entry, arc-length-spline, epicyclic-drift, etc.)
+- `transitions/` — scene transitions (clip-path-transitions, vortex-convergence, etc.)
+- `ui/` — UI component animations (glassmorphic-card, glow-card-entrance, etc.)
+- `camera/` — camera effects (camera-wrapper, dynamic-camera-focus)
+- `backgrounds/` — background animations (procedural-dot-grid)
+- `interaction/` — interactive elements (narrative-drag-interaction)
+- `3d/` — 3D effects (3d-phone-tunnel)
+
+Each recipe has a `use_when` field in its YAML frontmatter to help you pick the right one.
+
+---
+
+## Step 6 — Reference example compositions
+
+Before writing new animation code, open the example compositions listed in
+the subcategory. Study their spring configs, timing, and visual patterns.
+Reuse proven patterns rather than inventing new ones.
+
+---
+
+## Step 7 — Tag the composition
+
+When creating a new composition, always add `category`, `subcategories`, and
+`profile` to its entry in `studio/src/registry.ts`:
+
+```ts
+{
+  id: "my-new-saas-ad",
+  label: "My New SaaS Ad",
+  // ... other fields ...
+  category:      "saas",
+  subcategories: ["text-animation", "ui-elements"],
+  profile:       "snappy-saas",
+},
+```
+
+The `profile` field links to a style profile in `docs/profiles/` for color palette,
+typography, and motion feel. Available profiles: `snappy-saas`, `dark-tech`,
+`luxury-slow`, `kinetic-impact`.
+
+---
+
+## Lookup helpers (for scripts)
+
+```ts
+import { getCategory, getSubCategory, pickSpringFromSubCategory } from "@data/categories";
+
+const saas = getCategory("saas");
+const textAnim = getSubCategory("saas", "text-animation");
+const spring = pickSpringFromSubCategory("saas", "text-animation", "text");
+// → { stiffness: 160, damping: 25, mass: 0.8 }
+```

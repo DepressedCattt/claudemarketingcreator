@@ -1,0 +1,292 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 780" width="500" height="780">
+<defs>
+  <!-- Leaf gradient: dark edges, mid center -->
+  <linearGradient id="lf1" x1="0" y1="0" x2="1" y2="0.6">
+    <stop offset="0%" stop-color="#0D7A56"/>
+    <stop offset="50%" stop-color="#065F46"/>
+    <stop offset="100%" stop-color="#043D2E"/>
+  </linearGradient>
+  <!-- Bright leaf gradient -->
+  <linearGradient id="lf2" x1="0.1" y1="0" x2="0.9" y2="0.8">
+    <stop offset="0%" stop-color="#34D399"/>
+    <stop offset="55%" stop-color="#22C55E"/>
+    <stop offset="100%" stop-color="#15803D"/>
+  </linearGradient>
+  <!-- Mid-tone leaf -->
+  <linearGradient id="lf3" x1="0" y1="0.1" x2="0.8" y2="0.9">
+    <stop offset="0%" stop-color="#16A34A"/>
+    <stop offset="60%" stop-color="#0E8A3E"/>
+    <stop offset="100%" stop-color="#065F46"/>
+  </linearGradient>
+  <!-- Light accent leaf -->
+  <linearGradient id="lf4" x1="0.2" y1="0" x2="0.7" y2="1">
+    <stop offset="0%" stop-color="#6EE7B7"/>
+    <stop offset="50%" stop-color="#4ADE80"/>
+    <stop offset="100%" stop-color="#22C55E"/>
+  </linearGradient>
+  <!-- Stem gradient -->
+  <linearGradient id="stm" x1="0" y1="1" x2="0" y2="0">
+    <stop offset="0%" stop-color="#065F46"/>
+    <stop offset="100%" stop-color="#064E3B"/>
+  </linearGradient>
+</defs>
+
+<!-- ============ CHECKBOX ============ -->
+<g id="checkbox">
+  <rect x="207" y="672" width="86" height="86" rx="16" fill="#16A34A"/>
+  <path d="M 233 716 L 248 731 L 271 703" stroke="#FFF" stroke-width="6.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+
+<!-- ============ STEM (filled tapered shape) ============ -->
+<g id="stem">
+  <!-- Right edge traces up, left edge traces down — creates organic taper -->
+  <path d="
+    M 256,672 C 255,650 254,620 253,585 C 252,550 252,510 252,470
+    C 252,430 253,388 253,345 C 253,300 253,260 253,220
+    C 253,180 252,145 252,110 C 252,80 251,55 251,30
+    L 249,30 C 249,55 248,80 248,110 C 248,145 247,180 247,220
+    C 247,260 247,300 247,345 C 247,388 248,430 248,470
+    C 248,510 248,550 247,585 C 246,620 245,650 244,672 Z"
+    fill="url(#stm)"/>
+</g>
+
+<!-- ============ BRANCH 1 — lower right ============ -->
+<g id="branch-1">
+  <!-- Tapered branch shape -->
+  <path d="M 253,578 C 270,568 300,555 340,558 L 338,564 C 300,561 272,574 253,584 Z" fill="#065F46"/>
+
+  <!-- Large back leaf (depth shadow) -->
+  <g transform="translate(355,520) rotate(32) scale(1.35)">
+    <path d="M 0,-52 C -4,-48 -28,-28 -30,-2 C -31,22 -20,42 -12,49 C -6,53 -2,55 0,55 C 2,55 6,53 12,49 C 20,42 31,22 30,-2 C 28,-28 4,-48 0,-52Z" fill="#065F46" opacity="0.12"/>
+  </g>
+  <!-- Mid leaf behind -->
+  <g transform="translate(322,528) rotate(-10) scale(1.1)">
+    <path d="M 0,-52 C -4,-48 -28,-28 -30,-2 C -31,22 -20,42 -12,49 C -6,53 -2,55 0,55 C 2,55 6,53 12,49 C 20,42 31,22 30,-2 C 28,-28 4,-48 0,-52Z" fill="url(#lf1)" opacity="0.65"/>
+    <path d="M 0,-48 C -1,-28 0,12 0,50 M 0,24 C -6,18 -16,10 -22,4 M 0,24 C 6,18 16,10 22,4 M 0,2 C -8,-4 -18,-12 -24,-18 M 0,2 C 8,-4 18,-12 24,-18 M 0,-20 C -6,-26 -14,-32 -18,-38 M 0,-20 C 6,-26 14,-32 18,-38" stroke="#044D38" stroke-width="0.7" fill="none" opacity="0.18"/>
+  </g>
+  <!-- Main large leaf -->
+  <g transform="translate(340,548) rotate(22)">
+    <path d="M 0,-52 C -4,-48 -28,-28 -30,-2 C -31,22 -20,42 -12,49 C -6,53 -2,55 0,55 C 2,55 6,53 12,49 C 20,42 31,22 30,-2 C 28,-28 4,-48 0,-52Z" fill="url(#lf1)"/>
+    <path d="M 0,-48 C -1,-28 0,12 0,50 M 0,24 C -6,18 -16,10 -22,4 M 0,24 C 6,18 16,10 22,4 M 0,2 C -8,-4 -18,-12 -24,-18 M 0,2 C 8,-4 18,-12 24,-18 M 0,-20 C -6,-26 -14,-32 -18,-38 M 0,-20 C 6,-26 14,-32 18,-38" stroke="#044D38" stroke-width="0.8" fill="none" opacity="0.28"/>
+  </g>
+  <!-- Bright overlapping leaf -->
+  <g transform="translate(358,532) rotate(48) scale(0.92)">
+    <path d="M 0,-48 C -3,-44 -25,-25 -27,-2 C -28,20 -18,38 -10,44 C -5,48 -2,50 0,50 C 2,50 5,48 10,44 C 18,38 28,20 27,-2 C 25,-25 3,-44 0,-48Z" fill="url(#lf2)"/>
+    <path d="M 0,-44 C -1,-24 0,10 0,46 M 0,20 C -5,14 -14,8 -20,2 M 0,20 C 5,14 14,8 20,2 M 0,0 C -7,-6 -16,-12 -22,-18 M 0,0 C 7,-6 16,-12 22,-18" stroke="#0C7E55" stroke-width="0.7" fill="none" opacity="0.22"/>
+  </g>
+  <!-- Small accent leaf -->
+  <g transform="translate(312,546) rotate(2) scale(0.6)">
+    <path d="M 0,-42 C -3,-38 -22,-22 -24,-1 C -25,18 -16,32 -10,38 C -5,42 -2,44 0,44 C 2,44 5,42 10,38 C 16,32 25,18 24,-1 C 22,-22 3,-38 0,-42Z" fill="url(#lf4)"/>
+    <path d="M 0,-38 C 0,-18 0,8 0,40 M 0,14 C -4,10 -10,4 -14,0 M 0,14 C 4,10 10,4 14,0" stroke="#16A34A" stroke-width="0.6" fill="none" opacity="0.2"/>
+  </g>
+</g>
+
+<!-- ============ BRANCH 2 — lower left ============ -->
+<g id="branch-2">
+  <path d="M 247,540 C 228,530 195,517 152,522 L 154,528 C 195,523 228,536 247,546 Z" fill="#065F46"/>
+
+  <g transform="translate(132,488) rotate(-34) scale(1.3)">
+    <path d="M 0,-52 C -4,-48 -28,-28 -30,-2 C -31,22 -20,42 -12,49 C -6,53 -2,55 0,55 C 2,55 6,53 12,49 C 20,42 31,22 30,-2 C 28,-28 4,-48 0,-52Z" fill="#065F46" opacity="0.12"/>
+  </g>
+  <g transform="translate(168,502) rotate(14) scale(1.08)">
+    <path d="M 0,-52 C -4,-48 -28,-28 -30,-2 C -31,22 -20,42 -12,49 C -6,53 -2,55 0,55 C 2,55 6,53 12,49 C 20,42 31,22 30,-2 C 28,-28 4,-48 0,-52Z" fill="url(#lf1)" opacity="0.6"/>
+    <path d="M 0,-48 C -1,-28 0,12 0,50 M 0,24 C -6,18 -16,10 -22,4 M 0,24 C 6,18 16,10 22,4 M 0,2 C -8,-4 -18,-12 -24,-18 M 0,2 C 8,-4 18,-12 24,-18" stroke="#044D38" stroke-width="0.7" fill="none" opacity="0.16"/>
+  </g>
+  <g transform="translate(148,520) rotate(-18)">
+    <path d="M 0,-52 C -4,-48 -28,-28 -30,-2 C -31,22 -20,42 -12,49 C -6,53 -2,55 0,55 C 2,55 6,53 12,49 C 20,42 31,22 30,-2 C 28,-28 4,-48 0,-52Z" fill="url(#lf2)"/>
+    <path d="M 0,-48 C -1,-28 0,12 0,50 M 0,24 C -6,18 -16,10 -22,4 M 0,24 C 6,18 16,10 22,4 M 0,2 C -8,-4 -18,-12 -24,-18 M 0,2 C 8,-4 18,-12 24,-18 M 0,-20 C -6,-26 -14,-32 -18,-38 M 0,-20 C 6,-26 14,-32 18,-38" stroke="#0C7E55" stroke-width="0.8" fill="none" opacity="0.24"/>
+  </g>
+  <g transform="translate(136,504) rotate(-50) scale(0.92)">
+    <path d="M 0,-52 C -4,-48 -28,-28 -30,-2 C -31,22 -20,42 -12,49 C -6,53 -2,55 0,55 C 2,55 6,53 12,49 C 20,42 31,22 30,-2 C 28,-28 4,-48 0,-52Z" fill="url(#lf1)"/>
+    <path d="M 0,-48 C -1,-28 0,12 0,50 M 0,24 C -6,18 -16,10 -22,4 M 0,24 C 6,18 16,10 22,4 M 0,2 C -8,-4 -18,-12 -24,-18 M 0,2 C 8,-4 18,-12 24,-18" stroke="#044D38" stroke-width="0.8" fill="none" opacity="0.28"/>
+  </g>
+  <g transform="translate(172,530) rotate(4) scale(0.55)">
+    <path d="M 0,-42 C -3,-38 -22,-22 -24,-1 C -25,18 -16,32 -10,38 C -5,42 -2,44 0,44 C 2,44 5,42 10,38 C 16,32 25,18 24,-1 C 22,-22 3,-38 0,-42Z" fill="url(#lf4)"/>
+    <path d="M 0,-38 C 0,-18 0,8 0,40 M 0,14 C -4,10 -10,4 -14,0 M 0,14 C 4,10 10,4 14,0" stroke="#16A34A" stroke-width="0.6" fill="none" opacity="0.2"/>
+  </g>
+</g>
+
+<!-- Sprout buds between branch pair 1-2 -->
+<g transform="translate(257,558) rotate(16) scale(0.5)">
+  <path d="M 0,-30 C -3,-24 -12,-8 -10,8 C -8,20 -3,27 0,30 C 3,27 8,20 10,8 C 12,-8 3,-24 0,-30Z" fill="#34D399"/>
+  <path d="M 0,-26 C 0,-10 0,8 0,26" stroke="#22C55E" stroke-width="0.8" fill="none" opacity="0.35"/>
+</g>
+<g transform="translate(242,562) rotate(-22) scale(0.38)">
+  <path d="M 0,-30 C -3,-24 -12,-8 -10,8 C -8,20 -3,27 0,30 C 3,27 8,20 10,8 C 12,-8 3,-24 0,-30Z" fill="#4ADE80"/>
+  <path d="M 0,-26 C 0,-10 0,8 0,26" stroke="#22C55E" stroke-width="0.7" fill="none" opacity="0.3"/>
+</g>
+
+<!-- ============ BRANCH 3 — mid right ============ -->
+<g id="branch-3">
+  <path d="M 252,438 C 272,426 305,415 348,420 L 346,426 C 305,421 274,432 252,444 Z" fill="#065F46"/>
+
+  <g transform="translate(360,388) rotate(28) scale(1.2)">
+    <path d="M 0,-52 C -4,-48 -28,-28 -30,-2 C -31,22 -20,42 -12,49 C -6,53 -2,55 0,55 C 2,55 6,53 12,49 C 20,42 31,22 30,-2 C 28,-28 4,-48 0,-52Z" fill="#065F46" opacity="0.1"/>
+  </g>
+  <g transform="translate(342,416) rotate(16)">
+    <path d="M 0,-52 C -4,-48 -28,-28 -30,-2 C -31,22 -20,42 -12,49 C -6,53 -2,55 0,55 C 2,55 6,53 12,49 C 20,42 31,22 30,-2 C 28,-28 4,-48 0,-52Z" fill="url(#lf3)"/>
+    <path d="M 0,-48 C -1,-28 0,12 0,50 M 0,24 C -6,18 -16,10 -22,4 M 0,24 C 6,18 16,10 22,4 M 0,2 C -8,-4 -18,-12 -24,-18 M 0,2 C 8,-4 18,-12 24,-18 M 0,-20 C -6,-26 -14,-32 -18,-38 M 0,-20 C 6,-26 14,-32 18,-38" stroke="#054F3A" stroke-width="0.8" fill="none" opacity="0.26"/>
+  </g>
+  <g transform="translate(360,400) rotate(46) scale(0.9)">
+    <path d="M 0,-48 C -3,-44 -25,-25 -27,-2 C -28,20 -18,38 -10,44 C -5,48 -2,50 0,50 C 2,50 5,48 10,44 C 18,38 28,20 27,-2 C 25,-25 3,-44 0,-48Z" fill="url(#lf1)"/>
+    <path d="M 0,-44 C -1,-24 0,10 0,46 M 0,20 C -5,14 -14,8 -20,2 M 0,20 C 5,14 14,8 20,2 M 0,0 C -7,-6 -16,-12 -22,-18 M 0,0 C 7,-6 16,-12 22,-18" stroke="#044D38" stroke-width="0.7" fill="none" opacity="0.26"/>
+  </g>
+  <g transform="translate(330,426) rotate(-2) scale(0.6)">
+    <path d="M 0,-42 C -3,-38 -22,-22 -24,-1 C -25,18 -16,32 -10,38 C -5,42 -2,44 0,44 C 2,44 5,42 10,38 C 16,32 25,18 24,-1 C 22,-22 3,-38 0,-42Z" fill="url(#lf1)"/>
+    <path d="M 0,-38 C 0,-18 0,8 0,40 M 0,14 C -4,10 -10,4 -14,0 M 0,14 C 4,10 10,4 14,0" stroke="#044D38" stroke-width="0.6" fill="none" opacity="0.22"/>
+  </g>
+</g>
+
+<!-- ============ BRANCH 4 — mid left ============ -->
+<g id="branch-4">
+  <path d="M 248,388 C 226,376 192,365 150,370 L 152,376 C 192,371 226,382 248,394 Z" fill="#065F46"/>
+
+  <g transform="translate(134,338) rotate(-28) scale(1.15)">
+    <path d="M 0,-52 C -4,-48 -28,-28 -30,-2 C -31,22 -20,42 -12,49 C -6,53 -2,55 0,55 C 2,55 6,53 12,49 C 20,42 31,22 30,-2 C 28,-28 4,-48 0,-52Z" fill="#065F46" opacity="0.1"/>
+  </g>
+  <g transform="translate(150,368) rotate(-14)">
+    <path d="M 0,-52 C -4,-48 -28,-28 -30,-2 C -31,22 -20,42 -12,49 C -6,53 -2,55 0,55 C 2,55 6,53 12,49 C 20,42 31,22 30,-2 C 28,-28 4,-48 0,-52Z" fill="url(#lf1)"/>
+    <path d="M 0,-48 C -1,-28 0,12 0,50 M 0,24 C -6,18 -16,10 -22,4 M 0,24 C 6,18 16,10 22,4 M 0,2 C -8,-4 -18,-12 -24,-18 M 0,2 C 8,-4 18,-12 24,-18 M 0,-20 C -6,-26 -14,-32 -18,-38 M 0,-20 C 6,-26 14,-32 18,-38" stroke="#044D38" stroke-width="0.8" fill="none" opacity="0.28"/>
+  </g>
+  <g transform="translate(138,352) rotate(-48) scale(0.9)">
+    <path d="M 0,-48 C -3,-44 -25,-25 -27,-2 C -28,20 -18,38 -10,44 C -5,48 -2,50 0,50 C 2,50 5,48 10,44 C 18,38 28,20 27,-2 C 25,-25 3,-44 0,-48Z" fill="url(#lf3)"/>
+    <path d="M 0,-44 C -1,-24 0,10 0,46 M 0,20 C -5,14 -14,8 -20,2 M 0,20 C 5,14 14,8 20,2 M 0,0 C -7,-6 -16,-12 -22,-18 M 0,0 C 7,-6 16,-12 22,-18" stroke="#054F3A" stroke-width="0.7" fill="none" opacity="0.24"/>
+  </g>
+  <g transform="translate(164,378) rotate(8) scale(0.55)">
+    <path d="M 0,-42 C -3,-38 -22,-22 -24,-1 C -25,18 -16,32 -10,38 C -5,42 -2,44 0,44 C 2,44 5,42 10,38 C 16,32 25,18 24,-1 C 22,-22 3,-38 0,-42Z" fill="url(#lf4)"/>
+    <path d="M 0,-38 C 0,-18 0,8 0,40 M 0,14 C -4,10 -10,4 -14,0 M 0,14 C 4,10 10,4 14,0" stroke="#16A34A" stroke-width="0.6" fill="none" opacity="0.2"/>
+  </g>
+</g>
+
+<!-- Mid buds -->
+<g transform="translate(243,418) rotate(-14) scale(0.46)">
+  <path d="M 0,-30 C -3,-24 -12,-8 -10,8 C -8,20 -3,27 0,30 C 3,27 8,20 10,8 C 12,-8 3,-24 0,-30Z" fill="#34D399"/>
+  <path d="M 0,-26 C 0,-10 0,8 0,26" stroke="#22C55E" stroke-width="0.8" fill="none" opacity="0.35"/>
+</g>
+<g transform="translate(256,414) rotate(20) scale(0.38)">
+  <path d="M 0,-30 C -3,-24 -12,-8 -10,8 C -8,20 -3,27 0,30 C 3,27 8,20 10,8 C 12,-8 3,-24 0,-30Z" fill="#4ADE80"/>
+  <path d="M 0,-26 C 0,-10 0,8 0,26" stroke="#22C55E" stroke-width="0.7" fill="none" opacity="0.3"/>
+</g>
+
+<!-- ============ BRANCH 5 — upper right ============ -->
+<g id="branch-5">
+  <path d="M 252,298 C 268,288 295,278 335,282 L 333,288 C 295,284 270,294 252,304 Z" fill="#065F46"/>
+
+  <g transform="translate(346,252) rotate(30) scale(1.1)">
+    <path d="M 0,-48 C -3,-44 -25,-25 -27,-2 C -28,20 -18,38 -10,44 C -5,48 -2,50 0,50 C 2,50 5,48 10,44 C 18,38 28,20 27,-2 C 25,-25 3,-44 0,-48Z" fill="#065F46" opacity="0.1"/>
+  </g>
+  <g transform="translate(330,274) rotate(18) scale(0.92)">
+    <path d="M 0,-48 C -3,-44 -25,-25 -27,-2 C -28,20 -18,38 -10,44 C -5,48 -2,50 0,50 C 2,50 5,48 10,44 C 18,38 28,20 27,-2 C 25,-25 3,-44 0,-48Z" fill="url(#lf1)"/>
+    <path d="M 0,-44 C -1,-24 0,10 0,46 M 0,20 C -5,14 -14,8 -20,2 M 0,20 C 5,14 14,8 20,2 M 0,0 C -7,-6 -16,-12 -22,-18 M 0,0 C 7,-6 16,-12 22,-18" stroke="#044D38" stroke-width="0.7" fill="none" opacity="0.26"/>
+  </g>
+  <g transform="translate(346,262) rotate(50) scale(0.82)">
+    <path d="M 0,-48 C -3,-44 -25,-25 -27,-2 C -28,20 -18,38 -10,44 C -5,48 -2,50 0,50 C 2,50 5,48 10,44 C 18,38 28,20 27,-2 C 25,-25 3,-44 0,-48Z" fill="url(#lf2)"/>
+    <path d="M 0,-44 C -1,-24 0,10 0,46 M 0,20 C -5,14 -14,8 -20,2 M 0,20 C 5,14 14,8 20,2" stroke="#0C7E55" stroke-width="0.7" fill="none" opacity="0.2"/>
+  </g>
+  <g transform="translate(318,268) rotate(-4) scale(0.5)">
+    <path d="M 0,-42 C -3,-38 -22,-22 -24,-1 C -25,18 -16,32 -10,38 C -5,42 -2,44 0,44 C 2,44 5,42 10,38 C 16,32 25,18 24,-1 C 22,-22 3,-38 0,-42Z" fill="url(#lf1)"/>
+    <path d="M 0,-38 C 0,-18 0,8 0,40" stroke="#044D38" stroke-width="0.6" fill="none" opacity="0.22"/>
+  </g>
+</g>
+
+<!-- ============ BRANCH 6 — upper left ============ -->
+<g id="branch-6">
+  <path d="M 248,244 C 230,234 200,222 165,228 L 167,234 C 200,228 230,240 248,250 Z" fill="#065F46"/>
+
+  <g transform="translate(150,198) rotate(-28) scale(1.1)">
+    <path d="M 0,-48 C -3,-44 -25,-25 -27,-2 C -28,20 -18,38 -10,44 C -5,48 -2,50 0,50 C 2,50 5,48 10,44 C 18,38 28,20 27,-2 C 25,-25 3,-44 0,-48Z" fill="#065F46" opacity="0.1"/>
+  </g>
+  <g transform="translate(166,224) rotate(-14) scale(0.92)">
+    <path d="M 0,-48 C -3,-44 -25,-25 -27,-2 C -28,20 -18,38 -10,44 C -5,48 -2,50 0,50 C 2,50 5,48 10,44 C 18,38 28,20 27,-2 C 25,-25 3,-44 0,-48Z" fill="url(#lf2)"/>
+    <path d="M 0,-44 C -1,-24 0,10 0,46 M 0,20 C -5,14 -14,8 -20,2 M 0,20 C 5,14 14,8 20,2 M 0,0 C -7,-6 -16,-12 -22,-18 M 0,0 C 7,-6 16,-12 22,-18" stroke="#0C7E55" stroke-width="0.7" fill="none" opacity="0.22"/>
+  </g>
+  <g transform="translate(152,210) rotate(-50) scale(0.82)">
+    <path d="M 0,-48 C -3,-44 -25,-25 -27,-2 C -28,20 -18,38 -10,44 C -5,48 -2,50 0,50 C 2,50 5,48 10,44 C 18,38 28,20 27,-2 C 25,-25 3,-44 0,-48Z" fill="url(#lf1)"/>
+    <path d="M 0,-44 C -1,-24 0,10 0,46 M 0,20 C -5,14 -14,8 -20,2 M 0,20 C 5,14 14,8 20,2" stroke="#044D38" stroke-width="0.7" fill="none" opacity="0.26"/>
+  </g>
+  <g transform="translate(178,218) rotate(10) scale(0.5)">
+    <path d="M 0,-42 C -3,-38 -22,-22 -24,-1 C -25,18 -16,32 -10,38 C -5,42 -2,44 0,44 C 2,44 5,42 10,38 C 16,32 25,18 24,-1 C 22,-22 3,-38 0,-42Z" fill="url(#lf4)"/>
+    <path d="M 0,-38 C 0,-18 0,8 0,40" stroke="#16A34A" stroke-width="0.6" fill="none" opacity="0.2"/>
+  </g>
+</g>
+
+<!-- Upper buds -->
+<g transform="translate(244,278) rotate(-16) scale(0.44)">
+  <path d="M 0,-30 C -3,-24 -12,-8 -10,8 C -8,20 -3,27 0,30 C 3,27 8,20 10,8 C 12,-8 3,-24 0,-30Z" fill="#34D399"/>
+  <path d="M 0,-26 C 0,-10 0,8 0,26" stroke="#22C55E" stroke-width="0.8" fill="none" opacity="0.35"/>
+</g>
+<g transform="translate(256,274) rotate(18) scale(0.36)">
+  <path d="M 0,-30 C -3,-24 -12,-8 -10,8 C -8,20 -3,27 0,30 C 3,27 8,20 10,8 C 12,-8 3,-24 0,-30Z" fill="#4ADE80"/>
+  <path d="M 0,-26 C 0,-10 0,8 0,26" stroke="#22C55E" stroke-width="0.7" fill="none" opacity="0.3"/>
+</g>
+
+<!-- ============ BRANCH 7 — high right ============ -->
+<g id="branch-7">
+  <path d="M 252,184 C 266,176 288,168 318,172 L 316,177 C 288,173 268,181 252,189 Z" fill="#065F46"/>
+
+  <g transform="translate(322,148) rotate(24) scale(0.88)">
+    <path d="M 0,-48 C -3,-44 -25,-25 -27,-2 C -28,20 -18,38 -10,44 C -5,48 -2,50 0,50 C 2,50 5,48 10,44 C 18,38 28,20 27,-2 C 25,-25 3,-44 0,-48Z" fill="url(#lf1)" opacity="0.65"/>
+    <path d="M 0,-44 C -1,-24 0,10 0,46 M 0,20 C -5,14 -14,8 -20,2 M 0,20 C 5,14 14,8 20,2 M 0,0 C -7,-6 -16,-12 -22,-18 M 0,0 C 7,-6 16,-12 22,-18" stroke="#044D38" stroke-width="0.7" fill="none" opacity="0.22"/>
+  </g>
+  <g transform="translate(312,164) rotate(14) scale(0.8)">
+    <path d="M 0,-48 C -3,-44 -25,-25 -27,-2 C -28,20 -18,38 -10,44 C -5,48 -2,50 0,50 C 2,50 5,48 10,44 C 18,38 28,20 27,-2 C 25,-25 3,-44 0,-48Z" fill="url(#lf3)"/>
+    <path d="M 0,-44 C -1,-24 0,10 0,46 M 0,20 C -5,14 -14,8 -20,2 M 0,20 C 5,14 14,8 20,2" stroke="#054F3A" stroke-width="0.7" fill="none" opacity="0.22"/>
+  </g>
+  <g transform="translate(324,154) rotate(44) scale(0.7)">
+    <path d="M 0,-48 C -3,-44 -25,-25 -27,-2 C -28,20 -18,38 -10,44 C -5,48 -2,50 0,50 C 2,50 5,48 10,44 C 18,38 28,20 27,-2 C 25,-25 3,-44 0,-48Z" fill="url(#lf1)"/>
+    <path d="M 0,-44 C -1,-24 0,10 0,46 M 0,20 C -5,14 -14,8 -20,2 M 0,20 C 5,14 14,8 20,2" stroke="#044D38" stroke-width="0.7" fill="none" opacity="0.26"/>
+  </g>
+</g>
+
+<!-- ============ BRANCH 8 — high left ============ -->
+<g id="branch-8">
+  <path d="M 248,140 C 232,132 210,122 184,126 L 186,131 C 210,127 232,137 248,145 Z" fill="#065F46"/>
+
+  <g transform="translate(178,102) rotate(-24) scale(0.88)">
+    <path d="M 0,-48 C -3,-44 -25,-25 -27,-2 C -28,20 -18,38 -10,44 C -5,48 -2,50 0,50 C 2,50 5,48 10,44 C 18,38 28,20 27,-2 C 25,-25 3,-44 0,-48Z" fill="url(#lf1)" opacity="0.65"/>
+    <path d="M 0,-44 C -1,-24 0,10 0,46 M 0,20 C -5,14 -14,8 -20,2 M 0,20 C 5,14 14,8 20,2 M 0,0 C -7,-6 -16,-12 -22,-18 M 0,0 C 7,-6 16,-12 22,-18" stroke="#044D38" stroke-width="0.7" fill="none" opacity="0.22"/>
+  </g>
+  <g transform="translate(186,120) rotate(-12) scale(0.8)">
+    <path d="M 0,-48 C -3,-44 -25,-25 -27,-2 C -28,20 -18,38 -10,44 C -5,48 -2,50 0,50 C 2,50 5,48 10,44 C 18,38 28,20 27,-2 C 25,-25 3,-44 0,-48Z" fill="url(#lf1)"/>
+    <path d="M 0,-44 C -1,-24 0,10 0,46 M 0,20 C -5,14 -14,8 -20,2 M 0,20 C 5,14 14,8 20,2" stroke="#044D38" stroke-width="0.7" fill="none" opacity="0.26"/>
+  </g>
+  <g transform="translate(176,110) rotate(-44) scale(0.7)">
+    <path d="M 0,-48 C -3,-44 -25,-25 -27,-2 C -28,20 -18,38 -10,44 C -5,48 -2,50 0,50 C 2,50 5,48 10,44 C 18,38 28,20 27,-2 C 25,-25 3,-44 0,-48Z" fill="url(#lf2)"/>
+    <path d="M 0,-44 C -1,-24 0,10 0,46 M 0,20 C -5,14 -14,8 -20,2 M 0,20 C 5,14 14,8 20,2" stroke="#0C7E55" stroke-width="0.7" fill="none" opacity="0.2"/>
+  </g>
+</g>
+
+<!-- ============ CROWN ============ -->
+<g id="crown">
+  <!-- Large back ghost — biggest leaf, centered -->
+  <g transform="translate(250,12) rotate(0) scale(1.55)">
+    <path d="M 0,-52 C -4,-48 -28,-28 -30,-2 C -31,22 -20,42 -12,49 C -6,53 -2,55 0,55 C 2,55 6,53 12,49 C 20,42 31,22 30,-2 C 28,-28 4,-48 0,-52Z" fill="#065F46" opacity="0.1"/>
+    <path d="M 0,-48 C -1,-28 0,12 0,50 M 0,24 C -6,18 -16,10 -22,4 M 0,24 C 6,18 16,10 22,4 M 0,2 C -8,-4 -18,-12 -24,-18 M 0,2 C 8,-4 18,-12 24,-18" stroke="#065F46" stroke-width="0.7" fill="none" opacity="0.08"/>
+  </g>
+  <!-- Left back shadow -->
+  <g transform="translate(218,30) rotate(-32) scale(1.2)">
+    <path d="M 0,-52 C -4,-48 -28,-28 -30,-2 C -31,22 -20,42 -12,49 C -6,53 -2,55 0,55 C 2,55 6,53 12,49 C 20,42 31,22 30,-2 C 28,-28 4,-48 0,-52Z" fill="#065F46" opacity="0.1"/>
+  </g>
+  <!-- Left main dark leaf -->
+  <g transform="translate(224,44) rotate(-26) scale(1.12)">
+    <path d="M 0,-52 C -4,-48 -28,-28 -30,-2 C -31,22 -20,42 -12,49 C -6,53 -2,55 0,55 C 2,55 6,53 12,49 C 20,42 31,22 30,-2 C 28,-28 4,-48 0,-52Z" fill="url(#lf1)"/>
+    <path d="M 0,-48 C -1,-28 0,12 0,50 M 0,24 C -6,18 -16,10 -22,4 M 0,24 C 6,18 16,10 22,4 M 0,2 C -8,-4 -18,-12 -24,-18 M 0,2 C 8,-4 18,-12 24,-18 M 0,-20 C -6,-26 -14,-32 -18,-38 M 0,-20 C 6,-26 14,-32 18,-38" stroke="#044D38" stroke-width="0.8" fill="none" opacity="0.28"/>
+  </g>
+  <!-- Right bright leaf -->
+  <g transform="translate(278,36) rotate(28) scale(1.08)">
+    <path d="M 0,-52 C -4,-48 -28,-28 -30,-2 C -31,22 -20,42 -12,49 C -6,53 -2,55 0,55 C 2,55 6,53 12,49 C 20,42 31,22 30,-2 C 28,-28 4,-48 0,-52Z" fill="url(#lf2)"/>
+    <path d="M 0,-48 C -1,-28 0,12 0,50 M 0,24 C -6,18 -16,10 -22,4 M 0,24 C 6,18 16,10 22,4 M 0,2 C -8,-4 -18,-12 -24,-18 M 0,2 C 8,-4 18,-12 24,-18" stroke="#0C7E55" stroke-width="0.8" fill="none" opacity="0.2"/>
+  </g>
+  <!-- Center front leaf -->
+  <g transform="translate(250,30) rotate(4) scale(1.02)">
+    <path d="M 0,-52 C -4,-48 -28,-28 -30,-2 C -31,22 -20,42 -12,49 C -6,53 -2,55 0,55 C 2,55 6,53 12,49 C 20,42 31,22 30,-2 C 28,-28 4,-48 0,-52Z" fill="url(#lf1)"/>
+    <path d="M 0,-48 C -1,-28 0,12 0,50 M 0,24 C -6,18 -16,10 -22,4 M 0,24 C 6,18 16,10 22,4 M 0,2 C -8,-4 -18,-12 -24,-18 M 0,2 C 8,-4 18,-12 24,-18 M 0,-20 C -6,-26 -14,-32 -18,-38 M 0,-20 C 6,-26 14,-32 18,-38" stroke="#044D38" stroke-width="0.8" fill="none" opacity="0.28"/>
+  </g>
+  <!-- Top bud -->
+  <g transform="translate(250,4) rotate(0) scale(0.5)">
+    <path d="M 0,-30 C -3,-24 -12,-8 -10,8 C -8,20 -3,27 0,30 C 3,27 8,20 10,8 C 12,-8 3,-24 0,-30Z" fill="#34D399"/>
+    <path d="M 0,-26 C 0,-10 0,8 0,26" stroke="#22C55E" stroke-width="0.8" fill="none" opacity="0.35"/>
+  </g>
+</g>
+
+</svg>

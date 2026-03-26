@@ -10,6 +10,7 @@ import { REGISTRY }       from "../registry";
 import { startRender, getRenderStatus, getRenderHistory, previewUrl } from "../api";
 import type { RenderOptions, RenderStatus, RenderHistoryEntry } from "../api";
 import type { CompMeta }  from "../types";
+import { useStudio }      from "../store/useStudio";
 
 // ─── Palette / tokens ─────────────────────────────────────────────────────────
 const C = {
@@ -41,6 +42,15 @@ const formatSeconds = (frames: number, fps: number) => {
 };
 const formatRes = (w: number, h: number, scale: number) =>
   `${w * scale} × ${h * scale}`;
+
+const CODEC_EXT: Record<string, string> = {
+  h264:   ".mp4",
+  h265:   ".mp4",
+  vp8:    ".webm",
+  vp9:    ".webm",
+  prores: ".mov",
+};
+const extForCodec = (codec: string) => CODEC_EXT[codec] ?? ".mp4";
 
 // ─── Small primitives ─────────────────────────────────────────────────────────
 const Label: React.FC<{ children: React.ReactNode }> = ({ children }) => (
@@ -116,6 +126,8 @@ export interface RenderDialogProps {
 }
 
 export const RenderDialog: React.FC<RenderDialogProps> = ({ initialCompId, onClose }) => {
+  const { audioTracks: storeAudioTracks } = useStudio();
+
   // ── state ────────────────────────────────────────────────────────────────────
   const [activeTab,   setActiveTab]   = useState<"render" | "history">("render");
   const [selectedId,  setSelectedId]  = useState(initialCompId ?? REGISTRY[0]?.id ?? "");
@@ -210,10 +222,11 @@ export const RenderDialog: React.FC<RenderDialogProps> = ({ initialCompId, onClo
     setOutputPath("");
     stopPoll();
 
+    const ext      = extForCodec(effectiveCodec);
     const suffix   = presetId !== "normal" ? `-${presetId}` : "";
     const outFile  = filenameOvr
-      ? (filenameOvr.endsWith(".mp4") ? `out/${filenameOvr}` : `out/${filenameOvr}.mp4`)
-      : `out/${comp.id}${suffix}.mp4`;
+      ? (filenameOvr.includes(".") ? `out/${filenameOvr}` : `out/${filenameOvr}${ext}`)
+      : `out/${comp.id}${suffix}${ext}`;
 
     const opts: RenderOptions = {
       compId:       comp.id,
@@ -355,6 +368,7 @@ export const RenderDialog: React.FC<RenderDialogProps> = ({ initialCompId, onClo
           }}>
             {filteredComps.map((c, i) => {
               const active = c.id === selectedId;
+              const trackCount = (storeAudioTracks[c.id] ?? []).length;
               return (
                 <div
                   key={c.id}
@@ -379,6 +393,15 @@ export const RenderDialog: React.FC<RenderDialogProps> = ({ initialCompId, onClo
                   <span style={{ fontSize: 12, color: active ? "#fff" : C.text, flex: 1, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
                     {c.label}
                   </span>
+                  {/* Audio badge */}
+                  {trackCount > 0 && (
+                    <span style={{
+                      fontSize: 9, fontWeight: 600, padding: "2px 5px", borderRadius: 4,
+                      background: "#064e3b", color: "#6ee7b7", flexShrink: 0,
+                    }}>
+                      ♪ {trackCount}
+                    </span>
+                  )}
                   {/* Duration */}
                   <span style={{ fontSize: 11, color: C.muted, flexShrink: 0 }}>
                     {formatSeconds(c.durationInFrames, c.fps)}
@@ -476,7 +499,7 @@ export const RenderDialog: React.FC<RenderDialogProps> = ({ initialCompId, onClo
               </div>
               <div>
                 <Label>Output filename</Label>
-                <Input type="text" placeholder={`${selectedId}-${presetId}.mp4`} value={filenameOvr} onChange={(e) => setFilenameOvr(e.target.value)} />
+                <Input type="text" placeholder={`${selectedId}-${presetId}${extForCodec(codecOvr || preset.codec)}`} value={filenameOvr} onChange={(e) => setFilenameOvr(e.target.value)} />
                 <div style={{ fontSize: 10, color: C.muted, marginTop: 3 }}>Saved to /out/</div>
               </div>
               <div>
@@ -552,14 +575,18 @@ export const RenderDialog: React.FC<RenderDialogProps> = ({ initialCompId, onClo
           flexShrink: 0,
         }}>
           {/* Summary chips */}
-          {comp && (
-            <>
-              <Chip label="Comp"    value={comp.label.split("—")[0].trim()} />
-              <Chip label="Output"  value={outRes} />
-              <Chip label="Duration" value={`${durText} (${totalFrames} frames)`} />
-              <Chip label="Codec"   value={effectiveCodec.toUpperCase()} />
-            </>
-          )}
+          {comp && (() => {
+            const trackCt = (storeAudioTracks[comp.id] ?? []).length;
+            return (
+              <>
+                <Chip label="Comp"    value={comp.label.split("—")[0].trim()} />
+                <Chip label="Output"  value={outRes} />
+                <Chip label="Duration" value={`${durText} (${totalFrames} frames)`} />
+                <Chip label="Codec"   value={effectiveCodec.toUpperCase()} />
+                <Chip label="Audio"   value={trackCt > 0 ? `${trackCt} track${trackCt !== 1 ? "s" : ""}` : "None"} />
+              </>
+            );
+          })()}
 
           <div style={{ flex: 1 }} />
 

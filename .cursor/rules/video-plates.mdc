@@ -1,0 +1,56 @@
+---
+description: Video plate registry — read before writing Remotion compositions
+globs:
+  - "src/compositions/**/*.tsx"
+  - "src/components/**/*.tsx"
+alwaysApply: false
+---
+
+# Video Background Plates
+
+Before writing or editing any Remotion composition, read `src/data/videoPlates.ts`.
+
+This file is the registry of all available AI-generated background video plates.
+Each entry includes the file path, mood description, palette hint, and pre-tuned
+opacity/scrim values. Use it to decide whether to include a `VideoPlate` in the
+composition you are writing.
+
+## When to include a VideoPlate
+
+Include a `VideoPlate` when:
+- The composition is a bespoke hand-crafted ad (not a config-driven VerticalAd)
+- A registry entry exists whose `suitableFor` array or `mood` description matches
+  the brand/style of the composition being written
+- The composition has a consistent background mood across most of its scenes
+
+Do NOT include a VideoPlate when:
+- No suitable plate exists in the registry yet (tell the user which prompt template
+  from `public/video/README.md` to use to generate one)
+- The composition uses Three.js / ThreeCanvas as the full background (e.g. AwesomeAd,
+  CinemaRevealAd) — the 3D environment already provides the visual depth
+- The composition is a config-driven ad using `GradientBackground`
+
+## How to use
+
+```tsx
+import { VideoPlate } from "../components/VideoPlate";
+
+// Inside the composition root AbsoluteFill, as the FIRST child:
+<VideoPlate plateId="haven-warm" scrimColor={C.bg} />
+```
+
+Always set `scrimColor` to the composition's own background token (e.g. `C.bg`).
+This color-grades the video plate to feel native to the palette.
+
+## How to register a new plate
+
+After the user drops a new MP4 into `public/video/`, add one entry to
+`src/data/videoPlates.ts` following the existing pattern, then use it.
+
+## Scrim tuning reference
+
+| Palette type | scrimOpacity range |
+|---|---|
+| Light (cream, ivory, white) | 0.55–0.65 |
+| Mid (warm grey, muted) | 0.45–0.55 |
+| Dark (navy, black, espresso) | 0.35–0.45 |

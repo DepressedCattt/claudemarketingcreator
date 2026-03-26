@@ -1,0 +1,174 @@
+---
+description: Enforce the 4-step creative pipeline when creating new ad compositions. Ensures strategy → storyboard → art direction → implementation order is followed and no steps are skipped.
+globs: src/compositions/*Ad.tsx
+alwaysApply: false
+---
+
+# Ad Creation Pipeline — Required Workflow
+
+When creating a **new** ad composition, you MUST follow the four-step pipeline
+in order. Do not skip steps. Do not combine steps.
+
+---
+
+## The Pipeline
+
+```
+Step 1: Creative Strategist  →  docs/ads/{name}/strategy.md
+Step 2: Storyboard Architect →  docs/ads/{name}/storyboard.md
+Step 3: Art Director         →  docs/ads/{name}/art-direction.md (+ optional SVG assets)
+Step 4: Prompt Director      →  src/compositions/{Name}Ad.tsx + registration
+```
+
+Each step produces a persistent file. Each step MUST read the previous
+step's output file before proceeding.
+
+---
+
+## Step 1 — Creative Strategist
+
+**Skill:** `.cursor/skills/creative-strategist/SKILL.md`
+
+- Read the client brief
+- Select category (e.g., saas) and format (e.g., 16:9 4K)
+- Decide marketing angle, hook, audience, emotional arc
+- Define the color palette with exact hex values
+- Output: `docs/ads/{name}/strategy.md`
+
+**Gate:** Do NOT proceed to Step 2 until `strategy.md` exists.
+
+**Data produced for Step 2:**
+- Marketing angle, hook, messaging pillars
+- Emotional arc (before / during / after)
+- Color palette table (hex values)
+- Category, format, duration
+- Visual direction and anti-patterns
+
+---
+
+## Step 2 — Storyboard Architect
+
+**Skill:** `.cursor/skills/storyboard-architect/SKILL.md`
+
+- Read `strategy.md`
+- Select style profile (e.g., snappy-saas)
+- Design scene-by-scene blueprint with exact copy and component inventories
+- **Assign a recipe technique to every visual component**
+- **Write a choreography sequence for every scene**
+- Output: `docs/ads/{name}/storyboard.md`
+
+**Gate:** Do NOT proceed to Step 3 until `storyboard.md` exists.
+
+**Data produced for Step 3:**
+- Scene breakdown with frame ranges
+- Exact text copy per scene
+- Visual component inventory with recipe assignments
+- Choreography sequences (entrance order, timing)
+- Color palette (carried from strategy)
+- Category, subcategories, style profile
+- Transition types (cross-fade or clip-path variant)
+
+---
+
+## Step 3 — Art Director
+
+**Skill:** `.cursor/skills/art-director/SKILL.md`
+
+- Read `storyboard.md` and `strategy.md`
+- Classify every novel component: GENERATED, PROGRAMMATIC, or HYBRID
+- For GENERATED: create AI reference image, then hand-craft SVG with clean `<g>` groups
+- For ALL: write proportioning rules (element size as % of container, stroke hierarchies)
+- Define animation groups (which SVG elements animate independently)
+- Output: `docs/ads/{name}/art-direction.md` + optional SVGs in `public/svg/{name}/`
+
+**Gate:** Do NOT proceed to Step 4 until `art-direction.md` exists.
+
+**Data produced for Step 4:**
+- Asset strategy per novel component (GENERATED/PROGRAMMATIC/HYBRID)
+- Proportioning rules (exact percentages and pixel values)
+- SVG asset files (if any generated)
+- Animation group definitions (which paths/groups animate independently)
+- Color mapping (shade roles mapped to palette hex values)
+
+---
+
+## Step 4 — Prompt Director
+
+**Skill:** `.cursor/skills/prompt-director/SKILL.md`
+
+- Read `storyboard.md`, `strategy.md`, and `art-direction.md`
+- Read every recipe file referenced in the storyboard
+- **Use art direction proportioning rules for all novel component sizing**
+- **Import generated SVG assets where the Art Director specified GENERATED**
+- Build the composition using recipe code patterns (not simplified defaults)
+- Follow choreography sequences for entrance timing
+- Use the storyboard's exact color palette
+- Register in `src/Root.tsx` and `studio/src/registry.ts`
+- Output: `src/compositions/{Name}Ad.tsx`
+
+---
+
+## Naming Conventions
+
+| Item | Convention | Example |
+|------|-----------|---------|
+| Folder name | kebab-case | `docs/ads/flow-pilot/` |
+| Composition file | PascalCase + "Ad" | `FlowPilotAd.tsx` |
+| Composition id | kebab-case + version | `flowpilot-v1` |
+| Registry label | "{Client} — {tagline}" | `FlowPilot — Less admin. More momentum.` |
+
+For versioned ads of the same client, increment the folder and id:
+- `docs/ads/flowpilot-v2/` → `FlowPilotV2Ad.tsx` → `flowpilot-v2`
+
+---
+
+## When This Rule Applies
+
+- User asks to "create an ad", "make a new ad", "new campaign"
+- User provides a client brief
+- A new `*Ad.tsx` file is being created in `src/compositions/`
+
+## When This Rule Does NOT Apply
+
+- Editing an existing composition (fixing bugs, tuning animation)
+- The user explicitly asks to skip a step
+- Running comparison/analysis scripts
+
+---
+
+## Primitives + Novelty System
+
+Every ad uses the shared primitives library at
+`src/components/ad-primitives/` for proven, battle-tested components,
+AND creates 3-5 novel inline components for story-specific visuals.
+
+- **Storyboard Architect** marks each visual as `(primitive)` or `(novel)`
+- **Prompt Director** imports primitives and builds novel components inline
+- Every ad must have at least 2-3 `(novel)` components
+
+### Graduation Process
+
+After every 3 ads, audit the novel inline components across recent
+compositions. If a novel component has been rebuilt in 3+ ads:
+
+1. Extract it into `src/components/ad-primitives/` as a new file
+2. Make it colour-agnostic (all colours via props)
+3. Make it resolution-independent (sizes via props)
+4. Add it to `src/components/ad-primitives/index.ts`
+5. Add it to the Storyboard Architect's primitives table
+6. Add it to the Prompt Director's primitives table
+7. Document it as a new recipe in `docs/recipes/` if one doesn't exist
+
+This ensures the library grows organically from proven patterns rather
+than speculative abstraction.
+
+---
+
+## Quick Reference — Output Files
+
+| Step | Agent | Output | Key data it provides |
+|------|-------|--------|---------------------|
+| 1 | Creative Strategist | `strategy.md` | Angle, palette, category, format |
+| 2 | Storyboard Architect | `storyboard.md` | Scenes, recipes, choreography, palette |
+| 3 | Art Director | `art-direction.md` + SVGs | Proportioning, asset strategy, animation groups |
+| 4 | Prompt Director | `{Name}Ad.tsx` | Working Remotion composition |

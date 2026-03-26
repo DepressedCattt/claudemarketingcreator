@@ -47,15 +47,90 @@ import { SharedSalonKineticAd } from "./compositions/SharedSalonKineticAd";
 import { SharedSalonCinemaAd }  from "./compositions/SharedSalonCinemaAd";
 import { CinemaRevealAd }       from "./compositions/CinemaRevealAd";
 import { AwesomeAd }            from "./compositions/AwesomeAd";
+import { LangEaseAd }          from "./compositions/LangEaseAd";
+import { SaasExplainerAd }     from "./compositions/SaasExplainerAd";
+import { SaasExplainerV2 }    from "./compositions/SaasExplainerV2";
+import { SaasShowcaseAd }     from "./compositions/SaasShowcaseAd";
+import { SaasShowcase2Ad }    from "./compositions/SaasShowcase2Ad";
+import { SaasPlaygroundAd }  from "./compositions/SaasPlaygroundAd";
+import { SaasCameraAd }     from "./compositions/SaasCameraAd";
+import { Saas3DRealmAd }   from "./compositions/Saas3DRealmAd";
+import { Saas3DRealm2Ad } from "./compositions/Saas3DRealm2Ad";
+import { SaasSimpleComponentAd } from "./compositions/SaasSimpleComponentAd";
+import { SaasMediumComponentAd } from "./compositions/SaasMediumComponentAd";
+import { TerrraSurfaceAd } from "./compositions/TerrraSurfaceAd";
+import { FlowPilotAd } from "./compositions/FlowPilotAd";
+import { FlowPilotV2Ad } from "./compositions/FlowPilotV2Ad";
+import { DeskflowAd } from "./compositions/DeskflowAd";
+import { AnimTestAd } from "./compositions/AnimTestAd";
+import { AeReplicaAd } from "./compositions/AeReplicaAd";
+import { CalmlyAd } from "./compositions/CalmlyAd";
+import { GreenTaskAd } from "./compositions/GreenTaskAd";
+import { AnimDrillAd } from "./compositions/AnimDrillAd";
+import { AnimlyAd } from "./compositions/AnimlyAd";
+import { SmallSpotAd } from "./compositions/SmallSpotAd";
 import { AudioEditor, AudioEditorDefaultProps } from "./compositions/AudioEditor";
 import { withAudio } from "./components/AudioLayer";
 import { activeAd } from "./data/activeAd";
 import { getTotalDuration } from "./utils/timing";
 
-// Audio-wrapped variants — accept audioTracks prop at render time via --props
-const PulseAdWithAudio  = withAudio(PulseAd);
-const FormaAd2WithAudio = withAudio(FormaAd2);
-const ApexAdWithAudio   = withAudio(ApexAd);
+// Audio-wrapped variants — accept audioTracks prop at render time via --props.
+// Every composition is wrapped so that CLI renders include audio tracks from
+// the Studio's state.json automatically.
+const w = withAudio;
+const PulseAdWithAudio           = w(PulseAd);
+const FormaAd2WithAudio          = w(FormaAd2);
+const ApexAdWithAudio            = w(ApexAd);
+const ApexAd3DWithAudio          = w(ApexAd3D);
+const Dimension3DAdWithAudio     = w(Dimension3DAd);
+const IPhoneAdWithAudio          = w(IPhoneAd);
+const VelourAdWithAudio          = w(VelourAd);
+const BloomAdWithAudio           = w(BloomAd);
+const MaisonCielAdWithAudio      = w(MaisonCielAd);
+const ElumeAdWithAudio           = w(ElumeAd);
+const HavenAdWithAudio           = w(HavenAd);
+const LumenAdWithAudio           = w(LumenAd);
+const AuraSalonAdWithAudio       = w(AuraSalonAd);
+const SeriAdWithAudio            = w(SeriAd);
+const SharedSalonFinalAdAudio    = w(SharedSalonFinalAd);
+const SharedSalonOneShotAudio    = w(SharedSalonOneShot);
+const SharedSalonKineticAdAudio  = w(SharedSalonKineticAd);
+const SharedSalonCinemaAdAudio   = w(SharedSalonCinemaAd);
+const CinemaRevealAdWithAudio    = w(CinemaRevealAd);
+const AwesomeAdWithAudio         = w(AwesomeAd);
+const LangEaseAdWithAudio        = w(LangEaseAd);
+const SaasExplainerAdWithAudio   = w(SaasExplainerAd);
+const SaasExplainerV2WithAudio   = w(SaasExplainerV2);
+const SaasShowcaseAdWithAudio    = w(SaasShowcaseAd);
+const SaasShowcase2AdWithAudio   = w(SaasShowcase2Ad);
+const SaasPlaygroundAdWithAudio  = w(SaasPlaygroundAd);
+const SaasCameraAdWithAudio      = w(SaasCameraAd);
+const Saas3DRealmAdWithAudio     = w(Saas3DRealmAd);
+const Saas3DRealm2AdWithAudio    = w(Saas3DRealm2Ad);
+const SaasSimpleComponentWithAudio = w(SaasSimpleComponentAd);
+const SaasMediumComponentWithAudio = w(SaasMediumComponentAd);
+const TerrraSurfaceAdWithAudio   = w(TerrraSurfaceAd);
+const FlowPilotAdWithAudio       = w(FlowPilotAd);
+const FlowPilotV2AdWithAudio     = w(FlowPilotV2Ad);
+const DeskflowAdWithAudio        = w(DeskflowAd);
+const AeReplicaAdWithAudio       = w(AeReplicaAd);
+const AnimTestAdWithAudio        = w(AnimTestAd);
+const CalmlyAdWithAudio          = w(CalmlyAd);
+const GreenTaskAdWithAudio       = w(GreenTaskAd);
+const AnimDrillAdWithAudio       = w(AnimDrillAd);
+const AnimlyAdWithAudio          = w(AnimlyAd);
+const SmallSpotAdWithAudio       = w(SmallSpotAd);
+const ArcflowAdWithAudio         = w(ArcflowAd);
+const CrestAdWithAudio           = w(CrestAd);
+const FlowDeskAdWithAudio        = w(FlowDeskAd);
+const HeroExpansionAdWithAudio   = w(HeroExpansionAd);
+const KineticTypographyAdAudio   = w(KineticTypographyAd);
+const LuminaryAdWithAudio        = w(LuminaryAd);
+const MeridianAdWithAudio        = w(MeridianAd);
+const NovaSkinAdWithAudio        = w(NovaSkinAd);
+const SolaceAdWithAudio          = w(SolaceAd);
+const TrailBlazeAdWithAudio      = w(TrailBlazeAd);
+const VeridianAdWithAudio        = w(VeridianAdComp);
 
 // Remotion's Composition component requires a loosely-typed component reference.
 // We cast to any here to satisfy the generic constraint while keeping
@@ -96,8 +171,8 @@ export const RemotionRoot: React.FC = () => {
        * />
        */}
 
-      {/* FormaAd2 — 1:1 square, 17.3s */}
-      <Composition id="forma2-v1" component={FormaAd2WithAudio} durationInFrames={519} fps={30} width={1080} height={1080} defaultProps={{ audioTracks: [] }} />
+      {/* FormaAd2 — 1:1 square, 21s — LangEase SaaS recreation, iter2 rebuild */}
+      <Composition id="forma2-v1" component={FormaAd2WithAudio} durationInFrames={630} fps={30} width={1080} height={1080} defaultProps={{ audioTracks: [] }} />
 
       {/* PulseAd — 1:1, 18s, 120 BPM */}
       <Composition id="pulse-v1"  component={PulseAdWithAudio}  durationInFrames={540} fps={30} width={1080} height={1080} defaultProps={{ audioTracks: [] }} />
@@ -105,65 +180,64 @@ export const RemotionRoot: React.FC = () => {
       {/* ApexAd — 1:1, 18s, 120 BPM — SaaS CRM "Close faster." */}
       <Composition id="apex-v1"   component={ApexAdWithAudio}   durationInFrames={540} fps={30} width={1080} height={1080} defaultProps={{ audioTracks: [] }} />
       {/* ApexAd3D — 1:1, 18s — same as apex-v1 but with real Three.js GlassCard + Bloom */}
-      <Composition id="apex-3d-v1" component={ApexAd3D}         durationInFrames={540} fps={30} width={1080} height={1080} defaultProps={{}} />
+      <Composition id="apex-3d-v1" component={ApexAd3DWithAudio} durationInFrames={540} fps={30} width={1080} height={1080} defaultProps={{ audioTracks: [] }} />
       {/* Dimension3DAd — 1:1, 15s — 5-scene showcase of new 3D capabilities */}
-      <Composition id="dimension-3d-v1" component={Dimension3DAd} durationInFrames={450} fps={30} width={1080} height={1080} defaultProps={{}} />
+      <Composition id="dimension-3d-v1" component={Dimension3DAdWithAudio} durationInFrames={450} fps={30} width={1080} height={1080} defaultProps={{ audioTracks: [] }} />
       {/* IPhoneAd — 1:1, 15s — realistic iPhone 17 Pro product reveal */}
-      <Composition id="iphone-v1" component={IPhoneAd} durationInFrames={450} fps={30} width={1080} height={1080} defaultProps={{}} />
+      <Composition id="iphone-v1" component={IPhoneAdWithAudio} durationInFrames={450} fps={30} width={1080} height={1080} defaultProps={{ audioTracks: [] }} />
 
       {/* ── Beauty Industry Ads ───────────────────────────────────────────── */}
-      {/* VelourAd — 9:16, 18s — luxury barbershop/salon, editorial dark gold */}
-      <Composition id="velour-v1" component={VelourAd} durationInFrames={540} fps={30} width={1080} height={1920} defaultProps={{}} />
-      {/* BloomAd — 1:1, 18s — bespoke floral design studio, cream/forest green */}
-      <Composition id="bloom-v1"  component={BloomAd}  durationInFrames={540} fps={30} width={1080} height={1080} defaultProps={{}} />
-      {/* MaisonCielAd — 16:9, 18s — fashion boutique, deep navy/champagne */}
-      <Composition id="maison-ciel-v1" component={MaisonCielAd} durationInFrames={540} fps={30} width={1920} height={1080} defaultProps={{}} />
-      {/* ElumeAd — 9:16, 18s — luxe social transformation, silk black + champagne + rose-gold */}
-      <Composition id="elume-v1" component={ElumeAd} durationInFrames={540} fps={30} width={1080} height={1920} defaultProps={{}} />
-      {/* HavenAd — 9:16, 18s — warm trust-building, ivory + terracotta + espresso */}
-      <Composition id="haven-v1" component={HavenAd} durationInFrames={540} fps={30} width={1080} height={1920} defaultProps={{}} />
-      {/* LumenAd — 9:16, 18s — kinetic one-shot, clip-path match transitions, copper */}
-      <Composition id="lumen-v1" component={LumenAd} durationInFrames={540} fps={30} width={1080} height={1920} defaultProps={{}} />
-      {/* AuraSalonAd — 9:16, 18s — kinetic object-based transitions, salon journey */}
-      <Composition id="aura-salon-v1" component={AuraSalonAd} durationInFrames={540} fps={30} width={1080} height={1920} defaultProps={{}} />
-      {/* SeriAd — 9:16, 18s — layered motion design, masks/wipes/parallax, dusty mauve */}
-      <Composition id="seri-v1" component={SeriAd} durationInFrames={540} fps={30} width={1080} height={1920} defaultProps={{}} />
-      {/* SharedSalonFinalAd — 9:16, 26s — premium product commercial, Apple-style cinematography, 120 BPM */}
-      <Composition id="shared-salon-final" component={SharedSalonFinalAd} durationInFrames={780} fps={30} width={1080} height={1920} defaultProps={{}} />
-      {/* SharedSalonOneShot — 9:16, 26s — true one-shot, element-driven transitions, no cuts */}
-      <Composition id="shared-salon-oneshot" component={SharedSalonOneShot} durationInFrames={780} fps={30} width={1080} height={1920} defaultProps={{}} />
-      {/* SharedSalonKineticAd — 9:16, 25s — playful camera: tilt-up, dutch, orbital arc, tracking shot */}
-      <Composition id="shared-salon-kinetic" component={SharedSalonKineticAd} durationInFrames={756} fps={30} width={1080} height={1920} defaultProps={{}} />
-      {/* SharedSalonCinemaAd — 9:16, 4s (Seq 1) — 3D iPhone camera rise + dimensional pull-back */}
-      <Composition id="shared-salon-cinema" component={SharedSalonCinemaAd} durationInFrames={120} fps={30} width={1080} height={1920} defaultProps={{}} />
-      {/* CinemaRevealAd — 9:16, 10s — simulated cinematography reference: depth tiers + parallax */}
-      <Composition id="cinema-reveal" component={CinemaRevealAd} durationInFrames={480} fps={30} width={1080} height={1920} defaultProps={{}} />
-      {/* AwesomeAd — 9:16, 5s — Scene 1: camera rises up the phone face then pulls back to full reveal */}
-      <Composition id="awesome-ad" component={AwesomeAd} durationInFrames={150} fps={30} width={1080} height={1920} defaultProps={{}} />
+      <Composition id="velour-v1" component={VelourAdWithAudio} durationInFrames={540} fps={30} width={1080} height={1920} defaultProps={{ audioTracks: [] }} />
+      <Composition id="bloom-v1"  component={BloomAdWithAudio}  durationInFrames={540} fps={30} width={1080} height={1080} defaultProps={{ audioTracks: [] }} />
+      <Composition id="maison-ciel-v1" component={MaisonCielAdWithAudio} durationInFrames={540} fps={30} width={1920} height={1080} defaultProps={{ audioTracks: [] }} />
+      <Composition id="elume-v1" component={ElumeAdWithAudio} durationInFrames={540} fps={30} width={1080} height={1920} defaultProps={{ audioTracks: [] }} />
+      <Composition id="haven-v1" component={HavenAdWithAudio} durationInFrames={540} fps={30} width={1080} height={1920} defaultProps={{ audioTracks: [] }} />
+      <Composition id="lumen-v1" component={LumenAdWithAudio} durationInFrames={540} fps={30} width={1080} height={1920} defaultProps={{ audioTracks: [] }} />
+      <Composition id="aura-salon-v1" component={AuraSalonAdWithAudio} durationInFrames={540} fps={30} width={1080} height={1920} defaultProps={{ audioTracks: [] }} />
+      <Composition id="seri-v1" component={SeriAdWithAudio} durationInFrames={540} fps={30} width={1080} height={1920} defaultProps={{ audioTracks: [] }} />
+      <Composition id="shared-salon-final" component={SharedSalonFinalAdAudio} durationInFrames={780} fps={30} width={1080} height={1920} defaultProps={{ audioTracks: [] }} />
+      <Composition id="shared-salon-oneshot" component={SharedSalonOneShotAudio} durationInFrames={780} fps={30} width={1080} height={1920} defaultProps={{ audioTracks: [] }} />
+      <Composition id="shared-salon-kinetic" component={SharedSalonKineticAdAudio} durationInFrames={756} fps={30} width={1080} height={1920} defaultProps={{ audioTracks: [] }} />
+      <Composition id="shared-salon-cinema" component={SharedSalonCinemaAdAudio} durationInFrames={120} fps={30} width={1080} height={1920} defaultProps={{ audioTracks: [] }} />
+      <Composition id="cinema-reveal" component={CinemaRevealAdWithAudio} durationInFrames={480} fps={30} width={1080} height={1920} defaultProps={{ audioTracks: [] }} />
+      <Composition id="awesome-ad" component={AwesomeAdWithAudio} durationInFrames={150} fps={30} width={1080} height={1920} defaultProps={{ audioTracks: [] }} />
+      <Composition id="langease-v1" component={LangEaseAdWithAudio} durationInFrames={540} fps={30} width={1080} height={1920} defaultProps={{ audioTracks: [] }} />
+      <Composition id="saas-explainer" component={SaasExplainerAdWithAudio} durationInFrames={600} fps={30} width={3840} height={2160} defaultProps={{ audioTracks: [] }} />
+      <Composition id="saas-explainer-v2" component={SaasExplainerV2WithAudio} durationInFrames={600} fps={30} width={3840} height={2160} defaultProps={{ audioTracks: [] }} />
+      <Composition id="saas-showcase" component={SaasShowcaseAdWithAudio} durationInFrames={600} fps={30} width={3840} height={2160} defaultProps={{ audioTracks: [] }} />
+      <Composition id="saas-showcase-2" component={SaasShowcase2AdWithAudio} durationInFrames={600} fps={30} width={3840} height={2160} defaultProps={{ audioTracks: [] }} />
+      <Composition id="saas-playground" component={SaasPlaygroundAdWithAudio} durationInFrames={1120} fps={30} width={3840} height={2160} defaultProps={{ audioTracks: [] }} />
+      <Composition id="saas-camera" component={SaasCameraAdWithAudio} durationInFrames={450} fps={30} width={3840} height={2160} defaultProps={{ audioTracks: [] }} />
+      <Composition id="saas-3d-realm" component={Saas3DRealmAdWithAudio} durationInFrames={540} fps={30} width={3840} height={2160} defaultProps={{ audioTracks: [] }} />
+      <Composition id="saas-3d-realm-2" component={Saas3DRealm2AdWithAudio} durationInFrames={540} fps={30} width={3840} height={2160} defaultProps={{ audioTracks: [] }} />
+      <Composition id="saas-simple-component" component={SaasSimpleComponentWithAudio} durationInFrames={540} fps={30} width={3840} height={2160} defaultProps={{ audioTracks: [] }} />
+      <Composition id="saas-medium-component" component={SaasMediumComponentWithAudio} durationInFrames={600} fps={30} width={3840} height={2160} defaultProps={{ audioTracks: [] }} />
+      <Composition id="terrra-surface-v1" component={TerrraSurfaceAdWithAudio} durationInFrames={900} fps={30} width={3840} height={2160} defaultProps={{ audioTracks: [] }} />
+
+      <Composition id="flowpilot-v1" component={FlowPilotAdWithAudio} durationInFrames={600} fps={30} width={3840} height={2160} defaultProps={{ audioTracks: [] }} />
+      <Composition id="flowpilot-v2" component={FlowPilotV2AdWithAudio} durationInFrames={600} fps={30} width={3840} height={2160} defaultProps={{ audioTracks: [] }} />
+      <Composition id="deskflow-v1" component={DeskflowAdWithAudio} durationInFrames={600} fps={30} width={3840} height={2160} defaultProps={{ audioTracks: [] }} />
+
+      <Composition id="ae-replica" component={AeReplicaAdWithAudio} durationInFrames={150} fps={30} width={3840} height={2160} defaultProps={{ audioTracks: [] }} />
+      <Composition id="anim-test" component={AnimTestAdWithAudio} durationInFrames={600} fps={30} width={3840} height={2160} defaultProps={{ audioTracks: [] }} />
+      <Composition id="calmly-v1" component={CalmlyAdWithAudio} durationInFrames={390} fps={30} width={3840} height={2160} defaultProps={{ audioTracks: [] }} />
+      <Composition id="greentask-v1" component={GreenTaskAdWithAudio} durationInFrames={670} fps={30} width={3840} height={2160} defaultProps={{ audioTracks: [] }} />
+      <Composition id="anim-drill" component={AnimDrillAdWithAudio} durationInFrames={150} fps={30} width={3840} height={2160} defaultProps={{ audioTracks: [] }} />
+      <Composition id="animly-v1" component={AnimlyAdWithAudio} durationInFrames={706} fps={30} width={3840} height={2160} defaultProps={{ audioTracks: [] }} />
+      <Composition id="smallspot-v1" component={SmallSpotAdWithAudio} durationInFrames={706} fps={30} width={3840} height={2160} defaultProps={{ audioTracks: [] }} />
 
       {/* ── Existing compositions ─────────────────────────────────────────── */}
-      {/* ArcflowAd — 16:9, 20s */}
-      <Composition id="arcflow"           component={ArcflowAd}         durationInFrames={600} fps={30} width={1920} height={1080} defaultProps={{}} />
-      {/* CrestAd — 16:9, 15s */}
-      <Composition id="crest"             component={CrestAd}           durationInFrames={450} fps={30} width={1920} height={1080} defaultProps={{}} />
-      {/* FlowDeskAd — 1:1, 15s */}
-      <Composition id="flowdesk"          component={FlowDeskAd}        durationInFrames={450} fps={30} width={1080} height={1080} defaultProps={{}} />
-      {/* HeroExpansionAd — 1:1, 10s */}
-      <Composition id="hero-expansion"    component={HeroExpansionAd}   durationInFrames={300} fps={30} width={1080} height={1080} defaultProps={{}} />
-      {/* KineticTypographyAd — 16:9, 10s */}
-      <Composition id="kinetic-type"      component={KineticTypographyAd} durationInFrames={300} fps={30} width={1920} height={1080} defaultProps={{}} />
-      {/* LuminaryAd — 9:16, 18s */}
-      <Composition id="luminary"          component={LuminaryAd}        durationInFrames={540} fps={30} width={1080} height={1920} defaultProps={{}} />
-      {/* MeridianAd — 1:1, 18s */}
-      <Composition id="meridian"          component={MeridianAd}        durationInFrames={540} fps={30} width={1080} height={1080} defaultProps={{}} />
-      {/* NovaSkinAd — 9:16, 15s */}
-      <Composition id="nova-skin"         component={NovaSkinAd}        durationInFrames={450} fps={30} width={1080} height={1920} defaultProps={{}} />
-      {/* SolaceAd — 1:1, 15s */}
-      <Composition id="solace"            component={SolaceAd}          durationInFrames={450} fps={30} width={1080} height={1080} defaultProps={{}} />
-      {/* TrailBlazeAd — 16:9, 15s */}
-      <Composition id="trailblaze"        component={TrailBlazeAd}      durationInFrames={450} fps={30} width={1920} height={1080} defaultProps={{}} />
-      {/* VeridianAd — 9:16, 15s */}
-      <Composition id="veridian"          component={VeridianAdComp}    durationInFrames={450} fps={30} width={1080} height={1920} defaultProps={{}} />
+      <Composition id="arcflow"           component={ArcflowAdWithAudio}       durationInFrames={600} fps={30} width={1920} height={1080} defaultProps={{ audioTracks: [] }} />
+      <Composition id="crest"             component={CrestAdWithAudio}         durationInFrames={450} fps={30} width={1920} height={1080} defaultProps={{ audioTracks: [] }} />
+      <Composition id="flowdesk"          component={FlowDeskAdWithAudio}      durationInFrames={450} fps={30} width={1080} height={1080} defaultProps={{ audioTracks: [] }} />
+      <Composition id="hero-expansion"    component={HeroExpansionAdWithAudio} durationInFrames={300} fps={30} width={1080} height={1080} defaultProps={{ audioTracks: [] }} />
+      <Composition id="kinetic-type"      component={KineticTypographyAdAudio} durationInFrames={300} fps={30} width={1920} height={1080} defaultProps={{ audioTracks: [] }} />
+      <Composition id="luminary"          component={LuminaryAdWithAudio}      durationInFrames={540} fps={30} width={1080} height={1920} defaultProps={{ audioTracks: [] }} />
+      <Composition id="meridian"          component={MeridianAdWithAudio}      durationInFrames={540} fps={30} width={1080} height={1080} defaultProps={{ audioTracks: [] }} />
+      <Composition id="nova-skin"         component={NovaSkinAdWithAudio}      durationInFrames={450} fps={30} width={1080} height={1920} defaultProps={{ audioTracks: [] }} />
+      <Composition id="solace"            component={SolaceAdWithAudio}        durationInFrames={450} fps={30} width={1080} height={1080} defaultProps={{ audioTracks: [] }} />
+      <Composition id="trailblaze"        component={TrailBlazeAdWithAudio}    durationInFrames={450} fps={30} width={1920} height={1080} defaultProps={{ audioTracks: [] }} />
+      <Composition id="veridian"          component={VeridianAdWithAudio}      durationInFrames={450} fps={30} width={1080} height={1920} defaultProps={{ audioTracks: [] }} />
 
       {/* ── Audio Editor ─────────────────────────────────────────────────── */}
       {/* 16:9, 60s scrubbing range — set audioSrc + props in the Props panel */}

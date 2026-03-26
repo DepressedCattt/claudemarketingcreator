@@ -1273,36 +1273,36 @@ const SceneCTA: React.FC = () => {
 
 export const PulseAdCues: CueEvent[] = [
   // ── Scene 1: Hook (f0–f120) ──────────────────────────────────────────────
-  { frame: 0,   type: "SCENE_CUT",   label: 'Hook begins — "PULSE" on dark',        intensity: "hard",   notes: "Strong impact hit. This is the opening frame — make it land." },
-  { frame: 0,   type: "TEXT_IMPACT", label: '"PULSE" title enters',                  intensity: "hard",   notes: "160px dominant headline. Blur-resolves from 10px." },
-  { frame: 15,  type: "TEXT_REVEAL", label: '"Deep Work OS" badge',                  intensity: "soft",   notes: "Beat 2. Small badge fades in. Subtle shimmer or air." },
-  { frame: 30,  type: "TEXT_REVEAL", label: '"Your work has a rhythm." sub copy',    intensity: "soft",   notes: "Beat 3. Supporting copy." },
-  { frame: 45,  type: "WIPE",        label: "Accent gradient rule wipes left→right", intensity: "medium", notes: "Beat 4. Short directional sweep sound." },
-  { frame: 60,  type: "BEAT_LOCK",   label: "Beat waveform appears — 120 BPM set",  intensity: "medium", notes: "Bar 2. THIS is the moment the BPM identity locks in. Rhythmic click or pulse sequence." },
+  { id: "pulse-cue-1",  frame: 0,   duration: 1,  type: "SCENE_CUT",   label: 'Hook begins — "PULSE" on dark',        intensity: "hard",   notes: "Strong impact hit. This is the opening frame — make it land." },
+  { id: "pulse-cue-2",  frame: 0,   duration: 15, type: "TEXT_IMPACT", label: '"PULSE" title enters',                  intensity: "hard",   notes: "160px dominant headline. Blur-resolves from 10px." },
+  { id: "pulse-cue-3",  frame: 15,  duration: 15, type: "TEXT_REVEAL", label: '"Deep Work OS" badge',                  intensity: "soft",   notes: "Beat 2. Small badge fades in. Subtle shimmer or air." },
+  { id: "pulse-cue-4",  frame: 30,  duration: 15, type: "TEXT_REVEAL", label: '"Your work has a rhythm." sub copy',    intensity: "soft",   notes: "Beat 3. Supporting copy." },
+  { id: "pulse-cue-5",  frame: 45,  duration: 15, type: "WIPE",        label: "Accent gradient rule wipes left→right", intensity: "medium", notes: "Beat 4. Short directional sweep sound." },
+  { id: "pulse-cue-6",  frame: 60,  duration: 15, type: "BEAT_LOCK",   label: "Beat waveform appears — 120 BPM set",  intensity: "medium", notes: "Bar 2. THIS is the moment the BPM identity locks in. Rhythmic click or pulse sequence." },
 
   // ── Scene 2: Demo (f120–f240) ─────────────────────────────────────────────
-  { frame: 120, type: "SCENE_CUT",   label: "→ Demo: Focus card begins arc entry",   intensity: "hard",   notes: "Bar 3. Hard cut. Card swoops in from bottom-left." },
-  { frame: 120, type: "HERO_ENTRY",  label: "Focus card arc from bottom-left",       intensity: "hard",   notes: "Rising swoosh + impact on settle (~f150). Blur resolves over 28 frames." },
-  { frame: 135, type: "AMBIENT",     label: "Card blur resolves — rack focus",       intensity: "soft",   notes: "Beat 2 of bar 3. Soft shimmer as card sharpens." },
-  { frame: 150, type: "TEXT_REVEAL", label: '"In session" + task sub copy',          intensity: "soft",   notes: "Beat 3 of bar 3. Card has settled. Context copy drifts in." },
+  { id: "pulse-cue-7",  frame: 120, duration: 1,  type: "SCENE_CUT",   label: "→ Demo: Focus card begins arc entry",   intensity: "hard",   notes: "Bar 3. Hard cut. Card swoops in from bottom-left." },
+  { id: "pulse-cue-8",  frame: 120, duration: 15, type: "HERO_ENTRY",  label: "Focus card arc from bottom-left",       intensity: "hard",   notes: "Rising swoosh + impact on settle (~f150). Blur resolves over 28 frames." },
+  { id: "pulse-cue-9",  frame: 135, duration: 30, type: "AMBIENT",     label: "Card blur resolves — rack focus",       intensity: "soft",   notes: "Beat 2 of bar 3. Soft shimmer as card sharpens." },
+  { id: "pulse-cue-10", frame: 150, duration: 15, type: "TEXT_REVEAL", label: '"In session" + task sub copy',          intensity: "soft",   notes: "Beat 3 of bar 3. Card has settled. Context copy drifts in." },
 
   // ── Scene 3: Features (f240–f360) ─────────────────────────────────────────
-  { frame: 240, type: "SCENE_CUT",   label: "→ Features: Card recedes, list enters", intensity: "hard",   notes: "Bar 5. Hard cut. Card de-emphasises smoothly." },
-  { frame: 240, type: "OBJECT_LAND", label: 'Feature 1 lands: "Flow Detection"',     intensity: "medium", notes: "Beat 1 of bar 5. Slides from left. UI click or soft snap." },
-  { frame: 255, type: "OBJECT_LAND", label: 'Feature 2 lands: "Beat-sync Scheduling"', intensity: "medium", notes: "Beat 2. Same gesture, staggered." },
-  { frame: 270, type: "OBJECT_LAND", label: 'Feature 3 lands: "Rhythm Analytics"',  intensity: "medium", notes: "Beat 3. Final feature of the three." },
-  { frame: 300, type: "TEXT_REVEAL", label: '"Three pillars of flow" headline',      intensity: "soft",   notes: "Bar 6. Section context line appears after features settled." },
+  { id: "pulse-cue-11", frame: 240, duration: 1,  type: "SCENE_CUT",   label: "→ Features: Card recedes, list enters", intensity: "hard",   notes: "Bar 5. Hard cut. Card de-emphasises smoothly." },
+  { id: "pulse-cue-12", frame: 240, duration: 15, type: "OBJECT_LAND", label: 'Feature 1 lands: "Flow Detection"',     intensity: "medium", notes: "Beat 1 of bar 5. Slides from left. UI click or soft snap." },
+  { id: "pulse-cue-13", frame: 255, duration: 15, type: "OBJECT_LAND", label: 'Feature 2 lands: "Beat-sync Scheduling"', intensity: "medium", notes: "Beat 2. Same gesture, staggered." },
+  { id: "pulse-cue-14", frame: 270, duration: 15, type: "OBJECT_LAND", label: 'Feature 3 lands: "Rhythm Analytics"',  intensity: "medium", notes: "Beat 3. Final feature of the three." },
+  { id: "pulse-cue-15", frame: 300, duration: 15, type: "TEXT_REVEAL", label: '"Three pillars of flow" headline',      intensity: "soft",   notes: "Bar 6. Section context line appears after features settled." },
 
   // ── Scene 4: Metrics (f360–f420) ──────────────────────────────────────────
-  { frame: 360, type: "SCENE_CUT",   label: '→ Metrics: "2.4×" stat builds',        intensity: "hard",   notes: "Bar 7. Impact. Each metric gets its own beat." },
-  { frame: 360, type: "STAT_BUILD",  label: '"2.4× Deeper Focus" enters',           intensity: "hard",   notes: "Beat 1. 140px dominant number. Heavy impact + decay." },
-  { frame: 375, type: "STAT_BUILD",  label: '"94% Flow Rate" enters',               intensity: "hard",   notes: "Beat 2. Second metric. Echo of beat 1." },
-  { frame: 390, type: "STAT_BUILD",  label: '"47min Avg Session" enters',           intensity: "hard",   notes: "Beat 3. Third and final metric." },
+  { id: "pulse-cue-16", frame: 360, duration: 1,  type: "SCENE_CUT",   label: '→ Metrics: "2.4×" stat builds',        intensity: "hard",   notes: "Bar 7. Impact. Each metric gets its own beat." },
+  { id: "pulse-cue-17", frame: 360, duration: 15, type: "STAT_BUILD",  label: '"2.4× Deeper Focus" enters',           intensity: "hard",   notes: "Beat 1. 140px dominant number. Heavy impact + decay." },
+  { id: "pulse-cue-18", frame: 375, duration: 15, type: "STAT_BUILD",  label: '"94% Flow Rate" enters',               intensity: "hard",   notes: "Beat 2. Second metric. Echo of beat 1." },
+  { id: "pulse-cue-19", frame: 390, duration: 15, type: "STAT_BUILD",  label: '"47min Avg Session" enters',           intensity: "hard",   notes: "Beat 3. Third and final metric." },
 
   // ── Scene 5: CTA (f420–f480) ──────────────────────────────────────────────
-  { frame: 420, type: "SCENE_CUT",   label: "→ CTA: Background darkens",            intensity: "hard",   notes: "Bar 8. Final scene. Tone shift — feels like resolution." },
-  { frame: 435, type: "TEXT_IMPACT", label: '"Find your rhythm." headline',         intensity: "medium", notes: "Beat 2. Two-line headline enters. Cinematic blur-reveal." },
-  { frame: 450, type: "CTA_REVEAL",  label: "Button + URL reveals",                 intensity: "medium", notes: "Beat 3. Call-to-action. Clean, decisive. Ad ends at f480." },
+  { id: "pulse-cue-20", frame: 420, duration: 1,  type: "SCENE_CUT",   label: "→ CTA: Background darkens",            intensity: "hard",   notes: "Bar 8. Final scene. Tone shift — feels like resolution." },
+  { id: "pulse-cue-21", frame: 435, duration: 15, type: "TEXT_IMPACT", label: '"Find your rhythm." headline',         intensity: "medium", notes: "Beat 2. Two-line headline enters. Cinematic blur-reveal." },
+  { id: "pulse-cue-22", frame: 450, duration: 15, type: "CTA_REVEAL",  label: "Button + URL reveals",                 intensity: "medium", notes: "Beat 3. Call-to-action. Clean, decisive. Ad ends at f480." },
 ];
 
 // ─── Root Export ──────────────────────────────────────────────────────────────

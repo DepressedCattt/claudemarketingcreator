@@ -1,0 +1,105 @@
+---
+description: Check compare-results/ for visual comparison feedback before editing a composition. Apply fixes in priority order. Use when editing any composition that has been compared against a reference.
+globs: src/compositions/*.tsx
+alwaysApply: false
+---
+
+# Visual Comparison Feedback — Apply Before Editing
+
+When editing a composition in `src/compositions/`, ALWAYS check `compare-results/` for a
+comparison JSON file before making changes. If one exists for this composition, read it and
+apply the fixes in priority order (P1 first) before doing anything else.
+
+---
+
+## Step 1 — Find the latest comparison result
+
+Look for files matching: `compare-results/<compId>-iter*.json`
+
+Example: if editing `src/compositions/LangEaseAd.tsx` (id: `langease-v1`),
+check for `compare-results/langease-v1-iter*.json`.
+
+Take the file with the highest iteration number.
+
+---
+
+## Step 2 — Read the JSON and understand the feedback
+
+The JSON structure:
+
+```json
+{
+  "compId": "langease-v1",
+  "iterN": 2,
+  "overallScore": 67,
+  "categories": {
+    "colors":        { "score": 18, "max": 20, "note": "..." },
+    "motionTiming":  { "score": 12, "max": 20, "note": "..." },
+    "typography":    { "score": 15, "max": 20, "note": "..." },
+    "layout":        { "score": 14, "max": 20, "note": "..." },
+    "kineticEnergy": { "score": 8,  "max": 20, "note": "..." }
+  },
+  "fixes": [
+    {
+      "priority": 1,
+      "category": "kineticEnergy",
+      "issue": "Animations feel sluggish...",
+      "codeHint": "Change spring config to { stiffness: 200, damping: 25, mass: 0.8 }"
+    }
+  ],
+  "iterationNote": "The biggest gap is motion speed."
+}
+```
+
+---
+
+## Step 3 — Apply fixes in priority order
+
+- Apply P1 (priority 1) fixes first — these have the highest visual impact
+- Each `codeHint` is a concrete Remotion/CSS instruction. Follow it literally.
+- Do NOT skip or reorder fixes unless they directly conflict.
+- After applying all fixes, note the iteration in a comment at the top of the file:
+  `// Last comparison: iter{N}, score {overallScore}/100. Fixed: P1, P2, P3.`
+
+---
+
+## Step 4 — Tell the user what was applied
+
+After making changes, summarize:
+- Which fixes were applied (by priority and category)
+- What the score was when you started (`iter N, score X/100`)
+- What to do next: re-render with `▶ Export MP4` then click `⚖ Compare` in the Studio
+
+---
+
+## Common fix patterns
+
+| Category | Common issue | Fix |
+|---|---|---|
+| kineticEnergy | Feels sluggish | Increase spring `stiffness` to 180–220, `damping` to 22–28 |
+| motionTiming | Beats too slow | Reduce `durationInFrames` per Sequence, tighten stagger delays |
+| typography | Wrong reveal | Switch from `translateY` to blur-in + scale: `useCinematicTextReveal` |
+| colors | Wrong accent | Update `C.blue` / `C.accent` to the exact hex from the comparison note |
+| layout | Card offset | Adjust `top` / `left` / `translateY` values to match described position |
+
+---
+
+## When no comparison file exists
+
+If `compare-results/` is empty or has no file for this composition, skip this rule entirely.
+Proceed with the user's instructions as normal. No comparison has been run yet.
+
+---
+
+## The full workflow for one iteration cycle
+
+```
+1. User: "Build the ad"  →  Agent writes composition
+2. User: ▶ Export MP4   →  Renders to out/<compId>.mp4
+3. User: ⚖ Compare      →  Picks reference + rendered, clicks Compare
+4. Gemini compares both  →  Writes compare-results/<compId>-iter1.json
+5. User: "Apply the fixes" →  Agent reads JSON, applies P1→P2→P3 in order
+6. User: ▶ Export MP4   →  Re-renders
+7. User: ⚖ Compare      →  Score should be higher → iter2.json written
+8. Repeat until score ≥ 85 or user is satisfied
+```

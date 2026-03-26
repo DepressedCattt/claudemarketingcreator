@@ -1,0 +1,4 @@
+{
+  "description": "Parameter evolution log — records every comparison iteration and parameter deltas applied. Written by scripts/update-params.js after each compare-ads run.",
+  "entries": []
+}

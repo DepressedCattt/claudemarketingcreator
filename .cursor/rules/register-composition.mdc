@@ -1,0 +1,138 @@
+---
+description: Register every new Remotion composition in both Root.tsx and the studio registry. Apply whenever a new composition file is created in src/compositions/.
+globs: src/compositions/*.tsx
+alwaysApply: false
+---
+
+# New Composition — Mandatory Registration Checklist
+
+Every time a new composition file is created in `src/compositions/`, you MUST
+register it in **both** of the following files before the task is considered done.
+Never skip either step. Never ask the user to do it manually.
+
+---
+
+## Step 1 — `src/Root.tsx`
+
+Add a `<Composition>` block inside `RemotionRoot`. Match the format of existing entries:
+
+```tsx
+// LangEaseAd — 9:16, 18s — brief description
+<Composition
+  id="langease-v1"
+  component={LangEaseAd}
+  durationInFrames={540}
+  fps={30}
+  width={1080}
+  height={1920}
+  defaultProps={{}}
+/>
+```
+
+- Import the component at the top of `Root.tsx`
+- `id` must be kebab-case and end with a version suffix (e.g. `-v1`)
+- `width`/`height` must match the composition's intended format (9:16 = 1080×1920, 1:1 = 1080×1080, 16:9 = 1920×1080)
+
+---
+
+## Step 2 — `studio/src/registry.ts`
+
+Add an entry to the `REGISTRY` array. This is what makes the composition visible in the custom Studio UI:
+
+```ts
+// ── LangEaseAd ────────────────────────────────────────────────────────────
+{
+  id:               "langease-v1",           // must match Root.tsx id
+  label:            "LangEase — Translate. Dub. Distribute.",
+  component:        LangEaseAd,
+  durationInFrames: 540,
+  fps:              30,
+  width:            1080,
+  height:           1920,
+  format:           "9:16",
+  defaultProps:     {},
+  sequences: [
+    { id: "s1", label: "Hook",     from: 0,   durationInFrames: 90,  color: CLR.hook     },
+    { id: "s2", label: "Platform", from: 90,  durationInFrames: 135, color: CLR.product  },
+    { id: "s3", label: "Features", from: 225, durationInFrames: 135, color: CLR.features },
+    { id: "s4", label: "Tagline",  from: 360, durationInFrames: 90,  color: CLR.metrics  },
+    { id: "s5", label: "CTA",      from: 450, durationInFrames: 90,  color: CLR.cta      },
+  ],
+},
+```
+
+- Import the component at the top of `registry.ts` using the `@comps/` alias (e.g. `import { LangEaseAd } from "@comps/LangEaseAd"`)
+- `sequences` should reflect the actual scene breakdown in the composition
+- Use the `CLR` colour constants: `CLR.hook`, `CLR.product`, `CLR.features`, `CLR.metrics`, `CLR.cta`, `CLR.generic`
+- `label` should be human-readable with a short tagline
+
+---
+
+## Sequence colours reference
+
+```ts
+const CLR = {
+  hook:     "#0ea5e9",  // sky     — S1
+  product:  "#8b5cf6",  // violet  — S2
+  features: "#10b981",  // emerald — S3
+  metrics:  "#f59e0b",  // amber   — S4
+  cta:      "#ef4444",  // red     — S5
+  generic:  "#6366f1",  // indigo  — extra scenes
+};
+```
+
+---
+
+## Format reference
+
+| Format | width | height | format string |
+|--------|-------|--------|---------------|
+| 9:16   | 1080  | 1920   | `"9:16"`      |
+| 1:1    | 1080  | 1080   | `"1:1"`       |
+| 16:9   | 1920  | 1080   | `"16:9"`      |
+
+---
+
+## Why both files are required
+
+- **`src/Root.tsx`** — Remotion's renderer reads this. Without it, `npm run render` won't find the composition.
+- **`studio/src/registry.ts`** — The custom Studio UI reads this. Without it, the composition won't appear in the left panel or timeline. This is why the user has to "keep asking" — only one of the two was being updated.
+
+Both must be updated in the **same session** that creates the composition file.
+
+---
+
+## Duration Sync Checklist
+
+When changing the total duration of a composition (adding/removing scenes, extending `SceneFade dur`), update **all three locations**:
+
+| Location | Field to update |
+|----------|----------------|
+| `src/compositions/*.tsx` | `SceneFade dur` prop on the affected scene |
+| `src/Root.tsx` | `durationInFrames` on the `<Composition>` |
+| `studio/src/registry.ts` | `durationInFrames` on the registry entry AND the matching sequence's `durationInFrames` |
+
+**All three must match.** If they don't:
+- Remotion will render the wrong number of frames (Root.tsx mismatch)
+- Studio timeline will show wrong scene boundaries (registry mismatch)
+- Scenes will overlap or cut short (SceneFade mismatch)
+
+### Quick check after any duration change:
+```
+grep -n "durationInFrames" src/Root.tsx studio/src/registry.ts | grep "composition-id"
+```
+
+Verify the numbers match. This is the #1 source of "why does my scene cut off?" bugs.
+
+---
+
+## Category & Subcategory
+
+Every registry entry should include `category` and `subcategories` for scoped knowledge lookup:
+
+```ts
+category: "saas",
+subcategories: ["text-animation", "ui-elements", "transitions"],
+```
+
+Available categories are defined in `src/data/categories/*.json`. If a composition doesn't fit an existing category, create a new JSON file.

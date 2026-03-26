@@ -39,14 +39,22 @@ export type CueEventType =
 export type CueIntensity = "hard" | "medium" | "soft";
 
 export interface CueEvent {
+  /** Unique identifier for this cue (used as React key and for editing). */
+  id:              string;
   /** Global frame number within the composition (0-based). */
-  frame:     number;
+  frame:           number;
+  /** Duration of the cue in frames. */
+  duration:        number;
   /** Category of animation event. */
-  type:      CueEventType;
+  type:            CueEventType;
   /** Short human-readable label for the event. */
-  label:     string;
+  label:           string;
   /** Suggested sound intensity. */
-  intensity: CueIntensity;
+  intensity:       CueIntensity;
+  /** Suggested SFX characteristics (e.g. "metallic sweep with reverb tail"). */
+  sfxDescription?: string;
+  /** Ready-to-paste ElevenLabs SFX generation prompt. */
+  elevenLabsPrompt?: string;
   /** Optional notes for the sound designer / music generator. */
-  notes?:    string;
+  notes?:          string;
 }

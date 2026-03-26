@@ -1,16 +1,17 @@
 import React, { useEffect } from "react";
 import { useStudio }        from "./store/useStudio";
-import { checkHealth, listAudioFiles, loadStudioState } from "./api";
+import { checkHealth, listAudioFiles, loadStudioState, listSfx, loadCues } from "./api";
 import { Header }           from "./components/Header";
 import { LeftPanel }        from "./components/LeftPanel";
 import { PreviewPlayer }    from "./components/PreviewPlayer";
 import { PropertiesPanel }  from "./components/PropertiesPanel";
 import { Timeline }         from "./components/Timeline";
+import { REGISTRY }         from "./registry";
 
 const POLL_MS = 4000;
 
 export const App: React.FC = () => {
-  const { setAudioFiles, setServerOnline, setAudioTracks } = useStudio();
+  const { setAudioFiles, setServerOnline, setAudioTracks, setSfxMap, setCues, activeCompId } = useStudio();
 
   // Poll server health + refresh audio library
   useEffect(() => {
@@ -29,13 +30,34 @@ export const App: React.FC = () => {
             setAudioTracks(id, tracks);
           });
         } catch { /* first run, no state yet */ }
+
+        try {
+          const lib = await listSfx();
+          const map: Record<string, string> = {};
+          for (const [key, defaultId] of Object.entries(lib.defaults)) {
+            if (!defaultId) continue;
+            const entry = lib.entries.find(e => e.id === defaultId);
+            if (entry) map[key] = `/audio/sfx/${entry.file}`;
+          }
+          setSfxMap(map);
+        } catch { /* no sfx library yet */ }
+
+        try {
+          const apiCues = await loadCues(activeCompId);
+          if (apiCues.length > 0) {
+            setCues(activeCompId, apiCues);
+          } else {
+            const reg = REGISTRY.find((c) => c.id === activeCompId);
+            if (reg?.cues?.length) setCues(activeCompId, reg.cues);
+          }
+        } catch { /* no cues yet */ }
       }
     };
 
     poll();
     const id = setInterval(poll, POLL_MS);
     return () => clearInterval(id);
-  }, [setAudioFiles, setServerOnline, setAudioTracks]);
+  }, [setAudioFiles, setServerOnline, setAudioTracks, setSfxMap, setCues, activeCompId]);
 
   return (
     <div style={{

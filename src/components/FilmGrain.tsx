@@ -1,68 +1,68 @@
 /**
- * FilmGrain
+ * FilmGrain — SVG feTurbulence dither overlay to combat gradient banding.
  *
- * Adds an animated film grain / noise texture over any scene.
- * Uses an SVG feTurbulence filter that shifts its seed each frame
- * to produce authentic animated grain.
+ * H.264's 8-bit 4:2:0 encoding crushes subtle dark gradients into visible
+ * "steps" (banding). A noise overlay breaks up the uniform areas so the
+ * encoder preserves smooth transitions instead of quantizing them.
  *
- * Drop this as a child anywhere — it's absolutely positioned.
+ * Uses luminance noise with `overlay` blend mode so it affects both darks
+ * and lights equally — unlike `screen` which is invisible on dark backgrounds.
  *
- * Usage:
- *   <AbsoluteFill>
- *     <YourScene />
- *     <FilmGrain opacity={0.06} />
- *   </AbsoluteFill>
+ * Usage:  <FilmGrain />   (place as the LAST child in AbsoluteFill)
  */
 
 import React from "react";
 import { AbsoluteFill, useCurrentFrame } from "remotion";
 
 interface Props {
-  /** Grain opacity (default: 0.06) */
+  /** Grain intensity. 0.06–0.12 is a good range. Default: 0.08 */
   opacity?: number;
-  /** CSS blend mode (default: "overlay") */
-  blendMode?: React.CSSProperties["mixBlendMode"];
-  /** Grain frequency — higher = finer grain (default: 0.65) */
+  /** feTurbulence base frequency. Higher = finer grain. Default: 0.7 */
   frequency?: number;
+  /** Whether the grain pattern shifts each frame. Default: true */
+  animated?: boolean;
 }
 
 export const FilmGrain: React.FC<Props> = ({
-  opacity = 0.06,
-  blendMode = "overlay",
-  frequency = 0.65,
+  opacity = 0.08,
+  frequency = 0.7,
+  animated = true,
 }) => {
   const frame = useCurrentFrame();
-  // Shift seed each frame so grain animates (doesn't freeze)
-  const seed = frame % 100;
+  const seed = animated ? (frame % 120) + 1 : 1;
+  const filterId = `dither-${seed}`;
 
   return (
     <AbsoluteFill style={{ pointerEvents: "none" }}>
-      <svg style={{ position: "absolute", width: 0, height: 0 }}>
-        <defs>
-          <filter id={`film-grain-${seed}`} x="0%" y="0%" width="100%" height="100%">
-            <feTurbulence
-              type="fractalNoise"
-              baseFrequency={frequency}
-              numOctaves={4}
-              seed={seed}
-              stitchTiles="stitch"
-              result="noise"
-            />
-            <feColorMatrix type="saturate" values="0" in="noise" result="greyNoise" />
-            <feBlend in="SourceGraphic" in2="greyNoise" mode="overlay" />
-          </filter>
-        </defs>
-      </svg>
-
-      <AbsoluteFill
-        style={{
-          filter: `url(#film-grain-${seed})`,
-          opacity,
-          mixBlendMode: blendMode,
-        }}
+      <svg
+        width="100%"
+        height="100%"
+        style={{ display: "block", position: "absolute", inset: 0 }}
+        xmlns="http://www.w3.org/2000/svg"
       >
-        <div style={{ width: "100%", height: "100%", background: "#888888" }} />
-      </AbsoluteFill>
+        <filter id={filterId} x="0%" y="0%" width="100%" height="100%">
+          <feTurbulence
+            type="fractalNoise"
+            baseFrequency={frequency}
+            numOctaves={4}
+            seed={seed}
+            stitchTiles="stitch"
+            result="noise"
+          />
+          <feColorMatrix
+            type="saturate"
+            values="0"
+            in="noise"
+            result="mono"
+          />
+        </filter>
+        <rect
+          width="100%"
+          height="100%"
+          filter={`url(#${filterId})`}
+          style={{ opacity, mixBlendMode: "overlay" }}
+        />
+      </svg>
     </AbsoluteFill>
   );
 };

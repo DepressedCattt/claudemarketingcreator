@@ -31,23 +31,22 @@ export const CompositionWithAudio: React.FC<CompositionWithAudioProps> = ({
   audioTracks,
 }) => (
   <AbsoluteFill>
-    {/* Render the actual composition */}
     <Inner {...innerProps} />
 
-    {/* Overlay audio tracks — each wrapped in a Sequence so `offset`
-        controls when playback starts within the composition timeline. */}
     {audioTracks.map((track, i) => {
-      // endAt inside the Sequence is relative to the Sequence's own frame 0,
-      // which equals composition frame `track.offset`.
-      const seqEndAt = track.endAt - track.offset;
-
+      // Remotion's <Audio endAt={E}> internally wraps in
+      //   <Sequence from={-startFrom} durationInFrames={E}>
+      // Inside our outer <Sequence from={offset}>, the audio ends at comp frame:
+      //   offset + (E - startFrom) = track.endAt   →   E = endAt - offset + startFrom
+      // Remotion naturally stops rendering past the composition boundary.
+      const audioEndAt = track.endAt - track.offset + track.startFrom;
       return (
         <Sequence key={i} from={track.offset} layout="none">
           <Audio
-            src={track.src}
+            src={track.pitchedSrc ?? track.src}
             startFrom={track.startFrom}
-            endAt={seqEndAt > 0 ? seqEndAt : undefined}
-            volume={track.volume}
+            endAt={audioEndAt > 0 ? audioEndAt : undefined}
+            volume={Math.min(1, track.volume)}
             loop={track.loop}
           />
         </Sequence>

@@ -1,0 +1,121 @@
+---
+description: Governance rules for storing, routing, and maintaining the animation knowledge base. Ensures new learnings go to the right place and the system stays organized.
+globs:
+alwaysApply: true
+---
+
+# Knowledge Maintenance Protocol
+
+This rule governs how new knowledge is stored, where it goes, and when to clean up.
+It fires on every conversation to prevent knowledge rot.
+
+---
+
+## Routing Decision Tree — Where Does New Knowledge Go?
+
+When you learn something new (from user feedback, iteration, or experimentation), route it using this tree:
+
+```
+NEW LEARNING
+    │
+    ├─ Hard constraint that should ALWAYS be enforced?
+    │  (e.g., "never cross-fade misaligned duplicates")
+    │  → Add to appropriate .cursor/rules/*.mdc file
+    │    If no existing rule fits, create a new .mdc
+    │
+    ├─ Reusable code pattern with parameters?
+    │  (e.g., "Gaussian sweep: Math.exp(-dist*dist*N)")
+    │  → Create/update docs/recipes/{category}/*.md
+    │    Use existing recipe YAML template
+    │
+    ├─ Per-ad post-mortem? (what worked / didn't / spring configs)
+    │  → Write to docs/learnings/ads/{name}.md
+    │
+    └─ General theory or principle?
+       Route by topic:
+         Motion technique      → docs/learnings/motion.md
+         Pacing / timing       → docs/learnings/pacing.md
+         Design / commercial   → docs/learnings/principles.md
+         3D / Three.js         → docs/learnings/three-d.md
+         Video / plates        → docs/learnings/video-workflow.md
+         SVG / assets          → docs/learnings/svg-pipeline.md
+```
+
+**Most lessons go to TWO places:** the actionable version (rule or recipe) AND the contextual version (learnings file with the story of why).
+
+---
+
+## File Size Guardrails
+
+After writing to any knowledge file, check its size:
+
+- **Learnings files:** If > 800 lines, split by subsection into two files. Update `docs/learnings/INDEX.md`.
+- **Rule files (.mdc):** If > 150 lines, consider splitting by concern. One rule = one concept.
+- **Recipe files:** If > 200 lines, the recipe may be trying to cover multiple techniques. Split it.
+
+---
+
+## Graduation Protocol (Run Every 3 Ads)
+
+For each entry in `docs/learnings/ads/*.md`:
+
+1. Has this lesson appeared in 2+ ad post-mortems?
+2. Is it fully captured in a `.mdc` rule OR `docs/recipes/` file?
+
+**If BOTH yes:** Condense to a one-liner reference:
+```markdown
+#### Topic [GRADUATED → path/to/rule-or-recipe]
+One sentence summary. See rule/recipe for full details.
+```
+
+**If no:** Keep the full detail — it hasn't proven itself yet.
+
+**Important:** Only the user can mark a recipe as `superseded`. The agent may suggest it but must never deprecate unilaterally.
+
+---
+
+## INDEX.md Is the Source of Truth
+
+Every time a file is added, moved, or split:
+1. Update `docs/learnings/INDEX.md` routing table
+2. Update `docs/learnings/INDEX.md` topic files table
+3. If a new ad post-mortem is created, add it to the ads table
+
+---
+
+## End-of-Session Capture Prompt
+
+At the end of any session where 3+ iterations were needed on the same element, prompt the user:
+
+> "We iterated on [X] multiple times. Want me to capture what we learned?"
+
+This makes knowledge capture habitual rather than ad-hoc.
+
+---
+
+## Recipe Metadata Requirements
+
+All recipes must include in their YAML frontmatter:
+
+```yaml
+technique: name-of-technique
+use_when: "One sentence describing when to use this technique"
+see_also:
+  - file: alternative-technique.md
+    tradeoff: "When to use this alternative instead"
+```
+
+- `use_when` is the routing key — it helps agents pick the right recipe for the brief
+- `see_also` links related techniques with trade-off context
+- Default status is always `active` — nothing gets deprecated without explicit user approval
+
+---
+
+## Cross-Reference Format
+
+Use heading anchors for stable cross-references:
+```markdown
+[see: docs/learnings/ads/calmly.md#epicyclic-motion]
+```
+
+Never reference line numbers — they shift as files grow.

@@ -30,6 +30,7 @@ import { Player, type PlayerRef }                        from "@remotion/player"
 import { useStudio }                                      from "../store/useStudio";
 import { getComp }                                        from "../registry";
 import { CompositionWithAudio, type CompositionWithAudioProps } from "./CompositionWithAudio";
+import type { AudioTrack } from "../types";
 
 // ─── Error boundary ────────────────────────────────────────────────────────
 class PlayerErrorBoundary extends Component<
@@ -112,11 +113,42 @@ const Icon: React.FC<{
 
 // ─── Main component ─────────────────────────────────────────────────────────
 export const PreviewPlayer: React.FC = () => {
-  const { activeCompId, frame, playing, setFrame, setPlaying, audioTracks } = useStudio();
+  const {
+    activeCompId, frame, playing, setFrame, setPlaying,
+    audioTracks, sfxEnabled, setSfxEnabled, sfxMap, sfxVolume, setSfxVolume,
+    durationOverrides,
+  } = useStudio();
   const comp          = getComp(activeCompId);
-  const tracks        = (activeCompId && audioTracks[activeCompId]) ?? [];
+  const effectiveDuration = (comp && durationOverrides[activeCompId]) ?? comp?.durationInFrames ?? 1;
+  const userTracks    = (activeCompId && audioTracks[activeCompId]) ?? [];
   const playerRef     = useRef<PlayerRef>(null);
   const canvasAreaRef = useRef<HTMLDivElement>(null);
+
+  // Build SFX audio tracks from composition cues + library defaults
+  const sfxTracks: AudioTrack[] = React.useMemo(() => {
+    if (!sfxEnabled || !comp?.cues) return [];
+    return comp.cues
+      .map((cue) => {
+        const key = `${cue.type}:${cue.intensity}`;
+        const src = sfxMap[key];
+        if (!src) return null;
+        const intensityVol = cue.intensity === "hard" ? 1.0 : cue.intensity === "medium" ? 0.7 : 0.4;
+        return {
+          src,
+          offset:    cue.frame,
+          startFrom: 0,
+          endAt:     cue.frame + 60,
+          volume:    intensityVol * sfxVolume,
+          loop:      false,
+        } satisfies AudioTrack;
+      })
+      .filter((t): t is AudioTrack => t !== null);
+  }, [sfxEnabled, comp?.cues, sfxMap, sfxVolume]);
+
+  const tracks = React.useMemo(
+    () => [...userTracks, ...sfxTracks],
+    [userTracks, sfxTracks],
+  );
 
   const { isFullscreen, toggle: toggleFullscreen } = useFullscreen(canvasAreaRef);
   const [displayW, setDisplayW] = useState(0);
@@ -197,7 +229,7 @@ export const PreviewPlayer: React.FC = () => {
 
   const stepFrame = useCallback((delta: number) => {
     if (!playerRef.current || !comp) return;
-    const next = Math.max(0, Math.min(frame + delta, comp.durationInFrames - 1));
+    const next = Math.max(0, Math.min(frame + delta, effectiveDuration - 1));
     playerRef.current.seekTo(next);
     setFrame(next);
   }, [frame, comp, setFrame]);
@@ -213,9 +245,9 @@ export const PreviewPlayer: React.FC = () => {
     );
   }
 
-  const durationSec = (comp.durationInFrames / comp.fps).toFixed(1);
+  const durationSec = (effectiveDuration / comp.fps).toFixed(1);
   const currentSec  = (frame / comp.fps).toFixed(2);
-  const progress    = comp.durationInFrames > 0 ? frame / comp.durationInFrames : 0;
+  const progress    = effectiveDuration > 0 ? frame / effectiveDuration : 0;
 
   return (
     <div style={{ display: "flex", flexDirection: "column", height: "100%", background: "#141414" }}>
@@ -245,60 +277,33 @@ export const PreviewPlayer: React.FC = () => {
             background:   "#000",
           }}>
             <PlayerErrorBoundary key={activeCompId}>
-              {tracks.length > 0 ? (
-                // When audio tracks exist, wrap the composition so the Player
-                // can hear them during preview.
-                <Player
-                  key={`${activeCompId}-audio`}
-                  ref={playerRef}
-                  component={CompositionWithAudio}
-                  durationInFrames={comp.durationInFrames}
-                  fps={comp.fps}
-                  compositionWidth={comp.width}
-                  compositionHeight={comp.height}
-                  style={{ width: "100%", height: "100%", display: "block" }}
-                  inputProps={{
-                    innerComponent: comp.component,
-                    innerProps:     comp.defaultProps ?? {},
-                    audioTracks:    tracks,
-                  } satisfies CompositionWithAudioProps}
-                  clickToPlay={false}
-                  controls={false}
-                  acknowledgeRemotionLicense
-                  renderLoading={() => (
-                    <div style={{
-                      display: "flex", alignItems: "center", justifyContent: "center",
-                      height: "100%", background: "#111", color: "#555", fontSize: 12,
-                    }}>
-                      Loading…
-                    </div>
-                  )}
-                />
-              ) : (
-                // No audio — render the composition directly (cheaper path)
-                <Player
-                  key={activeCompId}
-                  ref={playerRef}
-                  component={comp.component}
-                  durationInFrames={comp.durationInFrames}
-                  fps={comp.fps}
-                  compositionWidth={comp.width}
-                  compositionHeight={comp.height}
-                  style={{ width: "100%", height: "100%", display: "block" }}
-                  inputProps={comp.defaultProps}
-                  clickToPlay={false}
-                  controls={false}
-                  acknowledgeRemotionLicense
-                  renderLoading={() => (
-                    <div style={{
-                      display: "flex", alignItems: "center", justifyContent: "center",
-                      height: "100%", background: "#111", color: "#555", fontSize: 12,
-                    }}>
-                      Loading…
-                    </div>
-                  )}
-                />
-              )}
+              <Player
+                key={activeCompId}
+                ref={playerRef}
+                component={CompositionWithAudio}
+                durationInFrames={effectiveDuration}
+                fps={comp.fps}
+                compositionWidth={comp.width}
+                compositionHeight={comp.height}
+                style={{ width: "100%", height: "100%", display: "block" }}
+                inputProps={{
+                  innerComponent: comp.component,
+                  innerProps:     comp.defaultProps ?? {},
+                  audioTracks:    tracks,
+                } satisfies CompositionWithAudioProps}
+                numberOfSharedAudioTags={16}
+                clickToPlay={false}
+                controls={false}
+                acknowledgeRemotionLicense
+                renderLoading={() => (
+                  <div style={{
+                    display: "flex", alignItems: "center", justifyContent: "center",
+                    height: "100%", background: "#111", color: "#555", fontSize: 12,
+                  }}>
+                    Loading…
+                  </div>
+                )}
+              />
             </PlayerErrorBoundary>
           </div>
         ) : (
@@ -311,7 +316,7 @@ export const PreviewPlayer: React.FC = () => {
         style={{ height: 4, background: "#1a1a1a", flexShrink: 0, cursor: "pointer" }}
         onClick={(e) => {
           const r = e.currentTarget.getBoundingClientRect();
-          const f = Math.round(((e.clientX - r.left) / r.width) * comp.durationInFrames);
+          const f = Math.round(((e.clientX - r.left) / r.width) * effectiveDuration);
           playerRef.current?.seekTo(f);
           setFrame(f);
         }}
@@ -353,12 +358,54 @@ export const PreviewPlayer: React.FC = () => {
           {currentSec}s / {durationSec}s
         </div>
         <div style={{ fontFamily: "monospace", fontSize: 11, color: "#555", whiteSpace: "nowrap", marginLeft: 8 }}>
-          f {frame} / {comp.durationInFrames}
+          f {frame} / {effectiveDuration}
         </div>
         <div style={{ width: 1, height: 20, background: "#333", margin: "0 8px" }} />
         <div style={{ fontSize: 10, color: "#555" }}>
           {comp.width}×{comp.height} · {comp.fps}fps
         </div>
+
+        <div style={{ width: 1, height: 20, background: "#333", margin: "0 8px" }} />
+
+        {/* SFX preview toggle + volume */}
+        {comp?.cues && comp.cues.length > 0 && (
+          <>
+            <button
+              title={sfxEnabled
+                ? `SFX ON (${sfxTracks.length}/${comp.cues.length} mapped) — click to disable`
+                : `Enable SFX preview (${comp.cues.length} cues)`
+              }
+              onClick={() => setSfxEnabled(!sfxEnabled)}
+              style={{
+                background:   sfxEnabled ? "#78350f" : "transparent",
+                border:       sfxEnabled ? "1px solid #f97316" : "1px solid transparent",
+                borderRadius: 4,
+                color:        sfxEnabled ? "#fb923c" : "#555",
+                height:       30,
+                padding:      "0 8px",
+                display:      "flex",
+                alignItems:   "center",
+                gap:          4,
+                fontSize:     11,
+                cursor:       "pointer",
+              }}
+              onMouseEnter={(e) => (e.currentTarget.style.background = sfxEnabled ? "#78350f" : "#2a2a2a")}
+              onMouseLeave={(e) => (e.currentTarget.style.background = sfxEnabled ? "#78350f" : "transparent")}
+            >
+              ♩ SFX
+            </button>
+            {sfxEnabled && (
+              <input
+                type="range"
+                min={0} max={100}
+                value={Math.round(sfxVolume * 100)}
+                onChange={(e) => setSfxVolume(parseInt(e.target.value, 10) / 100)}
+                title={`SFX volume: ${Math.round(sfxVolume * 100)}%`}
+                style={{ width: 50, height: 14, accentColor: "#f97316", cursor: "pointer" }}
+              />
+            )}
+          </>
+        )}
 
         <div style={{ width: 1, height: 20, background: "#333", margin: "0 8px" }} />
 

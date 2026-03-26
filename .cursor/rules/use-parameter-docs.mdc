@@ -1,0 +1,111 @@
+---
+description: Consult the parameter knowledge base (docs/params/, docs/recipes/, docs/profiles/) when creating or modifying any Remotion composition. Apply whenever a composition file is created or edited.
+globs: src/compositions/*.tsx
+alwaysApply: false
+---
+
+# Use Parameter Knowledge Base
+
+When creating or significantly modifying a Remotion composition, you MUST consult
+the structured parameter documentation in `docs/` to ensure motion, visual, and
+temporal parameters are correct for the target style profile.
+
+---
+
+## Step 1 — Identify the Style Profile
+
+Determine which profile the composition targets. Ask the user if unclear.
+
+| Profile | File | Key feel |
+|---------|------|----------|
+| Snappy SaaS | `docs/profiles/snappy-saas.md` | Apple-clean, critically damped, fast cuts |
+| Luxury Slow | `docs/profiles/luxury-slow.md` | Warm, organic, longer holds |
+| Kinetic Typography | `docs/profiles/kinetic-typography.md` | Text-dominant, word slams |
+| Dark Tech | `docs/profiles/dark-tech.md` | Dark bg, glow accents, ambient |
+| Product Showcase | `docs/profiles/product-showcase.md` | UI demos, dashboards, phone reveals |
+
+Read the full profile file. Use its L1–L5 parameter tables as your starting
+defaults for spring configs, colors, font sizes, scene durations, etc.
+
+---
+
+## Step 2 — Select Technique Recipes
+
+Based on the composition's storyboard, identify which animation techniques are
+needed and read the relevant recipe files from `docs/recipes/`:
+
+| Technique | Recipe file |
+|-----------|-------------|
+| Text blur-scale entrance | `docs/recipes/blur-scale-reveal.md` |
+| Curved hero arc entry | `docs/recipes/arc-entry.md` |
+| Feature list cascade | `docs/recipes/staggered-list.md` |
+| 3D phone tunnel | `docs/recipes/3d-phone-tunnel.md` |
+| Progress bar demo | `docs/recipes/progress-bar-demo.md` |
+| Word-by-word tagline | `docs/recipes/word-by-word-tagline.md` |
+| Rapid-fire hook | `docs/recipes/rapid-fire-hook.md` |
+| Frosted glass card | `docs/recipes/glassmorphic-card.md` |
+| Text scaling flood | `docs/recipes/typography-flood.md` |
+| Multi-line scatter exit | `docs/recipes/headline-scatter.md` |
+| Background de-emphasis | `docs/recipes/depth-deemphasis.md` |
+| Camera drift wrapper | `docs/recipes/camera-wrapper.md` |
+| Clip-path transitions | `docs/recipes/clip-path-transitions.md` |
+| Medium component animation (overview) | `docs/recipes/medium-component-animation.md` |
+| Glow card entrance | `docs/recipes/glow-card-entrance.md` |
+| SVG connector draw-on | `docs/recipes/svg-connector-draw.md` |
+| Notification pulse stack | `docs/recipes/notification-pulse-stack.md` |
+| Card assembly choreography | `docs/recipes/card-assembly-choreography.md` |
+
+Use the parameter table from each recipe, selecting the column matching
+your target profile.
+
+---
+
+## Step 3 — Reference Parameter Ranges
+
+If you need to tune a specific parameter beyond what the profile or recipe
+specifies, consult `docs/params/` for valid ranges:
+
+- `docs/params/physics.md` — L1: springs, easing, stagger
+- `docs/params/visual.md` — L2: blur, scale, translate, opacity
+- `docs/params/composition.md` — L3: typography, color, layout
+- `docs/params/temporal.md` — L4: scene durations, BPM, beat grids
+- `docs/params/techniques.md` — L5: reveal/transition/camera methods
+
+Never guess parameter values when the docs have the answer.
+
+---
+
+## Step 4 — After Comparison
+
+If a compare-ads result exists for this composition, read the latest
+`compare-results/<compId>-iter<N>.json` and `docs/parameter-log.json`
+to understand:
+
+1. Which parameters were flagged as deltas
+2. Whether previous adjustments improved the score
+3. Which parameters still need work
+
+Apply the `parameterDeltas` from the comparison result, prioritized
+by confidence score.
+
+---
+
+## Quick reference — Spring presets
+
+| Preset | stiffness | damping | mass | Profile |
+|--------|-----------|---------|------|---------|
+| SNAP | 200 | 25 | 0.8 | snappy-saas |
+| PREMIUM_SPRING.hero | 90 | 22 | 1.1 | luxury-slow |
+| SPRING.bouncy | 120 | 10 | 0.9 | kinetic-typography |
+| PREMIUM_SPRING.text | 120 | 28 | 0.7 | all (text) |
+| PREMIUM_SPRING.bg | 60 | 30 | 1.2 | luxury-slow (bg) |
+
+## Quick reference — Minimum constraints
+
+- spring.damping ≥ 18 for premium feel
+- float.amplitude ≤ 8px
+- float.periodFrames ≥ 70
+- blur.textReveal ≤ 14px (>14 excessive)
+- scene minimum 3s (90f at 30fps)
+- CTA scene 2–3s
+- depthDeemphasis opacity floor ≥ 0.35

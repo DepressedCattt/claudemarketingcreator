@@ -1,0 +1,610 @@
+{
+  "id": "saas",
+  "label": "SaaS / Dashboard",
+  "description": "Apple-clean, critically damped, fast cuts. Off-white backgrounds with blue gradient accents. Motion is digital, precise, and weightless — zero bounce, zero overshoot. Every element snaps to position as if magnetically guided.",
+  "profiles": ["snappy-saas"],
+  "subcategories": [
+    {
+      "id": "text-animation",
+      "label": "Text Animation",
+      "description": "Blur-scale text reveals, staggered word-by-word entrances, color cycling across phrases. Text appears via spring-driven blur-in (10px blur → 0, scale 0.92–0.98 → 1.0) with per-word stagger. No drift/translate on text — blur+scale only.",
+      "parameterRanges": {
+        "springs": {
+          "text": {
+            "stiffness": [120, 200],
+            "damping": [22, 28],
+            "mass": [0.7, 0.9]
+          }
+        },
+        "easing": ["easeOut3", "easeOut4"],
+        "stagger": { "min": 3, "max": 8 },
+        "blur": { "min": 8, "max": 12 },
+        "scale": { "entrance": [0.92, 0.98] },
+        "duration": { "min": 60, "max": 120 }
+      },
+      "techniques": ["blur-scale-reveal", "word-by-word-tagline", "staggered-list", "rapid-fire-hook"],
+      "compositions": ["saas-playground", "saas-explainer-v2", "forma2-v1", "langease-v1", "saas-showcase", "saas-showcase-2"],
+      "aeMapping": ["TextLayer", "TextDocument", "textAnimator"]
+    },
+    {
+      "id": "ui-elements",
+      "label": "UI Elements",
+      "description": "Floating frosted-glass cards, kanban boards, folders with animated sheets, dot indicators. Cards use backdrop-filter blur (10–12px), white/translucent backgrounds, subtle box-shadows. Elements enter with spring from off-screen (±120–160px) and may bob gently after settling.",
+      "parameterRanges": {
+        "springs": {
+          "ui": {
+            "stiffness": [110, 200],
+            "damping": [20, 25],
+            "mass": [0.8, 0.9]
+          }
+        },
+        "easing": ["easeOut3", "easeOut4"],
+        "stagger": { "min": 3, "max": 6 },
+        "blur": { "min": 6, "max": 12 },
+        "scale": { "entrance": [0.60, 0.70] },
+        "duration": { "min": 80, "max": 120 }
+      },
+      "techniques": ["glassmorphic-card"],
+      "compositions": ["saas-playground", "saas-explainer-v2", "forma2-v1", "pulse-v1", "saas-showcase", "saas-showcase-2"],
+      "aeMapping": ["ShapeLayer", "solidLayer", "precompLayer"]
+    },
+    {
+      "id": "data-viz",
+      "label": "Data Visualization",
+      "description": "Animated percentage counters (spring-driven count-up), progress bars, stat reveals. Numbers animate via spring progress mapped to target value. Large bold typography (380px+), centered, with text-shadow for depth.",
+      "parameterRanges": {
+        "springs": {
+          "hero": {
+            "stiffness": [90, 120],
+            "damping": [22, 28],
+            "mass": [1.0, 1.1]
+          }
+        },
+        "easing": ["easeOut4", "easeOut5"],
+        "stagger": { "min": 0, "max": 0 },
+        "blur": { "min": 0, "max": 0 },
+        "scale": { "entrance": [0.85, 0.95] },
+        "duration": { "min": 30, "max": 60 }
+      },
+      "techniques": ["progress-bar-demo"],
+      "compositions": ["saas-playground", "saas-explainer-v2", "pulse-v1", "saas-showcase", "saas-showcase-2"],
+      "aeMapping": ["TextLayer", "expression"]
+    },
+    {
+      "id": "transitions",
+      "label": "Scene Transitions",
+      "description": "Hard cuts between scenes (Sequence boundaries), with optional opacity cross-fades (8–10 frames). Exit uses usePremiumFadeOut (opacity 1→0 over 8–10f). No wipes or slides between scenes — clean cuts only. Exit scale 0.97 for subtle depth.",
+      "parameterRanges": {
+        "springs": {
+          "fade": {
+            "stiffness": [100, 120],
+            "damping": [28, 30],
+            "mass": [0.7, 0.8]
+          }
+        },
+        "easing": ["easeOut3"],
+        "stagger": { "min": 0, "max": 0 },
+        "blur": { "min": 0, "max": 0 },
+        "scale": { "entrance": [0.97, 1.0] },
+        "duration": { "min": 6, "max": 12 }
+      },
+      "techniques": [],
+      "compositions": ["saas-playground", "saas-explainer-v2", "forma2-v1", "langease-v1", "saas-showcase", "saas-showcase-2"],
+      "aeMapping": ["transition", "opacity"]
+    },
+    {
+      "id": "background-effects",
+      "label": "Background Effects",
+      "description": "Soft radial gradient blobs (700–900px, opacity 0.04–0.06), concentric dashed circles with slow rotation, SVG draw-on strokes (strokeDashoffset animation), subtle ripple expansions. All background elements use the slowest spring config (high damping, low stiffness) and pulse gently via sine wave.",
+      "parameterRanges": {
+        "springs": {
+          "bg": {
+            "stiffness": [30, 60],
+            "damping": [18, 30],
+            "mass": [1.2, 1.6]
+          }
+        },
+        "easing": ["easeOut3", "easeInOut3"],
+        "stagger": { "min": 4, "max": 8 },
+        "blur": { "min": 30, "max": 50 },
+        "scale": { "entrance": [0.65, 1.0] },
+        "duration": { "min": 60, "max": 180 }
+      },
+      "techniques": [],
+      "compositions": ["saas-playground", "saas-explainer-v2", "saas-showcase", "saas-showcase-2"],
+      "aeMapping": ["ShapeLayer", "gradient", "radialGradient"]
+    },
+    {
+      "id": "2d-camera-sweeps",
+      "label": "2D Camera Sweeps",
+      "description": "Fluid 2D virtual camera transforms using CSS scale + translate — corner-origin zooms, diagonal pans, orbital drifts, and perspective shifts. The camera never sits still; it breathes through multi-keyframe interpolate paths with per-scene transformOrigin anchored to corners or edges. Corner growth reveals expand content from a frame corner while the camera simultaneously pulls back or sweeps. All movement uses easeInOut4 for silk-smooth acceleration/deceleration with velocity-based motion blur at peak sweep speed. Distinct from 3D camera movement which uses Three.js / perspective transforms.",
+      "parameterRanges": {
+        "springs": {
+          "camera": {
+            "stiffness": [40, 80],
+            "damping": [24, 32],
+            "mass": [1.0, 1.4]
+          }
+        },
+        "easing": ["easeInOut3", "easeOut4", "easeOut5"],
+        "stagger": { "min": 0, "max": 0 },
+        "blur": { "min": 0, "max": 6 },
+        "scale": { "entrance": [0.0, 1.0] },
+        "duration": { "min": 90, "max": 180 },
+        "zoom": { "min": 1.0, "max": 1.25 },
+        "pan": { "xRange": [-60, 60], "yRange": [-40, 40] },
+        "roll": { "min": -1.5, "max": 1.5 },
+        "cornerOrigins": ["top left", "top right", "bottom left", "bottom right"]
+      },
+      "techniques": ["corner-zoom-reveal", "diagonal-pan", "corner-to-corner-sweep", "orbital-drift", "camera-wrapper"],
+      "compositions": ["saas-playground", "saas-camera"],
+      "aeMapping": ["transform", "position", "scale"]
+    },
+    {
+      "id": "3d-realm-camera",
+      "label": "3D Realm Camera",
+      "description": "CSS 3D perspective-driven camera movement with simple solid shapes. Two shape types only: TrueCube (6-face CSS 3D box with per-face shading) and TrueDiamond (identical 6-face cube rotated 45° on Z + 54.74° on X to balance on a vertex). All shapes render at full opacity and scale from frame 0 — NO spring entrance animations, NO stagger delays, NO gradient spheres or FlatSphere components. Camera movement (orbit, dolly, tumble, fly-through) is the only animated transform on the wrapper div. Shapes self-rotate slowly (spinSpeed 0.04–0.2) and bob gently via sine wave, but never change scale or opacity. NO filter:blur on any camera wrapper — CSS filters force rasterization of preserve-3d trees, causing flicker. OrbitalRing and GlowParticle are ambient decoration only. Text (TitleWord, SubtitleText) keeps spring entrances; shapes do not. Distinct from 2D camera sweeps which use only scale + translate.",
+      "parameterRanges": {
+        "springs": {
+          "text": {
+            "stiffness": [120, 200],
+            "damping": [22, 28],
+            "mass": [0.7, 0.9],
+            "note": "Text only — shapes do NOT use springs"
+          },
+          "camera": {
+            "stiffness": [30, 60],
+            "damping": [26, 32],
+            "mass": [1.1, 1.5],
+            "note": "CTA scene gentle camera breathe only"
+          }
+        },
+        "easing": ["easeInOut4", "easeOut4"],
+        "stagger": { "min": 0, "max": 0, "note": "Shapes have zero stagger — all visible from frame 0" },
+        "blur": { "min": 0, "max": 0, "note": "NEVER apply filter:blur to camera wrappers — causes flicker" },
+        "scale": { "entrance": [1.0, 1.0], "note": "Shapes always scale 1.0 — no entrance scaling" },
+        "duration": { "min": 100, "max": 130, "note": "Per scene, not total" },
+        "perspective": { "min": 2000, "max": 2400 },
+        "camera": {
+          "rotateY": { "min": -45, "max": 45 },
+          "rotateX": { "min": -15, "max": 15 },
+          "translateZ": { "min": 0, "max": 900 },
+          "holdFrames": { "min": 40, "max": 50, "note": "Camera holds still before sweep begins" },
+          "sweepFrames": { "min": 45, "max": 55, "note": "Duration of camera movement" }
+        },
+        "shapeTypes": {
+          "TrueCube": "6-face CSS box — rotateY(0/180/90/-90) + rotateX(90/-90) + translateZ(half). Per-face bg shading with backface-visibility:hidden. borderRadius 8% for softness.",
+          "TrueDiamond": "Same 6-face cube geometry, wrapper adds rotateZ(45deg) rotateX(54.74deg) to balance on vertex."
+        },
+        "objectSelfRotation": {
+          "spinSpeed": [0.04, 0.2],
+          "phaseOffset": [0, 300],
+          "bobAmplitude": [3, 5],
+          "bobFrequency": [0.015, 0.02],
+          "note": "Slow self-rotation + sine bob. No scale/opacity changes."
+        }
+      },
+      "techniques": ["3d-orbit", "depth-dolly", "multi-axis-tumble", "fly-through-corridor", "perspective-breathe", "cube-on-vertex-diamond"],
+      "compositions": ["saas-playground", "saas-3d-realm", "saas-3d-realm-2"],
+      "aeMapping": ["camera", "ADBE Camera Options Group", "ADBE Orientation", "ADBE Rotate X", "ADBE Rotate Y", "ADBE Rotate Z", "threeDLayer"],
+      "criticalRules": [
+        "Shapes must be fully visible from frame 0 — no spring entrance, no scale animation, no opacity animation",
+        "NEVER apply CSS filter (blur, drop-shadow, etc.) to any div with transform-style: preserve-3d — it forces rasterization and causes frame-to-frame flicker",
+        "Only two shape primitives: TrueCube and TrueDiamond — no circles, no gradient spheres, no clip-path triangles/pyramids",
+        "Camera wrapper uses willChange: transform for GPU compositing",
+        "Each shape needs unique phaseOffset to prevent visual synchronization",
+        "Scene transitions use SceneFade with fast linear fadeIn (1-8 frames) — shapes are already visible, only scene-level opacity changes"
+      ]
+    },
+    {
+      "id": "component-animation",
+      "label": "Component Animation",
+      "description": "Animated UI components — buttons, cards, toggles, badges, notification panels — that slide, scale, and spring into position with staggered entrances. Components are styled as realistic SaaS UI elements (pill buttons, stat cards, testimonial widgets, toggle switches, notification cards) on blue product backgrounds. Simple component animation uses basic spring-driven slide + scale + opacity with stagger delays. Complex component animation (future) will add inter-component choreography, data-flow visualizations, and micro-interactions.",
+      "parameterRanges": {
+        "springs": {
+          "pill": {
+            "stiffness": [140, 180],
+            "damping": [22, 26],
+            "mass": [0.8, 0.9],
+            "note": "Pill-shaped buttons — snappy slide-in from off-screen"
+          },
+          "card": {
+            "stiffness": [120, 160],
+            "damping": [20, 24],
+            "mass": [0.85, 0.95],
+            "note": "Dashboard cards — slightly heavier for gravitas"
+          },
+          "icon": {
+            "stiffness": [180, 220],
+            "damping": [18, 22],
+            "mass": [0.6, 0.8],
+            "note": "Small icons, checkmarks, stars — very snappy"
+          },
+          "cta": {
+            "stiffness": [100, 140],
+            "damping": [16, 20],
+            "mass": [0.85, 0.95],
+            "note": "CTA buttons — slight bounce allowed for attention"
+          }
+        },
+        "easing": ["easeOut3", "easeOut4"],
+        "stagger": { "min": 4, "max": 8, "note": "Between successive component entrances" },
+        "blur": { "min": 0, "max": 10, "note": "Title text only — components use opacity+scale, not blur" },
+        "scale": { "entrance": [0.7, 0.9], "note": "Components scale up from 70-90% to 100%" },
+        "translate": { "min": 200, "max": 600, "note": "Slide distance in px for off-screen entrances" },
+        "duration": { "min": 90, "max": 130, "note": "Per scene" },
+        "componentTypes": {
+          "pillButton": "Rounded rectangle (borderRadius = height), white bg, blue accent text, optional checkmark icon. Width 900-1100px at 4K.",
+          "statCard": "Rounded rectangle (borderRadius 48-60px), white bg, large counter number + label + progress bar. Width 800-1200px at 4K.",
+          "testimonialCard": "Rounded rectangle, white bg, star ratings + quote + author. Width 900-1400px at 4K.",
+          "toggleSwitch": "Track (140×72px) + knob (60px circle), animates from off to on state.",
+          "notificationCard": "Rounded rectangle, icon + text + timestamp. Slides in from right.",
+          "badge": "Small pill (borderRadius 60-100px), gradient or translucent bg, metric text.",
+          "ctaButton": "Pill shape, gradient blue bg, white text. Subtle pulse animation after entrance."
+        }
+      },
+      "techniques": ["simple-component-animation"],
+      "compositions": ["saas-playground", "saas-simple-component"],
+      "aeMapping": ["ShapeLayer", "precompLayer", "textDocument"],
+      "aeReference": {
+        "source": "SaaS_Product_Promo_Final.ae-extract.json",
+        "bgColor": "#5EB1FF",
+        "cardFill": "#F8F8F8",
+        "accentText": "#1B5DFF",
+        "cardStroke": "#83BBFF",
+        "cardRoundness": [60, 603],
+        "font": "Inter Medium/SemiBold"
+      },
+      "criticalRules": [
+        "Components must look like real UI elements — rounded corners, subtle shadows, proper text sizing",
+        "Blue background palette (#5EB1FF → #2E6FC0) from AE extract — darker per-scene for variety",
+        "Cards use white/near-white fill (#F8F8F8) with light blue border strokes (#83BBFF)",
+        "Text inside components uses blue accent (#1B5DFF) — never white on white cards",
+        "Stagger delays between component entrances create a cascade/assembly feel",
+        "Each scene should focus on ONE class of component (buttons, stats, reviews, toggles)",
+        "Checkmark draw-on animation uses SVG strokeDashoffset — triggered after button lands",
+        "CTA buttons get a subtle sine-wave pulse (amplitude 0.012-0.015) after spring settles"
+      ]
+    },
+    {
+      "id": "component-animation-medium",
+      "label": "Medium Component Animation",
+      "description": "Medium-complexity animated UI components with glow effects, inter-component data-flow choreography, ambient lighting (radiant gradient overlays, glow orbs), layered depth with parallax-like stagger, animated SVG connectors between components, notification stacks with pulse indicators, and multi-card assembly sequences. Steps up from simple component animation by adding richer visual effects inspired by After Effects glow (ADBE Glo2), drop shadows, inner shadows, and nested precomp patterns from Final Comp 1–10 AE extracts. Dark SaaS palette (#0F172A → #1E293B) with colored glow accents.",
+      "parameterRanges": {
+        "springs": {
+          "card": {
+            "stiffness": [130, 170],
+            "damping": [20, 24],
+            "mass": [0.85, 0.95],
+            "note": "Dashboard/node cards — medium weight with glow entrances"
+          },
+          "glow": {
+            "stiffness": [60, 100],
+            "damping": [24, 28],
+            "mass": [1.0, 1.2],
+            "note": "Ambient glow orbs and light sources — slow, organic reveal"
+          },
+          "connect": {
+            "stiffness": [80, 120],
+            "damping": [22, 26],
+            "mass": [0.9, 1.0],
+            "note": "SVG connector draw-on and data-flow animations"
+          },
+          "icon": {
+            "stiffness": [180, 220],
+            "damping": [18, 22],
+            "mass": [0.6, 0.8],
+            "note": "Notification badges, status indicators — very snappy"
+          },
+          "cta": {
+            "stiffness": [100, 140],
+            "damping": [16, 20],
+            "mass": [0.85, 0.95],
+            "note": "CTA buttons with gradient glow"
+          }
+        },
+        "easing": ["easeOut3", "easeOut4", "easeInOut3"],
+        "stagger": { "min": 4, "max": 10, "note": "Between card entrances and connector draw-ons" },
+        "blur": { "min": 0, "max": 12, "note": "Title text blur-reveal + ambient glow filter blur" },
+        "scale": { "entrance": [0.7, 0.9], "note": "Cards scale up from 70-90%" },
+        "translate": { "min": 60, "max": 400, "note": "Slide distance varies by component type" },
+        "duration": { "min": 110, "max": 150, "note": "Per scene — slightly longer for choreography" },
+        "glowEffects": {
+          "boxShadow": "Colored glow via box-shadow with pulse animation (sin wave, amplitude 0.3)",
+          "innerLight": "Radial gradient overlay inside cards at 15% opacity for top-lit effect",
+          "ambientOrbs": "Large radial gradient circles (500-900px) at 60% opacity with gentle bob",
+          "radiantSource": "Top-center light source via large blurred radial gradient",
+          "pulseRing": "Expanding ring around notification icons via scale + border animation"
+        },
+        "componentTypes": {
+          "glowCard": "Dark surface card (linear-gradient 145deg) with colored border + box-shadow glow. Inner radial gradient for light-source simulation.",
+          "dataFlowNode": "GlowCard with icon + title + status indicator. Connected by animated SVG paths.",
+          "animatedConnector": "Quadratic bezier SVG path with strokeDashoffset draw-on + traveling dot indicator.",
+          "notificationItem": "Horizontal card with icon, title, description, timestamp, and expanding pulse ring.",
+          "progressRing": "SVG circle with strokeDashoffset animation + center value/label text.",
+          "notificationBadge": "Small circle with count, colored glow shadow, scale-pulse animation.",
+          "assemblyCard": "Stacked cards that slide into overlapping positions with depth shadows."
+        }
+      },
+      "techniques": ["medium-component-animation", "glow-card-entrance", "svg-connector-draw", "notification-pulse-stack", "card-assembly-choreography"],
+      "compositions": ["saas-playground", "saas-medium-component"],
+      "aeMapping": ["ShapeLayer", "precompLayer", "textDocument", "ADBE Glo2", "ADBE Drop Shadow", "ADBE Inner Shadow"],
+      "aeReference": {
+        "source": "Final_Comp_1–10.ae-extract.json",
+        "resolution": "3840×2160",
+        "fps": 30,
+        "effects": ["Glow (ADBE Glo2)", "Drop Shadow", "Inner Shadow"],
+        "patterns": ["Nested precomps", "Shape layers with glow", "Multi-layer compositing"]
+      },
+      "criticalRules": [
+        "Dark background palette (#0F172A → #1E293B) — not the blue palette used in simple components",
+        "All cards use colored glow via box-shadow — the glow color matches the card's accent/category color",
+        "Inner light simulation via radial gradient overlay at 15% opacity inside each card",
+        "Ambient glow orbs breathe gently (sin wave, period ~33 frames) for organic feel",
+        "SVG connectors use quadratic bezier curves with strokeDashoffset draw-on + traveling dot",
+        "Notification items have expanding pulse rings around their icons for attention",
+        "Assembly scenes show cards sliding into overlapping stacked positions with progressive depth shadows",
+        "Status indicators use small colored dots with box-shadow glow (emerald = active)",
+        "CTA uses gradient background (accent → violet) with combined glow shadow"
+      ]
+    },
+    {
+      "id": "complex-animations",
+      "label": "Complex Animations",
+      "description": "Advanced animation techniques learned from professional After Effects templates (FINAL_RENDER_4K). These go far beyond simple spring-driven entrances — they use SVG filter chains, procedural generation, multi-phase motion (drift→snap), organic edge treatments, and physics-based overshoot. Every technique here was reverse-engineered from production AE projects and adapted for CSS/SVG/Remotion rendering.",
+      "parameterRanges": {
+        "springs": {
+          "bounce": {
+            "stiffness": [200, 260],
+            "damping": [12, 16],
+            "mass": [0.6, 0.8],
+            "note": "LOW damping for visible overshoot bounce — this is what makes elements feel alive"
+          },
+          "snap": {
+            "stiffness": [120, 160],
+            "damping": [16, 20],
+            "mass": [0.8, 1.0],
+            "note": "Medium damping — slight overshoot then settle, for magnet-snap cards"
+          },
+          "organic": {
+            "stiffness": [40, 80],
+            "damping": [18, 24],
+            "mass": [1.0, 1.4],
+            "note": "For slow organic blob/liquid motion — heavy, drifty"
+          }
+        },
+        "easing": ["easeOut3", "easeInOut3", "easeInOut4"],
+        "stagger": { "min": 2, "max": 6, "note": "Tight stagger (2-4f) for bounce-pop sequences" },
+        "blur": { "min": 0, "max": 50, "note": "SVG feGaussianBlur for liquid blobs can go very high" },
+        "scale": { "entrance": [0.0, 1.15], "note": "0→overshoot(1.15)→settle(1.0) for bounce pops" },
+        "duration": { "min": 15, "max": 50, "note": "Individual technique duration in frames" }
+      },
+      "subtypes": [
+        {
+          "id": "liquid-blob-transition",
+          "label": "Liquid Blob Transition",
+          "description": "Organic morphing blob shapes that flow across the screen as scene transitions. Uses SVG filter chain: feGaussianBlur (stdDeviation 30-50) + feColorMatrix threshold (alpha × 20 - 10) on animated ellipses. The blur merges overlapping circles into organic blob shapes. The signature technique from FINAL_RENDER_4K — used 16 times in that project.",
+          "recipe": "liquid-blob-transition",
+          "keyParameters": {
+            "blobCount": [3, 5],
+            "blobSizeRange": [200, 600],
+            "blurStdDeviation": [30, 50],
+            "thresholdContrast": [18, 25],
+            "displacementScale": [0, 15],
+            "transitionDuration": [20, 35]
+          }
+        },
+        {
+          "id": "unfurl-reveal",
+          "label": "Unfurl Reveal",
+          "description": "Cards and widgets reveal from one edge like a window shade rolling up. Uses clip-path: inset() animated from fully clipped to fully revealed, with a simultaneous scale-up (0.94→1.0). In AE uses Transform Scale Height with 6 keyframes. More visually interesting than opacity+translate.",
+          "recipe": "unfurl-reveal",
+          "keyParameters": {
+            "direction": ["bottom", "top", "left", "right"],
+            "duration": [18, 24],
+            "scaleStart": 0.94,
+            "scaleEnd": 1.0
+          }
+        },
+        {
+          "id": "magnet-snap-float",
+          "label": "Magnet Snap Float",
+          "description": "Cards drift loosely — translating and rotating with gentle momentum — then snap to their final position as if pulled by a magnet. Adds horizontal drift + rotation during approach + overshoot at snap point + 3D shadow that changes with position. Fundamentally different from simple translateY+opacity entrance.",
+          "recipe": "magnet-snap-float",
+          "keyParameters": {
+            "driftX": [-400, 400],
+            "driftY": [-200, 250],
+            "rotationRange": [-15, 15],
+            "shadowBlurRange": [20, 60],
+            "floatAfterSettle": true
+          }
+        },
+        {
+          "id": "bounce-pop-stagger",
+          "label": "Bounce Pop Stagger",
+          "description": "Elements scale from 0→overshoot(~115%)→settle(100%) with bouncy spring, staggered by 2-4 frames. KEY difference from our standard springs: LOW DAMPING (12-16). Our current springs use 22-28 damping (critically damped, no bounce). Dropping to 14 creates visible overshoot that makes elements pop.",
+          "recipe": "bounce-pop-stagger",
+          "keyParameters": {
+            "stiffness": [200, 260],
+            "damping": [12, 16],
+            "mass": [0.6, 0.8],
+            "staggerFrames": [2, 4],
+            "overshootPercent": [110, 120]
+          }
+        },
+        {
+          "id": "procedural-dot-grid",
+          "label": "Procedural Dot Grid",
+          "description": "Grid of small dots that fade in with a radial wave pattern — dots closer to center appear first, radiating outward. In AE uses Vector Repeater + Luma Key. Creates a tech-aesthetic background that's more alive than flat color but doesn't compete with foreground content. Dots breathe gently via sine wave.",
+          "recipe": "procedural-dot-grid",
+          "keyParameters": {
+            "cols": [20, 40],
+            "rows": [12, 24],
+            "dotSize": [3, 6],
+            "spacing": [80, 140],
+            "waveSpeed": [0.3, 0.6],
+            "maxOpacity": [0.15, 0.3]
+          }
+        },
+        {
+          "id": "tapered-draw-on",
+          "label": "Tapered Draw-On Stroke",
+          "description": "SVG strokes that draw themselves on with organic thickness variation — thicker at the start, tapering thin at the tip, like hand-drawn ink. In AE uses Trim Paths + Stroke Taper with animated Start/End Length. Implemented via layered SVG paths with decreasing stroke-width + strokeDashoffset animation.",
+          "recipe": "tapered-draw-on",
+          "keyParameters": {
+            "drawDuration": [15, 25],
+            "strokeWidthStart": [8, 14],
+            "strokeWidthEnd": [1, 3],
+            "glowBlur": [6, 10]
+          }
+        },
+        {
+          "id": "horizontal-card-scroll",
+          "label": "Horizontal Card Scroll",
+          "description": "Cards slide horizontally across the frame in a continuous carousel. Each card is a feature/widget showcase. In AE uses Position-only animation with 5-6 keyframes. Creates a smooth feature showcase without requiring the viewer to track vertically.",
+          "recipe": "horizontal-card-scroll",
+          "keyParameters": {
+            "cardCount": [4, 6],
+            "cardWidth": [750, 900],
+            "cardGap": [60, 100],
+            "easing": "easeInOut3"
+          }
+        }
+      ],
+      "techniques": ["liquid-blob-transition", "unfurl-reveal", "magnet-snap-float", "bounce-pop-stagger", "procedural-dot-grid", "tapered-draw-on", "horizontal-card-scroll"],
+      "compositions": ["anim-test"],
+      "aeMapping": ["ADBE Echo", "ADBE Fractal Noise", "ADBE Luma Key", "ADBE Roughen Edges", "ADBE Box Blur2", "ADBE Geometry2", "ADBE Vector Filter - Trim", "ADBE Vector Repeater"],
+      "aeReference": {
+        "source": "FINAL_RENDER_4K.ae-extract.json",
+        "resolution": "3840x2160",
+        "fps": 30,
+        "duration": "600 frames (20s)",
+        "effects": ["Echo", "Fractal Noise", "Luma Key", "Roughen Edges", "Fast Box Blur", "Transform", "Fill", "Simple Choker", "Tint"],
+        "signatureTechnique": "Liquid blob transition (Echo+Fractal Noise+Luma Key pipeline on adjustment layer over scaling ellipses)"
+      },
+      "criticalRules": [
+        "Liquid blobs: feColorMatrix threshold values (0 0 0 0 0 / 0 0 0 0 0 / 0 0 0 0 0 / 0 0 0 20 -10) are the key — they multiply alpha×20-10 creating crisp edges from gaussian blur",
+        "Bounce pops: damping MUST be 12-16, NOT 22-28 — the visible overshoot is the entire point",
+        "Magnet cards: must include rotation during drift, not just translation — the rotation adds perceived dimensionality",
+        "Dot grids: max opacity 0.2-0.3 — these are background texture, not foreground elements",
+        "Tapered strokes: use 5 layered SVG paths with decreasing width, not a single path — this simulates AE's Stroke Taper",
+        "All transitions in this category replace our default cross-fade/opacity transitions — they should feel organic and physical",
+        "Each unique SVG filter must have a unique filter ID to prevent conflicts when multiple instances coexist"
+      ]
+    },
+    {
+      "id": "spring-physics",
+      "label": "Spring Physics Presets",
+      "description": "Per-element-type spring presets that define the overall motion feel. Hero elements (focal point) use heavier mass and lower stiffness for gravitas. Text uses quick, critically-damped springs. UI elements snap crisply. Background elements drift slowly. These presets should be defined once per composition and reused consistently.",
+      "parameterRanges": {
+        "springs": {
+          "hero": {
+            "stiffness": [88, 120],
+            "damping": [20, 28],
+            "mass": [1.0, 1.2]
+          },
+          "text": {
+            "stiffness": [120, 220],
+            "damping": [22, 28],
+            "mass": [0.7, 0.9]
+          },
+          "ui": {
+            "stiffness": [110, 200],
+            "damping": [20, 28],
+            "mass": [0.8, 0.9]
+          },
+          "bg": {
+            "stiffness": [30, 60],
+            "damping": [18, 30],
+            "mass": [1.2, 1.6]
+          },
+          "settle": {
+            "stiffness": [80, 100],
+            "damping": [16, 22],
+            "mass": [1.0, 1.1]
+          }
+        },
+        "easing": ["easeOut3", "easeOut4", "easeOut5", "easeInOut2", "easeInOut3"],
+        "stagger": { "min": 3, "max": 30 },
+        "blur": { "min": 0, "max": 12 },
+        "scale": { "entrance": [0.85, 1.0] },
+        "duration": { "min": 450, "max": 660 }
+      },
+      "techniques": ["blur-scale-reveal", "glassmorphic-card", "word-by-word-tagline", "rapid-fire-hook", "progress-bar-demo", "staggered-list"],
+      "compositions": ["saas-playground", "saas-explainer-v2", "forma2-v1", "langease-v1", "pulse-v1", "saas-showcase", "saas-showcase-2"],
+      "aeMapping": []
+    }
+  ],
+  "colorGuidelines": {
+    "backgrounds": ["#FDFDFE", "#f2f2f2", "#fafafa", "#08080e"],
+    "accents": ["#2076FF", "#629DFF", "#4b63e9", "#3b53e9", "#f75d7f", "#fcbc05", "#10B981"],
+    "text": ["#1E1E1E", "#1c1c1c", "#ffffff", "#6B7280"]
+  },
+  "typographyGuidelines": {
+    "weights": [300, 400, 500, 600, 700],
+    "sizes": {
+      "hero": [96, 200],
+      "headline": [64, 128],
+      "body": [18, 22]
+    },
+    "letterSpacing": {
+      "hero": "-3px to -6px",
+      "body": "normal"
+    }
+  },
+  "temporalGuidelines": {
+    "bpm": [120, 128],
+    "sceneDuration": {
+      "hook": [60, 90],
+      "mid": [66, 180],
+      "cta": [40, 90]
+    },
+    "totalDuration": [450, 660],
+    "sceneCount": [5, 8],
+    "transitionType": "hard-cut",
+    "fadeOutFrames": [8, 12]
+  },
+  "compositionGuidelines": {
+    "spatialUtilization": {
+      "description": "Every scene must use the available canvas space effectively. On a 4K canvas (3840×2160) elements should not cluster in the center at tiny sizes — they should breathe and fill the frame. The focal element of each scene is the thing the viewer's eye should be drawn to first; it must be sized large enough to command attention immediately.",
+      "rules": [
+        "The focal element of each scene must occupy at least 30-50% of the canvas width or height",
+        "Supporting elements (cards, charts, decorative shapes) should be sized relative to the focal element — never so small that they feel like thumbnails on a large screen",
+        "On 4K canvases, UI cards should be at least 400-600px wide; on 1080p canvases, at least 200-300px",
+        "Stat widgets, counters, and KPI displays are attention-capture elements — size them as hero elements (40-60% of canvas width) not as small side elements",
+        "Leave intentional whitespace for breathing room, but never leave the center 50% of the canvas visually empty while all content sits in corners",
+        "When placing multiple cards or elements, distribute them across the full canvas area — use the edges and corners, not just the center band"
+      ],
+      "focalElementMinSize": {
+        "widthPercent": [30, 60],
+        "heightPercent": [25, 50]
+      },
+      "supportingElementMaxSize": {
+        "widthPercent": [15, 35]
+      }
+    },
+    "visualHierarchy": {
+      "description": "Each scene must have a single clear focal point — the primary visual that communicates the scene's purpose. Before placing any element, ask: what is this scene about? That answer determines what gets the largest size, the best position (center or golden ratio), and the highest contrast. Everything else is supporting material and should be visually subordinate.",
+      "rules": [
+        "Identify the scene's purpose FIRST, then design around it — the purpose determines the focal element",
+        "The focal element gets: largest size, center or golden-ratio placement, highest-contrast color, and the first spring entrance",
+        "Supporting elements should enter after the focal element (via stagger delay) and be smaller/more muted",
+        "Text should never compete with or overlap the visual demonstration — place text above/below the primary visual, not on top of it",
+        "If text describes what's happening, it should be positioned as a subtitle (bottom 20% of frame) or headline (top 20%), never in the middle where it fights the visual",
+        "Dashboard widgets and KPI elements ARE the focal point in data-viz scenes — give them hero-level sizing and center placement"
+      ]
+    },
+    "colorContrast": {
+      "description": "Text must always be readable against its background. This seems obvious but is easy to violate when background effects (blobs, gradients, light circles) share a color range with the text. Always validate that the text color has sufficient contrast against every background element it overlaps with.",
+      "rules": [
+        "Never place white or light-colored text on a white or light background — if the scene bg is #FDFDFE or #f2f2f2, text must be dark (#1E1E1E, #1c1c1c, or an accent color)",
+        "If a scene uses a dark overlay (bg #08080e), switch text to white or light accent colors",
+        "When background blobs or gradients are present, ensure the text's z-index is above them and that the blob colors don't wash out the text",
+        "For text over concentric circles or blue spheres, use white (#ffffff) only if the solid blue area behind the text has sufficient opacity (>0.6)",
+        "Descriptive/subtitle text (explaining the scene) should use the muted gray (#6B7280) on light backgrounds, or rgba(255,255,255,0.6) on dark backgrounds — never the same value as the background",
+        "Test readability by imagining the composition at thumbnail size — if the text disappears at 200px width, it needs more contrast or a darker backing element"
+      ],
+      "minimumContrastRatio": 4.5
+    }
+  }
+}

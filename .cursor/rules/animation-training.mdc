@@ -1,0 +1,79 @@
+---
+description: Behavioral rules for animation training sessions — governs how feedback is received, processed, and stored
+globs:
+alwaysApply: true
+---
+
+# Animation Training Session Rules
+
+## When Training is Active
+
+Training is active when the user is providing animation feedback, demonstrating techniques, or asking you to practice animation patterns. These rules apply during those interactions.
+
+## Rule 1: Process Feedback Deliberately
+
+After receiving animation critique:
+1. **Plan the fix** — 2-3 sentences identifying which parameter, technique, or approach to change and why
+2. **Implement** — make the change
+3. **Self-assess** — mentally score the fix against the quality rubric (docs/training/quality-rubric.md) before presenting
+
+Do NOT rush into fixes without understanding the root cause. "Make it bouncier" might mean lower damping, or it might mean adding overshoot via a secondary spring, or it might mean the timing is wrong.
+
+## Rule 2: Record Every Correction
+
+After any feedback-driven change:
+1. Append a session entry to `docs/training/training-log.md`
+2. Include before/after parameter values (exact numbers, not descriptions)
+3. Note the user's verbatim feedback
+4. Extract a generalizable rule if one exists
+
+## Rule 3: Build Recipes from Corrections
+
+After receiving 3+ corrections on the same technique (e.g. "spring entrances" or "stagger timing"):
+1. Create or update a recipe at `docs/recipes/{category}/{technique-name}.md`
+2. Include `use_when` and `see_also` fields in the YAML frontmatter
+3. Consolidate all corrections into the recipe's parameter table, code pattern, and key insights
+4. If a technique card already exists at `docs/training/techniques/`, merge its content into the recipe and delete the card
+
+## Rule 4: Graduate Rules
+
+When a training-derived insight applies broadly (not just to one technique):
+1. Add it to the "Training-Derived Rules" section of `.cursor/rules/animation-fluidity.mdc`
+2. Format it like the existing rules (numbered, with code examples if helpful)
+
+## Rule 5: Use the Drill Composition
+
+For isolated technique practice:
+1. Edit the `ActiveDrill` assignment in `src/compositions/AnimDrillAd.tsx`
+2. Create a new drill scene component or modify an existing one
+3. Keep drills short (150 frames / 5 seconds) for rapid iteration
+4. Preview at composition ID `anim-drill` in Remotion studio
+
+## Rule 6: Self-Assessment Before Presenting
+
+Before showing animation work for critique, mentally check against the quality rubric:
+- Would any criterion score below 3? Fix it first.
+- Are there any Rule violations from `animation-fluidity.mdc`? Fix them first.
+- Is anything using the exact same spring config for every element? Differentiate.
+
+## Rule 7: End-of-Session Capture
+
+At the end of any session where 3+ iterations were needed on the same element, prompt the user:
+
+> "We iterated on [X] multiple times. Want me to capture what we learned?"
+
+If yes:
+1. Create an ad post-mortem at `docs/learnings/ads/{name}.md` following the template in `docs/learnings/ads/animly.md`
+2. Route specific lessons to rules/recipes per `knowledge-maintenance.mdc`
+3. Update spring configs in `docs/params/physics.md`
+
+## Reference Files
+
+- Quality rubric: `docs/training/quality-rubric.md`
+- Training log: `docs/training/training-log.md`
+- Recipes: `docs/recipes/` (organized by category subdirectories)
+- Animation rules: `.cursor/rules/animation-fluidity.mdc`
+- Knowledge routing: `.cursor/rules/knowledge-maintenance.mdc`
+- Knowledge index: `docs/learnings/INDEX.md`
+- Spring configs (single source of truth): `docs/params/physics.md`
+- Drill composition: `src/compositions/AnimDrillAd.tsx` (ID: `anim-drill`)

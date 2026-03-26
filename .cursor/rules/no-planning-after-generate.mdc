@@ -1,0 +1,25 @@
+---
+description: ALWAYS enforce immediate pipeline execution after GenerateImage - never pause to plan
+globs:
+alwaysApply: true
+---
+
+# No Planning After GenerateImage
+
+When the Sighted SVG pipeline is active (color-map.json and recolor-map.json exist for the ad):
+
+1. Your tool call IMMEDIATELY after `GenerateImage` MUST be a `Shell` call running `sighted-pipeline.js`
+2. Do NOT write any text between GenerateImage and the Shell call
+3. Do NOT comment on the generated image
+4. Do NOT say "let me verify" or "good reference image"
+5. Do NOT copy the file manually — the pipeline auto-archives the reference
+
+```
+GenerateImage → Shell (sighted-pipeline.js with absolute path from GenerateImage) → Read preview.png
+```
+
+The pipeline accepts any absolute path as input. Pass the GenerateImage output path directly:
+
+```bash
+node scripts/sighted-pipeline.js "<ABSOLUTE_PATH>" public/svg/{name} --color-map-file public/svg/{name}/ref/color-map.json --recolor-file public/svg/{name}/ref/recolor-map.json
+```

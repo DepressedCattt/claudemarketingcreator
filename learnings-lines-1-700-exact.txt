@@ -1,0 +1,700 @@
+# Ad Creation Learnings
+
+Tracking what works and what doesn't across each round of feedback.
+Updated after every critique session.
+
+---
+
+## LEGEND — What's In This File & Where To Find It
+
+*Use this before reading the rest. Jump directly to the section you need.*
+
+---
+
+### CATEGORY A — Design Principles & Rules *(Start here for any new ad)*
+
+| Section | Line | What it covers |
+|---|---|---|
+| **Running Principles** | 253 | Distilled rules: motion, copy, composition, pacing. The core vocabulary. |
+| **What to Always Do / Never Do** | ~280 | Concrete dos and don'ts per principle area. |
+| **Reference Ad: `meridian-v1` ⭐** | 300 | The quality benchmark. Scene-by-scene breakdown. Key numbers/specs. |
+| **Pre-Ship Visual Audit Checklist** | 613 | Mandatory self-audit before shipping any composition. |
+| **Commercial Direction System** | 1572 | Ad must sell, not just impress. Product-first, copy, hierarchy, platform safety. |
+| **Hybrid Video Workflow** | 3203 | Background plate system: registry, VideoPlate component, scrim table, Kling prompt templates. |
+| **Composition Guidelines: Spatial, Hierarchy, Contrast** | 3600 | Three rules from SaaS Showcase audit. Focal sizing (30–60%), no text-visual overlap, 4.5:1 contrast. Before/after tables. |
+
+---
+
+### CATEGORY B — Motion & Animation Techniques
+
+| Section | Line | What it covers |
+|---|---|---|
+| **Premium Motion Principles** | 385 | Easing rules, arc motion, blur-resolve, float, depth de-emphasis, typography motion. |
+| **Motion Library — `premiumMotion.ts`** | 396 | All hooks/exports with usage guide (`useCinematicTextReveal`, `useArcEntry`, etc.). |
+| **Space Utilisation — The Real Rule** | 490 | Focal clarity vs. pixel-filling. Code patterns for centering. |
+| **Element Centering & Proportions** | 570 | Critical CSS centering rules. 9:16 layout zones. |
+| **Pattern: Hero Component Expansion** | 877 | 1→4 card burst transition. 7 things that make it premium. |
+| **Camera Motion Wrapper** | 945 | Scale + rotateZ + translate on scene root. Linear, not eased. |
+| **Layout-Aware Blur Reveal Typography** | 1011 | Premium word-by-word reveal where the layout reacts. `<WordReveal>` component. |
+| **Round 5 Iteration Log** | 1150 | 6 specific problems fixed: stop-start, flexbox reflow, gap sizing, etc. |
+| **Clip-Path Match-Cut Transitions** | 1745 | Brush sweep, vertical wipe, diagonal slash, iris close. Code for all four. |
+| **Horizontal Light Sweep** | 1801 | Studio-light sweep effect for hook scenes. |
+| **Abstract Hair Texture Visuals** | 1829 | Gradient-ellipse hair strands for beauty ads. No photos needed. |
+| **Simulated Cinematography** | 2458 | Depth tier system, parallax multipliers, camera vocabulary, shot spec format. |
+
+---
+
+### CATEGORY C — Pacing, Timing & Commercial Theory
+
+| Section | Line | What it covers |
+|---|---|---|
+| **Pacing & Composition Theory** | 1237 | The 3 layers of a strong ad. Attention beats. Stage attention over time. |
+| **Pacing Theory — Attention Beats** | 1258 | Hook / Explain / Expand / Proof / Resolution beat types. |
+| **Composition Theory** | 1296 | Center vs. rule-of-thirds vs. split. When to use each. |
+| **Screen-Space Theory** | 1331 | Why empty space is not wasted space. The removal mindset. |
+| **Camera Theory** | 1345 | Camera move types and when each is appropriate. |
+| **Hierarchy Theory** | 1378 | Three levels always: primary / secondary / tertiary. |
+| **Scene Composition Checklist** | 1394 | 6 questions to answer before building every scene. |
+| **What Makes an Ad Feel Expensive** | 1421 | Side-by-side expensive vs. cheap ad attributes. |
+| **The Motion Director Checklist** | 1441 | Per-shot decision framework (focal, composition, pacing, camera). |
+| **Rhythm, Timing Grids & Music** | 1481 | BPM math table, beat grids, hard vs. soft sync, 120 BPM scene template. |
+
+---
+
+### CATEGORY B+ — Component Animation & Complex Ad Builds
+
+| Section | Line | What it covers |
+|---|---|---|
+| **Component Animation (AE Extract)** | 3700 | Simple component animation subcategory. AE source data, spring configs, component types, simple vs complex definition. |
+| **CalmlyAd: Chaos-to-Calm Narrative Ad** | 3800 | Most iterated ad. Kinetic typography, epicyclic blob motion, dynamic camera focus, layered camera effects, narrative drag interaction, SVG envelope, 4-beat tagline. |
+| **§3810 What Worked** | 3810 | 9 techniques that shipped: typography cascade, envelope, screen shake, epicycles, coast phase, dynamic camera, layered effects, 4-beat tagline, narrative drag. |
+| **§3820 What Didn't Work** | 3820 | 8 mistakes and fixes: continuous drift, dashboard breathing, scale overshoot, sine/cos drift, quadratic ease-in, instant spawn, wavy underline, text overlap. |
+| **§3830 Spring Config Reference** | 3830 | Complete table of spring configs with stiffness/damping/mass and observed behavior. |
+| **§3840 Timing & Pacing** | 3840 | Act duration ratios, timing lessons, stagger intervals, shake duration, camera effect coupling. |
+| **§3850 Reusable Patterns** | 3850 | 10 extractable patterns for future ads. |
+
+---
+
+### CATEGORY D — 3D / Three.js Techniques
+
+| Section | Line | What it covers |
+|---|---|---|
+| **3D Layer Architecture** | 1916 | Why we moved to real 3D. Two-layer DOM pattern (CSS → ThreeCanvas → text). |
+| **ThreeScene Wrapper** | 1985 | `<ThreeScene>` usage, fov/cameraZ defaults, coordinate system, PPU conversions. |
+| **GlassCard Material System** | 2006 | `<GlassCard>` props, material presets (smoked glass, aluminium, plastic, crystal). |
+| **ParticleField — InstancedMesh** | 2034 | `<ParticleField>` ambient + burst modes. GPU particles, per-instance opacity workaround. |
+| **Post-Processing Chain (Bloom)** | 2077 | Bloom calibration values, luminanceThreshold, mipmapBlur. |
+| **Constructive 3D Product Models** | 2129 | Build phones/devices from primitives — no GLTF needed. Geometry vocabulary. |
+| **Geometry Vocabulary** | 2140 | Primitive shapes for phones, modules, lenses, buttons, ports. |
+| **Proportional Scaling System** | 2159 | Derive all dimensions from real product specs. iPhone example. |
+| **Material Presets — Product Surfaces** | 2185 | Titanium, mirror metal, lens glass, screen glass, matte. |
+| **Canvas 2D Screen Texture Pattern** | 2215 | `THREE.CanvasTexture`, colorSpace, emissiveMap, flipY behavior. |
+| **Product Photography Lighting Rig** | 2262 | Key + fill + rim light positions. Animated reveal sweep. |
+| **Product Turn Animation** | 2292 | Pacing rule (90–125f), easeInOut, post-turn oscillation. |
+| **Constructive vs GLTF Decision Matrix** | 2317 | When to build vs. import. |
+| **Dimension3DAd — 3D vs CSS Proof** | 2336 | 5 capability comparisons. Single persistent ThreeScene pattern. |
+| **CSS fails for camera-travel shots** | ~2645 | Hard lesson: why CSS 3D rotations are fake. When to use Three.js. |
+
+---
+
+### CATEGORY E — GLB / Model Loading & iPhone Production
+
+| Section | Line | What it covers |
+|---|---|---|
+| **GLB / Spline Model Loading — Failure Chain** | 2681 | 5 failure modes documented. `useGLTF`+`Suspense` silently broken in Remotion. |
+| **Correct GLB Pattern** | 2695 | `delayRender`/`continueRender` in DOM context. `fitModelToTarget()` normalizer. |
+| **Spline Export Problems** | 2720 | Material stripping, 100× scale bug, embedded lights, duplicate geometry. |
+| **Phone Screen Realism (3 layers)** | 2792 | Content plane + Canvas glass specular + `MeshPhysicalMaterial` glass overlay. |
+| **Black iPhone Material Overrides** | 2842 | Orange-phone fix, React Fast Refresh `useEffect` trap, metalness-based detection. |
+| **Phone Screen Text Legibility** | 2880 | Mipmap blur root cause. Fix: `LinearFilter` + 2× canvas resolution. |
+| **iPhone 3D Scene Code Map** | 2922 | Symbol index for `CinemaRevealAd.tsx`. What's at which line. Copy-paste patterns. |
+| **Preview vs. Render Quality** | 3014 | `isRendering` gate pattern. Cost table per setting. Always-redraw rule. |
+| **Screen Plane Sizing — Bezel Calibration** | ~3125 | Calibrated `SCREEN_PLANE_WIDTH/HEIGHT` values. How to adjust. |
+
+---
+
+### CATEGORY F — Ad Production History *(Background context — skim unless reviewing a specific round)*
+
+| Section | Line | What it covers |
+|---|---|---|
+| **Round 1 — Baseline Test** | 132 | NovaSkin, FlowDesk, TrailBlaze. Screen space and element sizing first identified. |
+| **Round 2 — V2 Iteration Fixes** | 188 | What changed. FlowDesk redesign. NovaSkin ingredient hero cards. |
+| **Round 3 — Shared Salon Real Brand** | 229 | Venue / Freelancer / Brand ads. Three audience cuts. |
+| **Round 4 — Premium Motion Showcase** | 368 | Arcflow, Luminary, Meridian. `premiumMotion.ts` library created. |
+| **Session: Hero Expansion Ad** | 653 | Iterative build log. 3D perception, directional drift, prism rim, camera motion. |
+| **Round 5 — Layout-Aware Typography** | 1011 | `kinetic-typography-v1`. Blur-reveal word system. Iteration problems log. |
+| **Round 6 — Beauty Salon Ads** | 1732 | Élume, Haven, Lumen. Clip-path transitions. Palette differentiation. |
+| **Round 7 — SharedSalonFinalAd** | 2361 | 26s product commercial. CSS iPhone frame, CameraWrap, panel flip, `sceneFade`. |
+
+---
+
+### CATEGORY G — Reference Ad Insights *(Read when recreating a competitor/reference ad style)*
+
+> Compact, agent-readable summaries. Each row is immediately actionable.
+> For deep beat-by-beat breakdowns see **Category H** (raw archive — skip unless you need full detail).
+
+| Section | What it covers |
+|---|---|
+| **G section body** | One compact table per analysed ad: design system, motion feel, spring configs, easing, timing, key technique to steal |
+
+---
+
+### CATEGORY H — Reference Ad Full Analyses *(Raw archive — deep dive only, skip on first pass)*
+
+| Section | What it covers |
+|---|---|
+| **H section body** | Full Gemini 2.5 Pro video analyses. Beat-by-beat animation sequences, detailed motion profiles, full Remotion recreation notes. |
+
+---
+
+### QUICK REFERENCE — Most-Used Code Patterns
+
+| Pattern | Where to find it |
+|---|---|
+| Camera motion wrapper (scale + roll + pan) | Line 945 (Technique: Camera Motion Wrapper) |
+| `useCinematicTextReveal` / all motion hooks | Line 396 (Motion Library table) |
+| `prismEdgeShadow()` — 3D card rim technique | Line ~753 (Hero Expansion session) |
+| 0×0 absolute anchor for kinetic layouts | Line ~1192 |
+| Clip-path transitions (brush, wipe, iris) | Line 1745 |
+| `depthDeemphasis` — background recede | Line ~410 (motion library) |
+| `sceneFade()` utility | Line ~2411 |
+| `fitModelToTarget()` — GLB normalizer | Line 2751 |
+| Single `camT` parallax system | Line ~2496 |
+| `isRendering` quality gate | Line 3014 |
+| Appointment card design pattern | Line 1890 |
+| 9:16 vertical layout zones | Line ~591 |
+| CSS iPhone frame component | Line ~2380 (Round 7) |
+| Three.js coord system / PPU conversions | Line 1968 |
+| BPM math + 120 BPM scene template | Line 1502 |
+
+---
+
+## G — Reference Ad Insights
+
+> Compact summaries of reference ads analysed via Gemini 2.5 Pro.
+> **Read these when recreating a similar ad style.** Each entry gives you everything needed to match the feel in Remotion.
+> For the full beat-by-beat breakdown of any entry see → **Section H** (raw archive at the bottom of this file).
+>
+> *New entries are auto-appended by `npm run analyze` or the Studio UI `🔬 Analyse Ad` button.*
+
+---
+
+*(No entries yet — run your first analysis to populate this section.)*
+
+---
+
+### G.1 — LangEase SaaS · videoplayback (1) (2026-03-20)
+
+| | |
+|---|---|
+| **Design language** | Minimal clean-tech (Apple-like) · off-white `#FDFDFE` bg · blue `#3A61FF` accent · glassmorphism UI cards |
+| **Motion feel** | Snappy and weightless · sharp ease-out deceleration · no bounce · critically damped · purely graphic/digital |
+| **Spring config** | `{ stiffness: 200, damping: 25, mass: 0.8 }` — for UI card reveals and button states |
+| **Easing** | `Easing.out(Easing.cubic)` for slides and fades · `Easing.inOut(Easing.quad)` for 3D tunnel |
+| **Typography** | Blur-in + scale from 0.95→1.0 · word-by-word stagger ~4-5 frames (133-166ms) · one gradient headline |
+| **Transitions** | Hard cuts synced to beat + phone-flies-into-camera wipe · 150-300ms · UI cards fly out and become next scene bg |
+| **Scene timing** | ~60-75f per beat at 30fps · transitions 6-9f · text reveals ~15f total |
+| **Hook technique** | Rapid-fire text replacements synced to vocal countdown in music — 4 concepts in 4 seconds |
+| **Key technique to steal** | UI elements travel ACROSS the cut (phone at 00:10, cards at 00:18) — they create the transition, not just play in it |
+| **Full analysis** | → H.1 |
+
+---
+
+## Round 1 — Baseline Test
+
+**Ads produced:**
+| ID | Brand | Format | Style | Key Techniques |
+|---|---|---|---|---|
+| `novaskin-v1` | NovaSkin (Skincare) | 9:16 | Warm luxury, slow pacing | Floating serum bottle, petal particles, italic serif, mauve/gold palette |
+| `flowdesk-v1` | FlowDesk (Productivity SaaS) | 1:1 | Dark technical, medium pacing | Typing reveal, grid background, green/navy, dashboard card reveals |
+| `trailblaze-v1` | TrailBlaze (Running App) | 16:9 | High energy, fast pacing | GPS route draw, HR wave, stat counters, orange/forest green |
+
+**Hypotheses going in:**
+- Luxury/slow pacing feels premium but might lose attention early
+- Dark mode ads may feel more "tech" but less immediately visually grabbing
+- Kinetic text with big bold statements tends to be the most memorable scene in any ad
+- 16:9 landscape is unusual for social — could feel cinematic or could feel wrong for the platform
+- Particle systems and floating elements add depth but risk looking "busy"
+- The before/after or problem→solution structure is reliable but predictable
+
+**Feedback received:** Round 1 complete.
+
+### What Worked
+- Strong motion and animation quality across all three
+- Color palettes were well-chosen and complementary in all ads
+- Kinetic text scenes consistently the strongest — bold pacing, good contrast
+- Scene-level concepts were clear and on-brand per industry
+- TrailBlaze route draw and metrics animations effectively communicated the product
+- NovaSkin style/aesthetic and CTA were well received
+- FlowDesk animations and pop-in physics were noted as good
+
+### What Didn't Work
+- **Screen space utilization** — recurring problem across ALL THREE ads. Elements too small, centered with large dead zones. Need to fill the frame aggressively.
+- **FlowDesk felt "vibe-coded"** — generic dashboard UI, default-looking text, cliché SaaS widget styling. Needs a completely original visual concept, not just styled divs.
+- **NovaSkin ingredient scene** — text too small, features not amplified enough. Each ingredient should feel like a hero moment, not a small card.
+
+### Specific Notes Per Ad
+
+**NovaSkin:**
+- ✅ Style, animations, colors, CTA all good
+- ❌ Scene 1: Bottle too small, ~half screen empty — needs to fill the frame
+- ❌ Scene 2: Text too small, ingredients not impactful enough — "amplify the features"
+- Fix: Much larger bottle + headline in Scene 1. Full-width, large ingredient heroes in Scene 2.
+
+**FlowDesk:**
+- ✅ Animations and pop-ins are good technically
+- ❌ Looks "vibe-coded" — generic, unoriginal, cliché SaaS widgets
+- ❌ Default text styling throughout
+- Fix: Complete visual redesign. Original concept, not dashboard UI. Think editorial/abstract.
+
+**TrailBlaze:**
+- ✅ Scene 1 (Route): All good — animation, style, colors, concept
+- ⚠️ Scene 2 (Metrics): Pop-ins good but ~50% dead space — stat cards too small for 16:9
+- ✅ Scene 3 (Kinetic): Strong — colors, text, side animations work
+- ⚠️ Scene 4 (CTA): Good colors/animations but poor screen utilization
+- Fix: Scene 2 → fill full 1920x1080 with larger stat layout. Scene 4 → both sides much larger.
+
+---
+
+## Round 2 — Iteration (V2 fixes applied)
+
+**Changes made based on feedback:**
+
+| Ad | Scene | Change |
+|---|---|---|
+| TrailBlaze | Scene 2 (Metrics) | Replaced 4-card row with corner-anchored hero stats (210px Distance + 210px Pace), full-width HR wave at bottom |
+| TrailBlaze | Scene 4 (CTA) | Left half: 180px "500K / RUNNERS" + subtext. Right half: large card filling the column |
+| NovaSkin | Scene 1 (Hook) | Switched from centered layout to editorial split: text left, large bottle (300×510) right |
+| NovaSkin | Scene 2 (Ingredients) | Replaced small offset cards with full-width 952px hero cards at 52px name font, 28px benefit |
+| FlowDesk | All scenes | Complete redesign: new palette (soft lavender + deep indigo + hot pink), editorial word-slam, full-screen kanban, beat-driven stats |
+
+**Feedback received (Round 3):**
+
+### What Worked — Round 3
+- **Brand V1 = best ad overall**: Word slam, split-screen two-sides, connection arc animation, dual CTA
+- **Freelancer opening** (chaos wipe): Best hook — immediately engaging, great animation, good storytelling
+- **Freelancer scene 2** (venue discovery cards): Shows how the app works clearly
+- **Freelancer scene 3** (editorial trust: VERIFIED/2 MINUTES): Strong, good animations
+- **Venue scene 3** (booking cards): Very good — "interactive" feel showing real value in action
+- **Brand scene 2** (split screen): Space used well, good animations
+- **Brand scene 3** (connection arc + popups): Most impressive — scissors/arc, space usage excellent
+- **Venue scene 2** ($12,480 cost): Good visual concept
+
+### What Didn't Work — Round 3
+- **Venue hook too dark** — lighter colors work better for hooks (cream/pale blue preferred)
+- **Venue opening text got clipped** — translateX animation + tight containers causes clipping
+- **Venue hook not engaging** — statement is too flat, question-based hook would land better
+- **Cost scene ($12,480) not engaging enough** — needs more dynamism, not just a static number
+- **Chair SVG** — user still doesn't like it; avoid or significantly improve in future ads
+- **Freelancer CTA labeled "Seek Fall"** — unclear what this is, likely rendering label issue
+
+### Key Upgrade for Round 4 (30-second ads)
+- **Light backgrounds for ALL hook scenes** — cream/pale blue, never dark as the opener
+- **Question hooks beat statement hooks** — "WHAT IF YOUR QUIET DAYS PAID YOU?" > "YOUR CHAIRS SIT EMPTY."
+- **No chair SVG** — replaced with other metaphors (booking cards, revenue counters, venue maps)
+- **Fix text clipping** — use translateY (vertical reveal) instead of translateX to avoid edge clipping
+- **Use top 5 proven elements**: chaos wipe, booking cards, word slam, split-screen, connection animation
+
+---
+
+## Round 3 — Shared Salon Product Ads (with real brand context)
+
+**What changed vs Round 2:**
+- Real product context provided (two-sided marketplace for salon industry)
+- Full Shared Salon color palette maintained consistently across all three
+- Designed for three distinct audiences: venue owners, freelancers, brand/both
+
+**Ads created:**
+
+| ID | Format | Concept | Key Design Decisions |
+|---|---|---|---|
+| `sharedsalon-venue-v1` | 9:16 | Venue owner — "empty chairs cost you $12,480/year" | Dark hook, $12,480 slam to full screen, 6 booking cards + monthly projection filling frame |
+| `sharedsalon-freelancer-v1` | 16:9 | Freelancer — "stop chasing, start booking" | Chaos words swept by blue wipe, 3 full-height venue cards filling landscape, editorial trust moments |
+| `sharedsalon-brand-v1` | 1:1 | Brand/marketplace — "two sides, one platform" | SHARED/SALON word slam, split dark/light halves, connection arc animation, dual CTA buttons |
+
+**Design principles applied from learnings:**
+- All scenes fill the 100% of the canvas at all times
+- Typography: 160–240px for hero moments, 68–108px for headlines, 44px+ for supporting text
+- No generic SaaS widgets — real booking data, real venue cards, real brand content
+- Every scene has a signature motion: word slam, counter reveal, chaos wipe, split converge, arc animation
+- Real Shared Salon product copy throughout (no placeholder text)
+
+---
+
+## Running Principles
+
+*(Patterns that emerge across multiple rounds — these become the rules)*
+
+### Motion Design
+- **Word slams beat fades** — aggressive entry from edges (translateX ±100–300px) looks premium and intentional
+- **Scale snap (easeSnap, power-5)** for cards and numbers — creates satisfying "click into place" feeling
+- **Stagger entries** by 15–25 frames per element, never show everything at once
+- **Something always moving** — ambient float, particle pulse, counter climbing. Static frames feel cheap.
+- **Blue wipe/line reveal** is a strong transition mechanic — feels like a brand gesture
+
+### Copy & Messaging
+- **Problem first** — open with the pain (empty chair, chaos of finding spaces). Makes the solution feel earned.
+- **Big numbers tell the story** — "$12,480/year" is more visceral than "you lose money". Show the scale.
+- **Real data beats generic data** — "Jessica M. · Monday 9am · $95" feels real. "User booked" does not.
+- **Per-audience precision** — venue owner copy and freelancer copy should never be the same. The pain points are different.
+
+### Visual Composition
+- **Focal clarity over pixel-filling** — the question is "where does the viewer's eye go?" not "is the canvas full?". Breathing room around a clear hero is premium. An unclear focal point with space everywhere is the error.
+- **Hero element at 40–60% of frame height** — a number, a card list, a venue grid. Not a tiny icon.
+- **Hook scene backgrounds** — light/cream/pale blue hooks tend to land better than dark openers. Dark backgrounds work well mid-ad for emphasis, but hooks benefit from brightness and contrast.
+- **Typography IS the visual** in text-heavy scenes — set it big, set it bold, set it precisely
+- **Split screens** for before/after or two-sided stories — cleaner and more readable than overlays
+
+### Pacing & Timing
+- **3s for problem, 4s for scale, 5.5s for solution** — problem scenes can be shorter than solution scenes
+- **Give important numbers 4+ seconds** — $12,480 needs time to land before moving on
+- **Scene 3 should always be the most information-dense** — by then the hook has worked, earn the detail
+- **CTA at 2–3s** — short. People don't need to read the CTA for long if the ad was good.
+- **Stated durations are NOT hard limits.** If a brief says "15 seconds", that is a target/guide, not a ceiling. Going to 18-22s for pacing reasons is always acceptable unless the user explicitly says "must stay within X seconds". Cramming scenes to hit a time target destroys quality — go over if the story needs it.
+
+### What to Always Do
+- Keep the brand color scheme locked (C.primary, C.text, C.secondary, C.accent always the same)
+- Put real product use-cases in the content (real names, real amounts, real venue names)
+- Use `easeSnap` (power-5) for punchy arrivals, `easeOut3` for smooth settles
+- Fill the frame with the right amount of hierarchy — one hero, one secondary, one supporting
+- Background glow (radial-gradient) makes scenes feel lit and premium
+
+### What to Never Do
+- Never use placeholder text ("Name", "Amount", "Title") in a finished ad
+- Never stack all content in a centered column with empty sides
+- Never show a feature card smaller than 300px wide — if it needs to be smaller, show fewer cards
+- Never open on a light, empty background with small text — it reads as unfinished
+- Never rely on opacity fade alone — always pair with a translateX, scale, or clip
+
+---
+
+## Reference Ad — `meridian-v1` ⭐ CLOSEST TO TARGET QUALITY
+
+**Status: Approved as quality benchmark. Use this as the reference when building future ads.**
+
+`meridian-v1` is the closest ad produced so far to the premium SaaS commercial target.
+When building a new ad, open this composition first and ask: "does my ad feel like this?"
+
+### What makes it work
+
+**Palette — warm cream `#F9F6F1` + warm dark `#1C1917` + terracotta `#C2410C`**
+The warm palette is differentiated from generic blue-on-white SaaS. It feels human and considered.
+The terracotta accent is distinctive — not indigo (too common), not green (too generic).
+
+**Scene 1 — Hook (pure typography, 3s)**
+- Badge + two headline lines + rule + sub copy. Nothing else.
+- `useCinematicTextReveal` on every line — drift + opacity + blur-resolve.
+- Lines stagger 10–12 frames apart. Never all at once.
+- The restraint is the quality signal. No particle effects, no background animation.
+
+**Scene 2 — Hero Demo (profile card, 5s)**
+- Card enters from BOTTOM-LEFT arc (not bottom-right — variation matters).
+- `useBlurResolve` from 16px → 0 as card settles (rack-focus hierarchy signal).
+- `useHeroFloatDelayed` — float only starts after card seats (~frame 38).
+- Slight X-axis sway in addition to Y float — makes the float feel physical, not mechanical.
+- Context copy waits until frame 36 before entering — never fights the hero for attention.
+
+**Scene 3 — Features (left list + de-emphasised card, 4s)**
+- Card persists but at `opacity: ~0.38, blur: ~2.5px, scale: ~0.97` via `depthDeemphasis`.
+- Features enter from LEFT (translateX negative → 0) — reads naturally left-to-right.
+- Each feature: icon chip + title (24px) + body (15px) + short wipe underline.
+- Stagger: 14 frames between features.
+
+**Scene 4 — Metrics (3 stats, each centred in its zone, 3s)** ← KEY SCENE
+- `flex: 1` on each row → each metric owns exactly 360px of the 1080px canvas.
+- `alignItems: center` + `textAlign: center` → number is unmistakably the focal point.
+- Value: 164px dominant. Label: 28px subordinate. Sub: 17px context.
+- Short centred accent dot below each stat (not full-bleed rule).
+- Thin `borderBottom` dividers between rows create visible structure without decoration.
+- **This is the correct pattern for any N-metric scene: flex rows + centred content.**
+
+**Scene 5 — CTA (warm dark close, 3s)**
+- Background shifts to `#1C1917` — confident tone change signals resolution.
+- Terracotta radial glow (slow `useBreathingGlow`) — ambient warmth on dark bg.
+- Two headline lines + sub + single button + URL. Nothing extra.
+- Button uses terracotta with matching box-shadow glow — tactile and premium.
+
+### Key numbers / specs
+| Property | Value |
+|---|---|
+| Format | 1:1 square (1080 × 1080) |
+| Duration | 18s (540 frames @ 30fps) |
+| Palette | `#F9F6F1` bg / `#1C1917` dark / `#C2410C` accent |
+| Hero font size | 108px (hook) / 164px (metrics) |
+| Body font size | 24px (hook sub) / 15–17px (feature body) |
+| Hero float | amplitude 6px, period 90f, X-axis phase offset π/2 |
+| Arc entry | BOTTOM-LEFT (`fromX: -110, fromY: 130`) |
+| Blur-resolve | `maxBlur: 16px`, resolves over 30 frames |
+| Spring config | `PREMIUM_SPRING.hero` (damping 22, stiffness 90, mass 1.1) |
+
+### What to replicate in future ads
+1. Warm/distinctive palette — avoid the default indigo-on-white SaaS look
+2. Scene 2 hero entry arc from a non-standard direction (not always bottom-right)
+3. Scene 4 metric structure — `flex: 1` rows, centred, 164px values
+4. The restraint of Scene 1 — just typography, nothing animated in the background
+5. CTA tone shift — background colour change signals the emotional resolution of the ad
+
+---
+
+## Round 4 — Premium Motion Showcase (Three Placeholder Ads)
+
+**Goal:** Improve animation quality by internalising Apple HIG, Material Design choreography, and NN/G motion principles. Create a reusable `premiumMotion.ts` library and demonstrate its techniques in three placeholder-brand showcase ads.
+
+**What was created:**
+
+| ID | Brand | Format | Duration | Motion Focus |
+|---|---|---|---|---|
+| `arcflow-v1` | Arcflow (Project Mgmt SaaS) | 16:9 | 20s | Arc entry, blur-resolve, hero float, shared element, depth de-emphasis |
+| `luminary-v1` | Luminary (Analytics SaaS) | 9:16 | 18s | Pure typographic hook, rack-focus hero entry, 3-direction orbit chips, dark proof scene |
+| `meridian-v1` | Meridian (HR/People Ops) | 1:1 | 18s | Warm palette, bottom-left arc entry, left-anchored feature wipes, graceful hero exit |
+
+**New library created:** `src/utils/premiumMotion.ts`
+All premium motion primitives are documented and reusable across future compositions.
+
+---
+
+## Premium Motion Principles (The Quality Upgrade)
+
+*Sourced from Apple HIG, Material Design choreography guidance, and Nielsen Norman Group motion research.*
+
+### The Core Rule
+**Motion should CLARIFY hierarchy, not decorate.**
+If you can't explain what a motion is communicating, remove it.
+The premium SaaS look comes from fewer moving parts, not more.
+
+---
+
+### Motion Library — `src/utils/premiumMotion.ts`
+
+All new compositions should use these primitives instead of rolling custom easing:
+
+| Hook / Export | What it does | When to use |
+|---|---|---|
+| `PREMIUM_SPRING` | Spring configs: `hero`, `text`, `ui`, `bg`, `settle` | Replace all `SPRING.*` usages for premium feel |
+| `easeOut3/4/5` | Cubic/quartic/quintic ease-out curves | Hero arrivals — the core easing vocabulary |
+| `easeInOut3` | Smooth ease-in-out cubic | State transitions, background shifts |
+| `useCinematicTextReveal` | Opacity + drift + blur-resolve combined | Every text entrance, always |
+| `useBlurResolve` | Blur px → 0 on element arrival | Hero object entry (the "rack focus" signal) |
+| `useArcEntry` | X spring + Y ease-out5 → curved path | Any hero object entering the scene |
+| `useHeroFloat` | Sinusoidal float loop, amplitude ≤ 8px | Hero objects during hold — keeps them alive |
+| `useHeroFloatDelayed` | Float that fades in after entrance | Combine with arc entry — wait for settle first |
+| `depthDeemphasis` | opacity → 0.38, scale → 0.97, blur → 2.5px | Background elements when hero takes focus |
+| `useSoftScaleIn` | Scale from 0.92 → 1.0, no bounce | Any object that needs to "grow on screen" |
+| `usePremiumWipe` | ease-in-out wipe 0→100% | Accent rules, underlines, progress bars |
+| `useBreathingGlow` | Slow sinusoidal 0→1 pulse | Ambient radial glows behind hero objects |
+| `usePremiumFadeOut` | Clean fade at scene end | Every scene component, without exception |
+| `premiumStagger` | Returns start frame for nth item (12f spacing) | Feature lists, stat cards, any staggered group |
+| `sharedElementScale` | Interpolate hero scale across scene boundary | Shared-element continuity between scenes |
+
+---
+
+### Easing Rules
+
+- **Hero arrivals:** `easeOut4` or `easeOut5` — decisive, decelerating
+- **Text entrances:** `easeOut3` — quick but gentle
+- **State transitions:** `easeInOut3` — smooth, not abrupt
+- **NEVER use linear** — linear motion reads as template/cheap on any hero element
+- **Avoid aggressive bounce** — `damping ≥ 18` on any PREMIUM_SPRING config
+- The "settle" spring (`damping: 18, stiffness: 88`) is the maximum acceptable bounce for hero objects
+
+### Arc Motion Rule
+**Hero objects must never travel in a straight line.**
+`useArcEntry` achieves the arc by having:
+- X axis: spring physics (slight natural overshoot, then settle)
+- Y axis: `easeOut5` (decelerates faster → concave arc path)
+The visual effect is that the hero object "glides" in rather than "slides" in.
+
+### Blur-Resolve Rule
+**Blur resolving = hierarchy signal.**
+When a hero element enters blurry (12–18px) and sharpens on settle, it communicates:
+*"The camera — and the viewer's attention — has just found its subject."*
+- Use `maxBlur: 14–18px` for hero objects
+- Use `maxBlur: 6–8px` for text entrances
+- Do NOT use blur on every element — overuse destroys the hierarchy signal
+
+### Float Rule
+- Amplitude: **≤ 8px** (6px is ideal for most hero objects)
+- Period: **≥ 80 frames** (2.67s @ 30fps minimum)
+- Any faster or larger reads as template-style animation
+- Use `useHeroFloatDelayed` — the float should START after the entrance animation completes
+- For multiple floating elements: use `phaseOffset` to prevent synchronised "breathing"
+
+### Depth De-Emphasis Rule
+When a hero takes focus, background elements must visually recede:
+- **Opacity:** 1.0 → 0.38 (never go below 0.35 — still needs to be visible as context)
+- **Scale:** 1.0 → 0.97 (barely perceptible, but real)
+- **Blur:** 0px → 2.5px (cinematic softening, NOT a heavy blur)
+Use `depthDeemphasis(progress)` from premiumMotion.ts. The transition itself should be `easeInOut3` over ~20 frames.
+
+### Typography Motion Rules
+- **`useCinematicTextReveal`** on all text — drift (16–18px) + opacity + blur-resolve
+- Stagger text lines by 12–16 frames — never reveal all lines simultaneously
+- Font sizes for premium ads: 80–130px for hero headlines, 20–30px for body
+- `letterSpacing: -4 to -6` on large headlines (tighter = more premium)
+- Text should NEVER bounce or overshoot — `useCinematicTextReveal` handles this
+
+### Shared Element Continuity Rule
+If a hero object appeared in the previous scene, it should persist into the next:
+- Keep the same hero component in the DOM (don't remove and re-add)
+- Use `depthDeemphasis` to recede it when other content takes focus
+- The hero transitions from "focal element" → "depth anchor" as the scene progresses
+This is what creates the "connected" feeling that makes premium ads feel like one continuous piece.
+
+### Focal Hierarchy Rule
+**One focal point per frame. Always.**
+Ask: "What is the viewer supposed to look at right now?"
+If the answer is ambiguous, something needs to be de-emphasised or removed.
+- Scene S1: typography is the hero → no UI objects competing for attention
+- Scene S2: hero object arrives → surrounding text de-emphasises
+- Scene S3: feature list becomes focal → hero object recedes via depthDeemphasis
+This is the single most impactful quality difference between template motion and premium motion.
+
+### Breathing Room Rule
+**Spacing is motion design too.**
+- Vertical canvas: never use more than 3 distinct element groups in one scene
+- Timing: 3–5 seconds per scene minimum — don't rush the reveal
+- After a big element arrives, give it 1+ seconds before adding context copy
+- CTA scenes: 2–3 seconds is correct. The ad already built the case.
+
+---
+
+### Space Utilisation — The Real Rule
+
+**It is NOT about filling every pixel. It is about focal clarity.**
+
+The question to ask for every scene is: *"Where is the viewer's eye supposed to go?"*
+If the answer is clear, the scene is correct — regardless of how much empty space exists.
+White space around a hero element is premium. White space that has nothing to anchor to is amateur.
+
+**The failure mode is not "empty canvas" — it's "hero not clearly the hero."**
+
+Examples:
+- A scene with one large stat: the stat should be centred on the canvas, large, and dominant.
+  Breathing room around it is correct. Having the stat in the corner at 96px is the error.
+- A scene with 3 metrics: each metric should own its zone, centred within it.
+  Three tiny numbers left-aligned at the top of the canvas is the error.
+- A split-screen with a board and feature list: each element centred in its half.
+  Board at far left, feature list at far right, 535px hole between them = no clear focal path.
+
+**The practical test: blur your eyes. Can you still tell what the scene is about?**
+If yes, the focal hierarchy is correct. If not, the hero isn't dominant enough.
+
+**Pattern — single hero stat on screen:**
+```tsx
+// Centre it. It's the only thing. Own that.
+<div style={{
+  position: "absolute", inset: 0,
+  display: "flex", flexDirection: "column",
+  alignItems: "center", justifyContent: "center", textAlign: "center",
+}}>
+  <div style={{ fontSize: 200, fontWeight: 900, color: accent }}>$4.2M</div>
+  <div style={{ fontSize: 32, color: bodyText }}>Total pipeline</div>
+</div>
+```
+
+**Pattern — N items each owning their zone:**
+```tsx
+<div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column" }}>
+  {items.map((item, i) => (
+    <div key={i} style={{
+      flex: 1,                               // Each item = canvas height / N
+      display: "flex", flexDirection: "column",
+      alignItems: "center", justifyContent: "center",  // Centred WITHIN its zone
+      textAlign: "center",
+      borderBottom: i < N-1 ? "1.5px solid ..." : "none",
+    }}>
+      <div style={{ fontSize: 160, fontWeight: 900 }}>{item.value}</div>  {/* Hero */}
+      <div style={{ fontSize: 28, fontWeight: 700 }}>{item.label}</div>   {/* Support */}
+      <div style={{ fontSize: 17, color: bodyText }}>{item.sub}</div>     {/* Context */}
+    </div>
+  ))}
+</div>
+```
+
+**Pattern — split-screen landscape (16:9):**
+- Left element: centred in the left half → `left = canvas_width/4 - element_width/2`
+- Right element: centred in the right half → `left = canvas_width*3/4 - element_width/2`
+- A thin vertical divider at `left: "50%"` makes the composition intentional
+- Gaps ≤ 160px are breathing room. Gaps > 300px with nothing in them are errors.
+
+### What to Always Do — Premium Motion Version
+- Use `useCinematicTextReveal` for ALL text entrances (never raw interpolate for text)
+- Use `useArcEntry` for ALL hero object arrivals
+- Use `useBlurResolve` on hero objects to signal focus
+- Use `depthDeemphasis` whenever a second element becomes focal
+- Use `useBreathingGlow` on all background radial glows — ambient life
+- Use `usePremiumFadeOut` in every scene component
+- Vary entry direction between scenes (bottom-right, bottom-left, top, etc.)
+- Use `premiumStagger` with 12–14 frames spacing for staggered groups
+
+### What to Never Do — Premium Motion Version
+- Never use `SPRING.bouncy` on any hero or text element in a premium composition
+- Never travel in a straight line — always pair springX with easeOut5Y for arc
+- Never start float loop simultaneously with entrance animation
+- Never blur every element — blur-resolve is a hierarchy signal, not decoration
+- Never reveal staggered items faster than 10 frames apart
+- Never skip `usePremiumFadeOut` on a scene — scene cuts without it look jarring
+- Never use more than one "entrance from below" in the same scene (vary directions)
+
+---
+
+## Element Centering & Proportions — Critical Rules
+
+**The #1 recurring technical error: using hardcoded pixel left values for elements that should be centered.**
+
+### Wrong approach (what was causing off-center renders):
+```tsx
+// WRONG: div is 300px wide. left=255 puts visual center at 255+150=405px, NOT 540px.
+<div style={{ position: "absolute", left: 255, top: 620 }}>
+  <SalonChairIllustration scale={1.9} ... />
+</div>
+```
+
+### Correct approach (use CSS centering, never hardcode left for center-aligned elements):
+```tsx
+// CORRECT: left "50%" + translateX(-50%) = perfectly centered regardless of element width.
+// CSS scale() transform-origin defaults to 50%/50% of the element, so scale keeps it centered.
+<div style={{ position: "absolute", left: "50%", top: 620, transform: "translateX(-50%)" }}>
+  <SalonChairIllustration scale={1.6} ... />
+</div>
+```
+
+### Hero element sizing for 9:16 (1080×1920):
+- A hero SVG/component at scale=1.6 → visual width=480px (44% of 1080) — good for side label space
+- A hero SVG/component at scale=1.9+ → visual width=570px+ (53%+) — leaves only 255px each side, too tight for labels
+- Rule: If labels or callouts appear on both sides, cap hero element at ~44% of canvas width
+- Rule: Hero visual height should be 35–45% of canvas height. For 9:16 that's 672–864px.
+
+### Vertical layout zones for 9:16 (1080×1920):
+```
+  Top zone (text/header): 0–460px
+  Chair/hero visual top:  ~480–500px
+  Hero center:            ~820px (42–45% down the frame)
+  Hero visual bottom:     ~1140–1180px
+  Bottom zone (CTA/URL):  1200–1920px (720px for text — use this space, don't leave it blank)
+```
+
+### Positioning ALL text overlays:
+- Center all text using `left: 0, right: 0, textAlign: "center"` — never use a fixed left offset for centered copy
+- Use `padding: "0 64px"` or similar to prevent text touching edges
+- Use `bottom: 80–200` for CTA elements at the bottom — don't hardcode `top` for bottom-anchored elements
+
+---
+
+## Pre-Ship Visual Audit — MANDATORY Before Every Finalised Composition
+
+**Before considering any composition complete, always self-audit it against the checklist below.**
+This is not optional. The audit must happen before presenting the video as finished.
+Catch problems now, not after the user watches it.
+
+### Audit Checklist
+
+**Typography & overflow**
+- [ ] Does every text element fit within the 1080px canvas width without clipping? Calculate: longest line × font-size × ~0.55 ≈ pixel width. If > 920px, reduce font size or break into separate lines.
+- [ ] Is `textAlign: "center"` set on every centered text div? A div can be centered in a flex column but text inside it will still left-anchor without this.
+- [ ] Are `padding: "0 64px"` (or equivalent) guards in place to prevent text touching canvas edges?
+- [ ] Is all text at least 28px? Nothing below that is readable on a phone screen.
+
+**Frame utilisation**
+- [ ] Is every scene using the full 1920px height? Mentally divide the canvas into top (0–600px), mid (600–1300px), bottom (1300–1920px) — all three zones should have intentional content.
+- [ ] Is there any dead zone larger than ~300px with no text, visual, or ambient element? If yes, fill it.

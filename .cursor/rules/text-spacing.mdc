@@ -1,0 +1,159 @@
+---
+description: Prevent text overlap in Remotion ad compositions
+globs: src/compositions/**/*.tsx
+alwaysApply: false
+---
+
+# Text Overlap Prevention
+
+## Critical: Calculate Bounds Before Placing Text
+
+Every text element occupies vertical space. Before positioning, calculate the **bounding box** and ensure minimum clearance between adjacent elements.
+
+### WordLine positioning
+`WordLine` uses `transform: translateY(-50%)` — the `y` prop is the **vertical center**, not the top edge.
+
+| Property | Top edge | Bottom edge |
+|----------|----------|-------------|
+| WordLine | `y - fontSize * 0.6` | `y + fontSize * 0.6` |
+| Raw text div (top) | `top` | `top + fontSize * 1.2` |
+| Raw text span (centered) | depends on parent | parent top + fontSize * 1.2 |
+
+### Minimum clearance rules
+- **Between two text blocks**: `max(fontSize_upper, fontSize_lower) * 0.5` minimum gap
+- **Between text and decorative line**: `fontSize * 0.4` minimum gap
+- **Between text and card/container edge**: `fontSize * 0.3` minimum padding
+- **Between scene title and content below**: at least `80px` at 4K (3840×2160)
+
+### Example calculation
+```
+WordLine y=980, size=120:
+  top  = 980 - 120*0.6 = 908
+  bottom = 980 + 120*0.6 = 1052
+
+WordLine y=1120, size=120:
+  top  = 1120 - 120*0.6 = 1048
+  bottom = 1120 + 120*0.6 = 1192
+
+Gap = 1048 - 1052 = -4  ← OVERLAP! Increase y gap.
+Fix: Move second line to y=1140 → top=1068, gap=16px (still tight).
+Better: y=1160 → top=1088, gap=36px ✓
+```
+
+## Scene Transitions: Never Leave Scenes Fully Opaque
+
+`SceneFade` with `fadeOut={0}` means the scene stays at **full opacity** when the next scene starts. This causes both scenes to render simultaneously during the overlap window.
+
+### Rules
+1. **Always set `fadeOut` to at least 10** unless the scene has an explicit visual exit (typography flood, vortex burst, etc.)
+2. If the scene has an explicit exit effect, **fade out all other content** during that effect (wrap in an opacity container)
+3. Adjacent `<Sequence>` overlaps (e.g., `from={115}` starting before previous scene's `from + dur`) must have corresponding fade-out/fade-in to create a crossfade
+
+### Pattern: Typography flood exit
+```tsx
+const textFadeOut = floodRaw > 0 ? Math.max(0, 1 - floodRaw * 3) : 1;
+// Wrap all text in: <div style={{ opacity: textFadeOut }}>...</div>
+// The flood text itself handles its own opacity via floodOpacity
+```
+
+## Transition Elements Must Be the Existing Element, Not a Duplicate
+
+When an on-screen element (e.g. a word, card, icon) is used as a transition effect (scaling up, flying out, morphing), **animate the existing element** — never create a second copy.
+
+### The Duplicate Anti-Pattern
+```tsx
+// ❌ BAD: creates a second "2015." on top of the one already in the headline
+<WordLine words={[{text:"stuck"}, {text:"in"}, {text:"2015."}]} />
+{floodActive && <span style={{scale: floodScale}}>2015.</span>}  // DUPLICATE!
+```
+
+### The Correct Pattern
+```tsx
+// ✅ GOOD: break the word out of WordLine so it can be individually animated
+<span><BlurWord text="stuck" /></span>
+<span><BlurWord text="in" /></span>
+<span style={{ transform: floodActive ? `scale(${floodScale})` : normalTransform }}>
+  2015.
+</span>
+// No duplicate — the same element transitions from inline to full-screen
+```
+
+### Rules
+1. If a WordLine word needs to animate independently later, **don't use WordLine** for that word — render it manually with the same flex layout
+2. The element's entrance animation and its transition animation should be on the **same DOM node** using conditional logic
+3. Surrounding elements (siblings in the same row) should fade out during the transition while the transitioning element stays
+
+## Transition Effects Must Emerge FROM Scene Elements
+
+When a transition effect (vortex, burst, glow, merge) represents on-screen elements combining, the effect must:
+
+1. **Only appear AFTER the elements have visibly converged** — never before or simultaneously
+2. **Use ONLY the colors of the elements being combined** — never introduce new colors that aren't on screen
+3. **Start small and grow proportionally** as the source elements shrink/converge
+4. Surrounding content (headers, labels) should fade out as the effect takes over
+
+### Timing rule
+If elements converge over progress `0→1`, the transition effect should not become visible until at least `0.4-0.5` progress, when elements have physically overlapped at the convergence point.
+
+```tsx
+// ✅ GOOD: core only forms when cards have overlapped
+const CORE_THRESHOLD = 0.45;
+const coreProgress = clamp01((vt - CORE_THRESHOLD) / (1 - CORE_THRESHOLD));
+
+// ❌ BAD: core appears before convergence even starts
+const vortexAppear = VORTEX_START - 10; // 10 frames too early!
+```
+
+### Color rule
+```tsx
+// ✅ GOOD: gradient uses only the card colors
+const CARD_COLORS = [C.rose, C.amber, C.textDim];
+background: `conic-gradient(${CARD_COLORS[0]}, ${CARD_COLORS[1]}, ${CARD_COLORS[2]}, ${CARD_COLORS[0]})`;
+
+// ❌ BAD: introduces accent + cyan which aren't on any card
+background: `conic-gradient(${C.rose}, ${C.accent}, ${C.cyan}, ${C.amber}, ${C.rose})`;
+```
+
+## SVG-to-HTML Element Swaps
+
+When replacing an SVG text element with an HTML element (e.g. to add per-character styling), **the swap must be instant and pixel-aligned**.
+
+### Rules
+1. **Zero overlap frames** — the SVG element must disappear on the exact frame the HTML element appears. Never cross-fade.
+2. **Match coordinate systems** — SVG `text` with `dominantBaseline="central"` at `y={CY}` renders at a different visual position than HTML `position: absolute; top: CY`. Use flexbox centering to match:
+   ```tsx
+   // SVG text centered at CY using dominantBaseline="central"
+   <text y={CY} textAnchor="middle" dominantBaseline="central">Animly</text>
+
+   // HTML match: center via flex, not absolute top
+   <div style={{
+     position: "absolute", left: 0, right: 0,
+     top: 0, height: H,  // fill full height
+     display: "flex", alignItems: "center", justifyContent: "center",
+   }}>
+     <span style={{ fontSize: 200, fontWeight: 800 }}>Animly</span>
+   </div>
+   ```
+3. **Delay subsequent transforms** — if the HTML version will animate (tilt, scale, color), delay those transforms by 5-10 frames. The element must appear **flat and identical** to the SVG for a few frames to make the swap invisible.
+4. **Opacity approach:**
+   ```tsx
+   // SVG: instant off
+   const svgOpacity = frame >= SWAP_FRAME ? 0 : svgProgress;
+   // HTML: instant on
+   {frame >= SWAP_FRAME && <div>...</div>}
+   ```
+
+### Why not cross-fade?
+Cross-fading reveals coordinate mismatches (even 1-2px) as a visible "jitter" or "double vision." Instant swaps are imperceptible if alignment is correct.
+
+---
+
+## Checklist Before Finalizing a Scene Layout
+
+1. List every text element's y-position and font size
+2. Calculate top/bottom edges using the formulas above
+3. Verify gaps between adjacent elements meet minimums
+4. Check that `SceneFade` has non-zero `fadeOut` (or explicit exit handling)
+5. If two `<Sequence>` components overlap in time, verify crossfade behavior
+6. Check that animated entrance `translateY` offsets don't cause temporary overlaps with nearby elements
+7. If any SVG element is replaced by HTML mid-animation, verify zero-overlap instant swap (see SVG-to-HTML section above)

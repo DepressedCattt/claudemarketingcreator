@@ -1,0 +1,3 @@
+# Drop reference MP4 ads here.
+# They will be analysed by: npm run analyze <file.mp4> "Ad Name"
+# Results are appended to LEARNINGS.md as section G.

@@ -548,12 +548,12 @@ const SceneCTA: React.FC = () => {
 
 // ─── Cue Sheet ────────────────────────────────────────────────────────────────
 export const ApexAd3DCues: CueEvent[] = [
-  { frame: 0,   type: "SCENE_CUT",   label: 'Hook begins — "42%" pain stat on dark',        intensity: "hard",   notes: "Same as ApexAd. 3D card not yet visible." },
-  { frame: 120, type: "SCENE_CUT",   label: "→ Demo: GlassCard arc entry (3D)",              intensity: "hard",   notes: "MeshPhysicalMaterial card arcs in. Bloom glow around it. Real IBL reflections." },
-  { frame: 120, type: "HERO_ENTRY",  label: "GlassCard (Acme Corp $840K) arcs in via R3F",  intensity: "hard",   notes: "Same arc math as CSS version but real 3D geometry." },
-  { frame: 240, type: "SCENE_CUT",   label: "→ Features: CSS card de-emphasised (right)",   intensity: "hard",   notes: "CSS DealCard retained for Features scene." },
-  { frame: 360, type: "SCENE_CUT",   label: '→ Metrics: "43%" enters',                      intensity: "hard",   notes: "Same as ApexAd." },
-  { frame: 420, type: "SCENE_CUT",   label: "→ CTA: Background warms and deepens",          intensity: "hard",   notes: "Same as ApexAd." },
+  { id: "apex3d-cue-1", frame: 0,   duration: 1,  type: "SCENE_CUT",   label: 'Hook begins — "42%" pain stat on dark',        intensity: "hard",   notes: "Same as ApexAd. 3D card not yet visible." },
+  { id: "apex3d-cue-2", frame: 120, duration: 1,  type: "SCENE_CUT",   label: "→ Demo: GlassCard arc entry (3D)",              intensity: "hard",   notes: "MeshPhysicalMaterial card arcs in. Bloom glow around it. Real IBL reflections." },
+  { id: "apex3d-cue-3", frame: 120, duration: 15, type: "HERO_ENTRY",  label: "GlassCard (Acme Corp $840K) arcs in via R3F",  intensity: "hard",   notes: "Same arc math as CSS version but real 3D geometry." },
+  { id: "apex3d-cue-4", frame: 240, duration: 1,  type: "SCENE_CUT",   label: "→ Features: CSS card de-emphasised (right)",   intensity: "hard",   notes: "CSS DealCard retained for Features scene." },
+  { id: "apex3d-cue-5", frame: 360, duration: 1,  type: "SCENE_CUT",   label: '→ Metrics: "43%" enters',                      intensity: "hard",   notes: "Same as ApexAd." },
+  { id: "apex3d-cue-6", frame: 420, duration: 1,  type: "SCENE_CUT",   label: "→ CTA: Background warms and deepens",          intensity: "hard",   notes: "Same as ApexAd." },
 ];
 
 // ─── Root Export ──────────────────────────────────────────────────────────────

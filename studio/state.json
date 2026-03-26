@@ -51,6 +51,299 @@
         "volume": 1,
         "loop": false
       }
+    ],
+    "animly-v1": [
+      {
+        "src": "/audio/Old_computer_turning__3-1774405538337.mp3",
+        "startFrom": 0,
+        "endAt": 137,
+        "offset": 119,
+        "volume": 1,
+        "loop": false
+      },
+      {
+        "src": "/audio/slight_old_electroni__2-1774409488807.mp3",
+        "startFrom": 0,
+        "endAt": 121,
+        "offset": 0,
+        "volume": 1,
+        "loop": false
+      },
+      {
+        "src": "/audio/digital_distortion_o__3-1774409608007.mp3",
+        "startFrom": 0,
+        "endAt": 128,
+        "offset": 95,
+        "volume": 0.11,
+        "loop": false
+      },
+      {
+        "src": "/audio/rising_doppler_whoos__3-1774409695448.mp3",
+        "startFrom": 0,
+        "endAt": 155,
+        "offset": 128,
+        "volume": 0.05,
+        "loop": false
+      },
+      {
+        "src": "/audio/Very_quiet_and_subtl__1-1774431551586.mp3",
+        "startFrom": 0,
+        "endAt": 74,
+        "offset": 15,
+        "volume": 1,
+        "loop": false
+      },
+      {
+        "src": "/audio/Very_quiet_and_subtl__1-1774431551586.mp3",
+        "startFrom": 0,
+        "endAt": 197,
+        "offset": 159,
+        "volume": 1,
+        "loop": false
+      },
+      {
+        "src": "/audio/Very_quiet_and_subtl__1-1774431791449.mp3",
+        "startFrom": 0,
+        "endAt": 237,
+        "offset": 207,
+        "volume": 1,
+        "loop": false
+      },
+      {
+        "src": "/audio/Very_quiet_and_subtl__1-1774431791449.mp3",
+        "startFrom": 0,
+        "endAt": 268,
+        "offset": 238,
+        "volume": 1,
+        "loop": false,
+        "pitchSemitones": 2,
+        "pitchedSrc": "/audio/pitched/Very_quiet_and_subtl__1-1774431791449_+2st.wav"
+      },
+      {
+        "src": "/audio/Very_quiet_and_subtl__1-1774431791449.mp3",
+        "startFrom": 0,
+        "endAt": 297,
+        "offset": 267,
+        "volume": 1,
+        "loop": false,
+        "pitchSemitones": 4,
+        "pitchedSrc": "/audio/pitched/Very_quiet_and_subtl__1-1774431791449_+4st.wav"
+      },
+      {
+        "src": "/audio/Very_quiet_and_subtl__3-1774431843206.mp3",
+        "startFrom": 0,
+        "endAt": 346,
+        "offset": 301,
+        "volume": 1,
+        "loop": false,
+        "pitchSemitones": -2,
+        "pitchedSrc": "/audio/pitched/Very_quiet_and_subtl__3-1774431843206_-2st.wav"
+      },
+      {
+        "src": "/audio/blob_explosion__4-1774432268596.mp3",
+        "startFrom": 0,
+        "endAt": 434,
+        "offset": 374,
+        "volume": 0.15,
+        "loop": false
+      },
+      {
+        "src": "/audio/rising_tension_blob___4-1774432410248.mp3",
+        "startFrom": 0,
+        "endAt": 361,
+        "offset": 301,
+        "volume": 1,
+        "loop": false
+      },
+      {
+        "src": "/audio/soft_orbs_wondering___4-1774433092727.mp3",
+        "startFrom": 0,
+        "endAt": 534,
+        "offset": 384,
+        "volume": 1,
+        "loop": false
+      },
+      {
+        "src": "/audio/orb_subtle_conversio__1-1774433249243.mp3",
+        "startFrom": 0,
+        "endAt": 551,
+        "offset": 521,
+        "volume": 1,
+        "loop": false
+      },
+      {
+        "src": "/audio/orb_subtle_conversio__2-1774433384231.mp3",
+        "startFrom": 0,
+        "endAt": 527,
+        "offset": 497,
+        "volume": 0.15,
+        "loop": false
+      },
+      {
+        "src": "/audio/gold_shimmer_light_s__1-1774434097129.mp3",
+        "startFrom": 0,
+        "endAt": 610,
+        "offset": 571,
+        "volume": 0.25,
+        "loop": false,
+        "pitchSemitones": -1,
+        "pitchedSrc": "/audio/pitched/gold_shimmer_light_s__1-1774434097129_-1st.wav"
+      },
+      {
+        "src": "/audio/Data_Groove_2026-03-25T102524.wav",
+        "startFrom": 169,
+        "endAt": 707,
+        "offset": 0,
+        "volume": 0.5,
+        "loop": false
+      }
+    ],
+    "smallspot-v1": [
+      {
+        "src": "/audio/Old_computer_turning__3-1774405538337.mp3",
+        "startFrom": 0,
+        "endAt": 137,
+        "offset": 119,
+        "volume": 1,
+        "loop": false
+      },
+      {
+        "src": "/audio/slight_old_electroni__2-1774409488807.mp3",
+        "startFrom": 0,
+        "endAt": 121,
+        "offset": 0,
+        "volume": 1,
+        "loop": false
+      },
+      {
+        "src": "/audio/digital_distortion_o__3-1774409608007.mp3",
+        "startFrom": 0,
+        "endAt": 128,
+        "offset": 95,
+        "volume": 0.11,
+        "loop": false
+      },
+      {
+        "src": "/audio/rising_doppler_whoos__3-1774409695448.mp3",
+        "startFrom": 0,
+        "endAt": 155,
+        "offset": 128,
+        "volume": 0.05,
+        "loop": false
+      },
+      {
+        "src": "/audio/Very_quiet_and_subtl__1-1774431551586.mp3",
+        "startFrom": 0,
+        "endAt": 74,
+        "offset": 15,
+        "volume": 1,
+        "loop": false
+      },
+      {
+        "src": "/audio/Very_quiet_and_subtl__1-1774431551586.mp3",
+        "startFrom": 0,
+        "endAt": 197,
+        "offset": 159,
+        "volume": 1,
+        "loop": false
+      },
+      {
+        "src": "/audio/Very_quiet_and_subtl__1-1774431791449.mp3",
+        "startFrom": 0,
+        "endAt": 237,
+        "offset": 207,
+        "volume": 2,
+        "loop": false,
+        "pitchedSrc": "/audio/pitched/Very_quiet_and_subtl__1-1774431791449_+6.0dB.wav"
+      },
+      {
+        "src": "/audio/Very_quiet_and_subtl__1-1774431791449.mp3",
+        "startFrom": 0,
+        "endAt": 268,
+        "offset": 238,
+        "volume": 2,
+        "loop": false,
+        "pitchSemitones": 2,
+        "pitchedSrc": "/audio/pitched/Very_quiet_and_subtl__1-1774431791449_+2st.wav"
+      },
+      {
+        "src": "/audio/Very_quiet_and_subtl__1-1774431791449.mp3",
+        "startFrom": 0,
+        "endAt": 296,
+        "offset": 266,
+        "volume": 2,
+        "loop": false,
+        "pitchSemitones": 4,
+        "pitchedSrc": "/audio/pitched/Very_quiet_and_subtl__1-1774431791449_+4st.wav"
+      },
+      {
+        "src": "/audio/Very_quiet_and_subtl__3-1774431843206.mp3",
+        "startFrom": 0,
+        "endAt": 346,
+        "offset": 301,
+        "volume": 1,
+        "loop": false,
+        "pitchSemitones": -2,
+        "pitchedSrc": "/audio/pitched/Very_quiet_and_subtl__3-1774431843206_-2st.wav"
+      },
+      {
+        "src": "/audio/blob_explosion__4-1774432268596.mp3",
+        "startFrom": 0,
+        "endAt": 434,
+        "offset": 374,
+        "volume": 0.15,
+        "loop": false
+      },
+      {
+        "src": "/audio/rising_tension_blob___4-1774432410248.mp3",
+        "startFrom": 0,
+        "endAt": 361,
+        "offset": 301,
+        "volume": 1,
+        "loop": false
+      },
+      {
+        "src": "/audio/soft_orbs_wondering___4-1774433092727.mp3",
+        "startFrom": 0,
+        "endAt": 534,
+        "offset": 384,
+        "volume": 1,
+        "loop": false
+      },
+      {
+        "src": "/audio/orb_subtle_conversio__1-1774433249243.mp3",
+        "startFrom": 0,
+        "endAt": 551,
+        "offset": 521,
+        "volume": 1,
+        "loop": false
+      },
+      {
+        "src": "/audio/orb_subtle_conversio__2-1774433384231.mp3",
+        "startFrom": 0,
+        "endAt": 527,
+        "offset": 497,
+        "volume": 0.15,
+        "loop": false
+      },
+      {
+        "src": "/audio/gold_shimmer_light_s__1-1774434097129.mp3",
+        "startFrom": 0,
+        "endAt": 610,
+        "offset": 571,
+        "volume": 0.25,
+        "loop": false,
+        "pitchSemitones": -1,
+        "pitchedSrc": "/audio/pitched/gold_shimmer_light_s__1-1774434097129_-1st.wav"
+      },
+      {
+        "src": "/audio/Data_Groove_2026-03-25T102524.wav",
+        "startFrom": 171,
+        "endAt": 728,
+        "offset": 0,
+        "volume": 0.5,
+        "loop": false
+      }
     ]
   }
 }

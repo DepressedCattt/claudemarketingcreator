@@ -33,7 +33,7 @@ interface Props {
   baseColor?: string;
   /**
    * Optional path to a background video (mp4/webm).
-   * Place video files in /public/videos/ and reference as "/public/videos/myfile.mp4"
+   * Place video files in public/video/ and reference via staticFile("video/myfile.mp4")
    */
   videoSrc?: string;
   /** 0–1 opacity of the video layer (default: 0.35) */
@@ -143,6 +143,7 @@ export const GradientBackground: React.FC<Props> = ({
             src={videoSrc}
             style={{ width: "100%", height: "100%", objectFit: "cover" }}
             muted
+            loop
           />
         </AbsoluteFill>
       )}

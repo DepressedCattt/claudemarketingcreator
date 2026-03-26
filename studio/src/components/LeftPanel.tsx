@@ -3,8 +3,10 @@ import { useStudio }                            from "../store/useStudio";
 import { REGISTRY }                             from "../registry";
 import { uploadAudioFiles, deleteAudioFile, saveAudioTracks } from "../api";
 import type { AudioFile }                       from "../types";
+import { SFXLibraryPanel }                      from "./SFXLibraryPanel";
+import { SfxPromptPanel }                      from "./SfxPromptPanel";
 
-type Tab = "comps" | "audio";
+type Tab = "comps" | "audio" | "sfx" | "prompts";
 
 const FORMAT_COLORS: Record<string, string> = {
   "9:16": "#8b5cf6",
@@ -13,6 +15,9 @@ const FORMAT_COLORS: Record<string, string> = {
 };
 
 // ─── Composition list ─────────────────────────────────────────────────────────
+const GOLD = "#d4a017";
+const GOLD_LIGHT = "#f5d060";
+
 const CompList: React.FC = () => {
   const { activeCompId, setActiveCompId } = useStudio();
 
@@ -20,7 +25,13 @@ const CompList: React.FC = () => {
     <div style={{ display: "flex", flexDirection: "column", gap: 2, padding: "8px 8px" }}>
       {REGISTRY.map((c) => {
         const active = c.id === activeCompId;
+        const isPlayground = !!(c as { playground?: boolean }).playground;
         const durationSec = (c.durationInFrames / c.fps).toFixed(1);
+
+        const activeBg = isPlayground ? "#3a2e0a" : "#1e3a5f";
+        const activeBorder = isPlayground ? GOLD : "#0070f3";
+        const hoverBg = isPlayground ? "#2a2208" : "#222";
+
         return (
           <div
             key={c.id}
@@ -28,22 +39,28 @@ const CompList: React.FC = () => {
             style={{
               padding:      "7px 10px",
               borderRadius: 5,
-              background:   active ? "#1e3a5f" : "transparent",
-              border:       `1px solid ${active ? "#0070f3" : "transparent"}`,
+              background:   active ? activeBg : isPlayground ? `${GOLD}08` : "transparent",
+              border:       `1px solid ${active ? activeBorder : isPlayground ? `${GOLD}25` : "transparent"}`,
               cursor:       "pointer",
               transition:   "background 0.1s",
             }}
-            onMouseEnter={(e) => { if (!active) e.currentTarget.style.background = "#222"; }}
-            onMouseLeave={(e) => { if (!active) e.currentTarget.style.background = "transparent"; }}
+            onMouseEnter={(e) => { if (!active) e.currentTarget.style.background = hoverBg; }}
+            onMouseLeave={(e) => {
+              if (!active) e.currentTarget.style.background = isPlayground ? `${GOLD}08` : "transparent";
+            }}
           >
             <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
+              {/* Playground crown */}
+              {isPlayground && (
+                <span style={{ fontSize: 11, flexShrink: 0 }}>★</span>
+              )}
               {/* Format badge */}
               <div style={{
                 fontSize:     9,
                 fontWeight:   700,
-                color:        FORMAT_COLORS[c.format] ?? "#888",
-                background:   `${FORMAT_COLORS[c.format] ?? "#888"}18`,
-                border:       `1px solid ${FORMAT_COLORS[c.format] ?? "#888"}33`,
+                color:        isPlayground ? GOLD : (FORMAT_COLORS[c.format] ?? "#888"),
+                background:   `${isPlayground ? GOLD : (FORMAT_COLORS[c.format] ?? "#888")}18`,
+                border:       `1px solid ${isPlayground ? GOLD : (FORMAT_COLORS[c.format] ?? "#888")}33`,
                 borderRadius: 3,
                 padding:      "1px 5px",
                 letterSpacing: "0.05em",
@@ -52,12 +69,12 @@ const CompList: React.FC = () => {
               </div>
               <span style={{
                 fontSize:   12,
-                color:      active ? "#fff" : "#ccc",
-                fontWeight: active ? 500 : 400,
+                color:      isPlayground ? (active ? GOLD_LIGHT : GOLD) : (active ? "#fff" : "#ccc"),
+                fontWeight: isPlayground ? 600 : (active ? 500 : 400),
               }}>
                 {c.label}
               </span>
-              <span style={{ marginLeft: "auto", fontSize: 10, color: "#555" }}>
+              <span style={{ marginLeft: "auto", fontSize: 10, color: isPlayground ? `${GOLD}88` : "#555" }}>
                 {durationSec}s
               </span>
             </div>
@@ -140,7 +157,6 @@ const AudioLibrary: React.FC = () => {
     const audio = new window.Audio(file.path);
     audio.addEventListener("loadedmetadata", async () => {
       const durationFrames = Math.ceil(audio.duration * comp.fps);
-      // Replace the track we just added (last item) with real endAt
       const updated = withNew.map((t, i) =>
         i === withNew.length - 1 ? { ...t, endAt: durationFrames } : t
       );
@@ -217,6 +233,11 @@ const AudioLibrary: React.FC = () => {
           audioFiles.map((f) => (
             <div
               key={f.name}
+              draggable
+              onDragStart={(e) => {
+                e.dataTransfer.setData("application/x-studio-audio", JSON.stringify({ path: f.path, name: f.name }));
+                e.dataTransfer.effectAllowed = "copy";
+              }}
               style={{
                 display:      "flex",
                 alignItems:   "center",
@@ -226,6 +247,7 @@ const AudioLibrary: React.FC = () => {
                 marginBottom: 2,
                 background:   "#181818",
                 border:       "1px solid #262626",
+                cursor:       "grab",
               }}
             >
               <span style={{ fontSize: 13, flexShrink: 0 }}>🎵</span>
@@ -295,32 +317,40 @@ export const LeftPanel: React.FC = () => {
         borderBottom:  "1px solid #2a2a2a",
         flexShrink:    0,
       }}>
-        {(["comps", "audio"] as Tab[]).map((t) => (
-          <button
-            key={t}
-            onClick={() => setTab(t)}
-            style={{
-              flex:        1,
-              height:      34,
-              background:  "transparent",
-              border:      "none",
-              borderBottom: tab === t ? "2px solid #0070f3" : "2px solid transparent",
-              color:        tab === t ? "#fff" : "#666",
-              fontSize:     11,
-              fontWeight:   tab === t ? 600 : 400,
-              cursor:       "pointer",
-              textTransform: "uppercase",
-              letterSpacing: "0.08em",
-            }}
-          >
-            {t === "comps" ? "Compositions" : "Audio"}
-          </button>
-        ))}
+        {(["comps", "audio", "sfx", "prompts"] as Tab[]).map((t) => {
+          const labels: Record<Tab, string> = {
+            comps: "Comps", audio: "Audio", sfx: "SFX", prompts: "Prompts",
+          };
+          return (
+            <button
+              key={t}
+              onClick={() => setTab(t)}
+              style={{
+                flex:        1,
+                height:      34,
+                background:  "transparent",
+                border:      "none",
+                borderBottom: tab === t ? "2px solid #0070f3" : "2px solid transparent",
+                color:        tab === t ? "#fff" : "#666",
+                fontSize:     10,
+                fontWeight:   tab === t ? 600 : 400,
+                cursor:       "pointer",
+                textTransform: "uppercase",
+                letterSpacing: "0.06em",
+              }}
+            >
+              {labels[t]}
+            </button>
+          );
+        })}
       </div>
 
       {/* Tab content */}
       <div style={{ flex: 1, overflowY: "auto" }}>
-        {tab === "comps" ? <CompList /> : <AudioLibrary />}
+        {tab === "comps"   && <CompList />}
+        {tab === "audio"   && <AudioLibrary />}
+        {tab === "sfx"     && <SFXLibraryPanel />}
+        {tab === "prompts" && <SfxPromptPanel />}
       </div>
     </div>
   );

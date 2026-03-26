@@ -1,10 +1,15 @@
 import React, { useState } from "react";
 import { useStudio }       from "../store/useStudio";
 import { getComp }         from "../registry";
-import { renderComp }      from "../api";
 import { buildCueSheet, downloadText } from "../utils/exportCues";
 import { RenderDialog }       from "./RenderDialog";
 import { CameraPrototyper }  from "./CameraPrototyper";
+import { AnalysisPanel }     from "./AnalysisPanel";
+import { ComparePanel }      from "./ComparePanel";
+import { ImportPanel }       from "./ImportPanel";
+import { FeatureLibraryPanel } from "./FeatureLibraryPanel";
+import { AssetPreviewPanel }  from "./AssetPreviewPanel";
+import { CueEditorPanel }     from "./CueEditorPanel";
 
 // ─── Shared button ────────────────────────────────────────────────────────────
 const Btn: React.FC<React.ButtonHTMLAttributes<HTMLButtonElement> & { accent?: boolean }> = ({
@@ -39,11 +44,15 @@ export const Header: React.FC = () => {
   const { activeCompId, frame, playing, serverOnline } = useStudio();
   const comp = getComp(activeCompId);
 
-  const [rendering,       setRendering]       = useState(false);
-  const [renderMsg,       setRenderMsg]       = useState("");
   const [cueFlash,        setCueFlash]        = useState(false);
   const [showDialog,      setShowDialog]      = useState(false);
   const [showCamTool,     setShowCamTool]     = useState(false);
+  const [showAnalysis,    setShowAnalysis]    = useState(false);
+  const [showCompare,     setShowCompare]     = useState(false);
+  const [showImport,      setShowImport]      = useState(false);
+  const [showLibrary,     setShowLibrary]     = useState(false);
+  const [showAssets,      setShowAssets]      = useState(false);
+  const [showCueEditor,  setShowCueEditor]  = useState(false);
 
   const fps = comp?.fps ?? 30;
   const sec = (frame / fps).toFixed(2);
@@ -54,20 +63,6 @@ export const Header: React.FC = () => {
     downloadText(`${comp.id}-cues.txt`, text);
     setCueFlash(true);
     setTimeout(() => setCueFlash(false), 2000);
-  };
-
-  // Quick "Export MP4" — normal quality, no dialog
-  const handleQuickExport = async () => {
-    if (!comp) return;
-    setRendering(true);
-    setRenderMsg("Starting…");
-    try {
-      const res = await renderComp(comp.id, `out/${comp.id}.mp4`);
-      setRenderMsg(res.message);
-    } catch {
-      setRenderMsg("Render failed — check terminal");
-    }
-    setTimeout(() => { setRendering(false); setRenderMsg(""); }, 5000);
   };
 
   return (
@@ -100,13 +95,6 @@ export const Header: React.FC = () => {
 
         <div style={{ flex: 1 }} />
 
-        {/* Quick render feedback */}
-        {renderMsg && (
-          <span style={{ fontSize: 11, color: rendering ? "#f59e0b" : "#10b981" }}>
-            {renderMsg}
-          </span>
-        )}
-
         {/* Server status */}
         <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
           <div style={{ width: 6, height: 6, borderRadius: "50%", background: serverOnline ? "#10b981" : "#555" }} />
@@ -124,15 +112,33 @@ export const Header: React.FC = () => {
 
         <div style={{ width: 1, height: 20, background: "#333" }} />
 
+        {/* Feature library */}
+        <Btn
+          onClick={() => setShowLibrary(true)}
+          title="Browse the category taxonomy — subcategories, parameter ranges, techniques, and composition guidelines"
+          style={{ borderColor: "#1e3a5f", color: "#38bdf8" }}
+        >
+          📚 Library
+        </Btn>
+
         {/* Export Cues */}
         {comp?.cues && comp.cues.length > 0 && (
-          <Btn
-            onClick={handleExportCues}
-            title={`Export ${comp.cues.length} animation cue events`}
-            style={{ borderColor: cueFlash ? "#8b5cf6" : undefined, color: cueFlash ? "#a78bfa" : undefined }}
-          >
-            {cueFlash ? "✓ Saved" : "♩ Export Cues"}
-          </Btn>
+          <>
+            <Btn
+              onClick={() => setShowCueEditor(true)}
+              title={`View and filter ${comp.cues.length} animation cue events`}
+              style={{ borderColor: "#78350f", color: "#f97316" }}
+            >
+              ♩ Cues ({comp.cues.length})
+            </Btn>
+            <Btn
+              onClick={handleExportCues}
+              title={`Export ${comp.cues.length} animation cue events`}
+              style={{ borderColor: cueFlash ? "#8b5cf6" : undefined, color: cueFlash ? "#a78bfa" : undefined }}
+            >
+              {cueFlash ? "✓ Saved" : "↓ Export"}
+            </Btn>
+          </>
         )}
 
         {/* Camera prototyper */}
@@ -144,18 +150,45 @@ export const Header: React.FC = () => {
           🎥 Camera
         </Btn>
 
-        {/* Render dialog button — always openable; server check is inside the dialog */}
+        {/* Analyse reference ad */}
         <Btn
-          onClick={() => setShowDialog(true)}
-          title="Open render settings — choose composition, quality preset, codec and more"
-          style={{ borderColor: "#334155", color: "#94a3b8" }}
+          onClick={() => setShowAnalysis(true)}
+          title="Analyse a reference MP4 ad with Gemini 1.5 Pro — results appended to LEARNINGS.md"
+          style={{ borderColor: "#3b1f5e", color: "#a78bfa" }}
         >
-          ⬆ Render…
+          🔬 Analyse Ad
         </Btn>
 
-        {/* Quick export */}
-        <Btn accent onClick={handleQuickExport} disabled={rendering || !serverOnline}>
-          {rendering ? "⏳ Exporting…" : "▶ Export MP4"}
+        {/* Import AE template */}
+        <Btn
+          onClick={() => setShowImport(true)}
+          title="Import a Lottie JSON exported from After Effects — extract animation parameters and generate a Remotion composition"
+          style={{ borderColor: "#052e16", color: "#059669" }}
+        >
+          Import AE
+        </Btn>
+
+        {/* Compare reference vs render */}
+        <Btn
+          onClick={() => setShowCompare(true)}
+          title="Compare your render against a reference ad — Gemini scores the visual diff and outputs prioritised fixes"
+          style={{ borderColor: "#2d2000", color: "#d97706" }}
+        >
+          ⚖ Compare
+        </Btn>
+
+        {/* Asset preview panel */}
+        <Btn
+          onClick={() => setShowAssets(true)}
+          title="Browse SVG assets and AI-generated reference images — compare side-by-side"
+          style={{ borderColor: "#065f46", color: "#10b981" }}
+        >
+          🎨 Assets
+        </Btn>
+
+        {/* Export — opens full render dialog with quality, codec, audio options */}
+        <Btn accent onClick={() => setShowDialog(true)}>
+          ▶ Export
         </Btn>
       </div>
 
@@ -170,6 +203,36 @@ export const Header: React.FC = () => {
       {/* Camera prototyper */}
       {showCamTool && (
         <CameraPrototyper onClose={() => setShowCamTool(false)} />
+      )}
+
+      {/* Analysis panel */}
+      {showAnalysis && (
+        <AnalysisPanel onClose={() => setShowAnalysis(false)} />
+      )}
+
+      {/* Compare panel */}
+      {showCompare && (
+        <ComparePanel onClose={() => setShowCompare(false)} />
+      )}
+
+      {/* Import panel */}
+      {showImport && (
+        <ImportPanel onClose={() => setShowImport(false)} />
+      )}
+
+      {/* Feature library */}
+      {showLibrary && (
+        <FeatureLibraryPanel onClose={() => setShowLibrary(false)} />
+      )}
+
+      {/* Asset preview */}
+      {showAssets && (
+        <AssetPreviewPanel onClose={() => setShowAssets(false)} />
+      )}
+
+      {/* Cue editor */}
+      {showCueEditor && (
+        <CueEditorPanel onClose={() => setShowCueEditor(false)} />
       )}
     </>
   );

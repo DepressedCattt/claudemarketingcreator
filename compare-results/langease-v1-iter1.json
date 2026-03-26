@@ -1,0 +1,128 @@
+{
+  "compId": "langease-v1",
+  "iterN": 1,
+  "timestamp": "2026-03-20T04:22:45.040Z",
+  "referenceFile": "videoplayback _1_.mp4",
+  "renderedFile": "langease-v1.mp4",
+  "overallScore": 23,
+  "detectedProfile": "snappy-saas",
+  "categories": {
+    "colors": {
+      "score": 6,
+      "max": 20,
+      "note": "The attempt uses a different, flatter blue and introduces purple and green which are absent in the reference. The distinctive blue-to-light-blue gradient on text and UI elements is missing."
+    },
+    "motionTiming": {
+      "score": 4,
+      "max": 20,
+      "note": "Pacing is drastically slower than the reference. Scene durations are too long, and the rapid, punchy transitions are replaced with slow fades, resulting in a complete loss of urgency and energy."
+    },
+    "typography": {
+      "score": 5,
+      "max": 20,
+      "note": "The core text reveal animation (a horizontal motion blur and scale-in) is completely missing. The color treatment for the initial 'Turn Books' is inverted (black/blue instead of blue-gradient/black)."
+    },
+    "layout": {
+      "score": 3,
+      "max": 20,
+      "note": "The scenes are fundamentally different. The attempt replaces dynamic, 3D compositions like the phone tunnel and interactive UI mockups with static, centered text and flat cards. Key layouts are not replicated."
+    },
+    "kineticEnergy": {
+      "score": 5,
+      "max": 20,
+      "note": "The attempt feels static and passive. It lacks the springy physics, fast camera moves, and satisfying micro-interactions that give the reference its snappy, high-energy feel."
+    }
+  },
+  "fixes": [
+    {
+      "priority": 1,
+      "category": "kineticEnergy",
+      "issue": "The core text reveal effect, a defining characteristic of the reference's style, is absent. Reference text (e.g., 00:00-00:02) appears with a fast horizontal motion blur and slight scale-up.",
+      "codeHint": "Replace the simple fade-in with a sequenced animation. For each word, animate `filter: blur(20px)` to `blur(0px)` and `transform: scale(0.95)` to `scale(1)` over ~15 frames with an ease-out curve. The blur should be primarily horizontal."
+    },
+    {
+      "priority": 2,
+      "category": "layout",
+      "issue": "Major scenes from the reference are missing and replaced with static alternatives. The phone tunnel (00:06), progress bar (00:10), and video grid (00:14) are key moments that are not attempted.",
+      "codeHint": "Prioritize recreating the progress bar scene (00:10-00:13). Animate a rounded progress bar filling up, then have it transform into a circle with a checkmark, accompanied by a confetti burst. Use spring physics for the final checkmark pop."
+    },
+    {
+      "priority": 3,
+      "category": "motionTiming",
+      "issue": "The overall pacing is far too slow. The first 3 seconds of the reference contain 4 distinct text animations, while the attempt shows 2 over the same period.",
+      "codeHint": "Increase the overall tempo. Shorten the duration of each scene significantly. For example, the opening text sequence should last no more than 60 frames total (2 seconds at 30fps)."
+    },
+    {
+      "priority": 4,
+      "category": "colors",
+      "issue": "The color palette is incorrect. The reference uses a specific blue gradient on text and a light, glassy feel for UI. The attempt uses a solid, darker blue and introduces other colors.",
+      "codeHint": "For hero text like 'Turn' and 'Instantly', use a linear gradient: `background: linear-gradient(to right, #609FFF, #A8C9FF); -webkit-background-clip: text; -webkit-text-fill-color: transparent;`. For UI elements, use a background with `rgba(..., 0.5)` and a `backdrop-filter: blur(10px);` to achieve the glassmorphism effect."
+    },
+    {
+      "priority": 5,
+      "category": "typography",
+      "issue": "The typography in the opening shot (00:00) is incorrect. The reference has 'Turn' in a blue gradient and 'Books' in black. The attempt has 'Turn' in black and 'Books' in blue.",
+      "codeHint": "Invert the color styles for the first two words at 00:00. Apply the blue gradient to the word 'Turn' and a near-black color (e.g., #1D1D1F) to the word 'Books'."
+    }
+  ],
+  "parameterDeltas": [
+    {
+      "parameter": "technique.textReveal",
+      "level": "L5",
+      "current_estimated": "fade-scale",
+      "target_estimated": "horizontal-blur-in",
+      "confidence": 1,
+      "reasoning": "The reference's signature text animation is a fast horizontal blur-in, which is completely absent in the attempt, making it the highest impact visual difference."
+    },
+    {
+      "parameter": "technique.camera",
+      "level": "L5",
+      "current_estimated": "static",
+      "target_estimated": "3d-dolly-zoom",
+      "confidence": 0.95,
+      "reasoning": "The attempt uses a static camera, whereas the reference features complex 3D camera moves, such as the phone tunnel at 00:06, which creates depth and dynamism."
+    },
+    {
+      "parameter": "blur.textReveal",
+      "level": "L2",
+      "current_estimated": "0px",
+      "target_estimated": "20px",
+      "confidence": 0.9,
+      "reasoning": "To achieve the target text reveal technique, a significant initial blur value is required before it resolves to zero."
+    },
+    {
+      "parameter": "scene.hookDuration",
+      "level": "L4",
+      "current_estimated": "90",
+      "target_estimated": "45",
+      "confidence": 0.9,
+      "reasoning": "The opening sequence in the attempt is roughly twice as long as the reference, which immediately establishes a slower, less energetic pace."
+    },
+    {
+      "parameter": "spring.stiffness",
+      "level": "L1",
+      "current_estimated": "100",
+      "target_estimated": "300",
+      "confidence": 0.85,
+      "reasoning": "The attempt lacks bouncy, satisfying animations. The 'Done' checkmark at 00:13 in the reference has a strong, snappy spring effect that requires much higher stiffness."
+    },
+    {
+      "parameter": "spring.damping",
+      "level": "L1",
+      "current_estimated": "20",
+      "target_estimated": "25",
+      "confidence": 0.8,
+      "reasoning": "To control the high stiffness and prevent excessive oscillation, the damping needs to be increased to create a critically damped, snappy pop."
+    },
+    {
+      "parameter": "color.accent",
+      "level": "L3",
+      "current_estimated": "#4F46E5",
+      "target_estimated": "linear-gradient(#609FFF, #A8C9FF)",
+      "confidence": 0.8,
+      "reasoning": "The solid blue in the attempt doesn't match the lighter, gradient-based blue that defines the reference's modern, airy aesthetic."
+    }
+  ],
+  "iterationNote": "The single biggest gap to close is the fundamental disconnect in scene composition and kinetic style; the attempt must move from a static slideshow to a dynamic, fast-paced motion piece that replicates the reference's key UI animations.",
+  "rawGeminiText": "```json\n{\n  \"overallScore\": 23,\n  \"detectedProfile\": \"snappy-saas\",\n  \"categories\": {\n    \"colors\": {\n      \"score\": 6,\n      \"max\": 20,\n      \"note\": \"The attempt uses a different, flatter blue and introduces purple and green which are absent in the reference. The distinctive blue-to-light-blue gradient on text and UI elements is missing.\"\n    },\n    \"motionTiming\": {\n      \"score\": 4,\n      \"max\": 20,\n      \"note\": \"Pacing is drastically slower than the reference. Scene durations are too long, and the rapid, punchy transitions are replaced with slow fades, resulting in a complete loss of urgency and energy.\"\n    },\n    \"typography\": {\n      \"score\": 5,\n      \"max\": 20,\n      \"note\": \"The core text reveal animation (a horizontal motion blur and scale-in) is completely missing. The color treatment for the initial 'Turn Books' is inverted (black/blue instead of blue-gradient/black).\"\n    },\n    \"layout\": {\n      \"score\": 3,\n      \"max\": 20,\n      \"note\": \"The scenes are fundamentally different. The attempt replaces dynamic, 3D compositions like the phone tunnel and interactive UI mockups with static, centered text and flat cards. Key layouts are not replicated.\"\n    },\n    \"kineticEnergy\": {\n      \"score\": 5,\n      \"max\": 20,\n      \"note\": \"The attempt feels static and passive. It lacks the springy physics, fast camera moves, and satisfying micro-interactions that give the reference its snappy, high-energy feel.\"\n    }\n  },\n  \"fixes\": [\n    {\n      \"priority\": 1,\n      \"category\": \"kineticEnergy\",\n      \"issue\": \"The core text reveal effect, a defining characteristic of the reference's style, is absent. Reference text (e.g., 00:00-00:02) appears with a fast horizontal motion blur and slight scale-up.\",\n      \"codeHint\": \"Replace the simple fade-in with a sequenced animation. For each word, animate `filter: blur(20px)` to `blur(0px)` and `transform: scale(0.95)` to `scale(1)` over ~15 frames with an ease-out curve. The blur should be primarily horizontal.\"\n    },\n    {\n      \"priority\": 2,\n      \"category\": \"layout\",\n      \"issue\": \"Major scenes from the reference are missing and replaced with static alternatives. The phone tunnel (00:06), progress bar (00:10), and video grid (00:14) are key moments that are not attempted.\",\n      \"codeHint\": \"Prioritize recreating the progress bar scene (00:10-00:13). Animate a rounded progress bar filling up, then have it transform into a circle with a checkmark, accompanied by a confetti burst. Use spring physics for the final checkmark pop.\"\n    },\n    {\n      \"priority\": 3,\n      \"category\": \"motionTiming\",\n      \"issue\": \"The overall pacing is far too slow. The first 3 seconds of the reference contain 4 distinct text animations, while the attempt shows 2 over the same period.\",\n      \"codeHint\": \"Increase the overall tempo. Shorten the duration of each scene significantly. For example, the opening text sequence should last no more than 60 frames total (2 seconds at 30fps).\"\n    },\n    {\n      \"priority\": 4,\n      \"category\": \"colors\",\n      \"issue\": \"The color palette is incorrect. The reference uses a specific blue gradient on text and a light, glassy feel for UI. The attempt uses a solid, darker blue and introduces other colors.\",\n      \"codeHint\": \"For hero text like 'Turn' and 'Instantly', use a linear gradient: `background: linear-gradient(to right, #609FFF, #A8C9FF); -webkit-background-clip: text; -webkit-text-fill-color: transparent;`. For UI elements, use a background with `rgba(..., 0.5)` and a `backdrop-filter: blur(10px);` to achieve the glassmorphism effect.\"\n    },\n    {\n      \"priority\": 5,\n      \"category\": \"typography\",\n      \"issue\": \"The typography in the opening shot (00:00) is incorrect. The reference has 'Turn' in a blue gradient and 'Books' in black. The attempt has 'Turn' in black and 'Books' in blue.\",\n      \"codeHint\": \"Invert the color styles for the first two words at 00:00. Apply the blue gradient to the word 'Turn' and a near-black color (e.g., #1D1D1F) to the word 'Books'.\"\n    }\n  ],\n  \"parameterDeltas\": [\n    {\n      \"parameter\": \"technique.textReveal\",\n      \"level\": \"L5\",\n      \"current_estimated\": \"fade-scale\",\n      \"target_estimated\": \"horizontal-blur-in\",\n      \"confidence\": 1.0,\n      \"reasoning\": \"The reference's signature text animation is a fast horizontal blur-in, which is completely absent in the attempt, making it the highest impact visual difference.\"\n    },\n    {\n      \"parameter\": \"technique.camera\",\n      \"level\": \"L5\",\n      \"current_estimated\": \"static\",\n      \"target_estimated\": \"3d-dolly-zoom\",\n      \"confidence\": 0.95,\n      \"reasoning\": \"The attempt uses a static camera, whereas the reference features complex 3D camera moves, such as the phone tunnel at 00:06, which creates depth and dynamism.\"\n    },\n    {\n      \"parameter\": \"blur.textReveal\",\n      \"level\": \"L2\",\n      \"current_estimated\": \"0px\",\n      \"target_estimated\": \"20px\",\n      \"confidence\": 0.9,\n      \"reasoning\": \"To achieve the target text reveal technique, a significant initial blur value is required before it resolves to zero.\"\n    },\n    {\n      \"parameter\": \"scene.hookDuration\",\n      \"level\": \"L4\",\n      \"current_estimated\": \"90\",\n      \"target_estimated\": \"45\",\n      \"confidence\": 0.9,\n      \"reasoning\": \"The opening sequence in the attempt is roughly twice as long as the reference, which immediately establishes a slower, less energetic pace.\"\n    },\n    {\n      \"parameter\": \"spring.stiffness\",\n      \"level\": \"L1\",\n      \"current_estimated\": \"100\",\n      \"target_estimated\": \"300\",\n      \"confidence\": 0.85,\n      \"reasoning\": \"The attempt lacks bouncy, satisfying animations. The 'Done' checkmark at 00:13 in the reference has a strong, snappy spring effect that requires much higher stiffness.\"\n    },\n    {\n      \"parameter\": \"spring.damping\",\n      \"level\": \"L1\",\n      \"current_estimated\": \"20\",\n      \"target_estimated\": \"25\",\n      \"confidence\": 0.8,\n      \"reasoning\": \"To control the high stiffness and prevent excessive oscillation, the damping needs to be increased to create a critically damped, snappy pop.\"\n    },\n    {\n      \"parameter\": \"color.accent\",\n      \"level\": \"L3\",\n      \"current_estimated\": \"#4F46E5\",\n      \"target_estimated\": \"linear-gradient(#609FFF, #A8C9FF)\",\n      \"confidence\": 0.8,\n      \"reasoning\": \"The solid blue in the attempt doesn't match the lighter, gradient-based blue that defines the reference's modern, airy aesthetic.\"\n    }\n  ],\n  \"iterationNote\": \"The single biggest gap to close is the fundamental disconnect in scene composition and kinetic style; the attempt must move from a static slideshow to a dynamic, fast-paced motion piece that replicates the reference's key UI animations.\"\n}\n```"
+}

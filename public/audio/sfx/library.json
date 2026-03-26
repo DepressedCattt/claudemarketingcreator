@@ -1,0 +1,24 @@
+{
+  "version": 1,
+  "description": "SFX library manifest. Each entry maps to a file in public/audio/sfx/{category}/. Generated and curated via scripts/generate-sfx.js.",
+  "densityPresets": {
+    "minimal": {
+      "minPriority": 9,
+      "description": "Scene cuts + hero entries only (~4-6 cues for 20s ad)"
+    },
+    "normal": {
+      "minPriority": 6,
+      "description": "Adds headlines, CTA, first stat (~8-12 cues). Default."
+    },
+    "detailed": {
+      "minPriority": 4,
+      "description": "Adds wipes, secondary text, stagger firsts (~15-20 cues)"
+    },
+    "maximal": {
+      "minPriority": 1,
+      "description": "Everything. Not recommended."
+    }
+  },
+  "defaults": {},
+  "entries": []
+}

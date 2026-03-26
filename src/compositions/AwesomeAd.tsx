@@ -1,20 +1,32 @@
 /**
  * AwesomeAd — Scene 1: "Rise & Reveal" (5 seconds)
  *
- * ── Camera Path ────────────────────────────────────────────────────────────────
- * Phase 1  (f0–90,  3s):  RISE — camera starts below the phone, close and low,
- *                          looking up at the screen. It slowly tracks upward
- *                          along the phone face, scanning the screen content.
- *                          Tight FOV (28°) gives a cinematic close-up feel.
+ * ── Shot Intent ────────────────────────────────────────────────────────────────
+ * FPV drone starts at the very bottom of the phone, close to the glass, and
+ * pedestal-rises up the face. The screen is readable from the first frame.
+ * Once the camera crests above phone centre it retreats in Z for the full reveal.
  *
- * Phase 2  (f90–150, 2s): PULL BACK — camera eases back and re-centres to a
- *                          flat-on position showing the entire phone face.
- *                          FOV widens slightly (36°) for the full reveal.
+ * ── On-Ice Easing ──────────────────────────────────────────────────────────────
+ * Global t is remapped through a double-smootherstep pulse so velocity follows:
+ *
+ *   t=0.00  rest       — camera at phone bottom, building inertia
+ *   t=0.25  peak speed — flying up the phone face
+ *   t=0.50  near rest  — crests the rise, frame lingers for a beat
+ *   t=0.75  peak speed — retreating dolly accelerates away
+ *   t=1.00  rest       — full reveal settles
+ *
+ * This gives the "on ice" quality: momentum builds, glides, decelerates, then
+ * builds again — two full pulse cycles across 5 seconds.
+ *
+ * ── Camera Waypoints (5, evenly spaced) ────────────────────────────────────────
+ *   f0   cy=-0.95  cz=1.50  fov=52°  — bottom of phone, FPV wide-angle
+ *   f37  cy=-0.20  cz=1.80  fov=48°  — flying up the lower screen
+ *   f75  cy= 0.45  cz=2.50  fov=44°  — crest of rise, slight float overshoot
+ *   f112 cy= 0.06  cz=3.80  fov=40°  — height settling, Z retreat opening up
+ *   f149 cy= 0.00  cz=5.20  fov=36°  — centred full-phone reveal
  *
  * ── Screen Content ─────────────────────────────────────────────────────────────
- * Image is NOT scrolled — it is shown statically from the top of the page.
- * The camera rise naturally reveals different parts of the screen (bottom first,
- * then hero content at top) which IS the storytelling mechanism of this shot.
+ * Image shown statically; camera rise is the reveal mechanic.
  *
  * Format:   9:16 (1080 × 1920)
  * Duration: 150 frames @ 30fps = 5 seconds
@@ -138,39 +150,21 @@ function drawScreenContent(
 }
 
 // ─── Camera Rig ───────────────────────────────────────────────────────────────
-// Phase 1 (0–90):  RISE — dramatic worm's-eye start, camera sweeps up the phone
-// Phase 2 (90–150): PULL BACK — retreats to flat-on full-phone reveal
-//
-// Start geometry (f0):
-//   cam  = [0, -3.0, 2.0]  — well below phone bottom (-0.925), further back
-//   look = [0,  1.5, 0]    — aimed past the phone top toward sky
-//   → effective upward pitch ≈ 66°  (worm's-eye / ~80° visual feel)
-//
-// End of rise (f90):
-//   cam  = [0, +0.5, 2.0]  — just above phone centre height
-//   look = [0,  0.5, 0]    — now looking straight at the screen face
-//
-// End of pull-back (f150):
-//   cam  = [0,  0.0, 5.6]  — centred, flat-on, full phone in frame
-//   look = [0,  0.0, 0]
+// FPV pedestal-rise from phone bottom → pull-back reveal.
+// "On-ice" double-pulse easing: two full accel/decel cycles across 150 frames.
 function CameraRig() {
   const frame = useCurrentFrame();
   const { camera } = useThree();
 
   // ── Catmull-Rom spline ────────────────────────────────────────────────────
-  // Interpolates p1→p2 using p0/p3 as tangent guides.
-  // Unlike lerp-per-segment, this guarantees C1 continuity — velocity never
-  // resets to zero at intermediate waypoints, giving naturally fluid motion.
   const crm = (t: number, p0: number, p1: number, p2: number, p3: number): number =>
     0.5 * (
        2 * p1 +
-      (-p0 + p2)               * t +
+      (-p0 + p2)                 * t +
       (2*p0 - 5*p1 + 4*p2 - p3) * t * t +
-      (-p0 + 3*p1 - 3*p2 + p3) * t * t * t
+      (-p0 + 3*p1 - 3*p2 + p3)  * t * t * t
     );
 
-  // Evaluate an evenly-spaced catmull-rom arc with any number of waypoints.
-  // t = 0 → first waypoint, t = 1 → last waypoint.
   const spline = (t: number, pts: number[]): number => {
     const segs = pts.length - 1;
     const si   = Math.min(segs - 1, Math.floor(t * segs));
@@ -184,24 +178,34 @@ function CameraRig() {
     );
   };
 
-  let cy = 0, cz = 0;
-  const lx = 0, ly = 0.04, lz = 0.22;
+  // ── On-ice double-pulse ease ──────────────────────────────────────────────
+  // Smootherstep (6t⁵ - 15t⁴ + 10t³) applied twice across [0,0.5] then
+  // [0.5,1]. Velocity profile: 0 → peak → ~0 → peak → 0. Feels like high
+  // inertia on a frictionless surface — builds, glides, decelerates, repeats.
+  const ss  = (x: number) => x * x * x * (x * (x * 6 - 15) + 10);
+  const raw = cl(frame / 149, 0, 1);
+  const t   = raw < 0.5 ? ss(raw * 2) * 0.5 : 0.5 + ss((raw - 0.5) * 2) * 0.5;
 
-  if (frame <= 90) {
-    // Scene 1 — Rise (Camera Scan Up): 4 waypoints at f0 / f30 / f60 / f90
-    const t = frame / 90;
-    cy = spline(t, [-1.40, -0.76, -0.06,  0.58]);
-    cz = spline(t, [ 0.55,  0.62,  0.82,  0.99]);
-  } else {
-    // Scene 2 — Pull Back (Full Reveal): 3 waypoints at f90 / f120 / f150
-    const t = (frame - 90) / 60;
-    cy = spline(t, [ 0.04, -0.01, -0.06]);
-    cz = spline(t, [ 1.46,  3.08,  4.63]);
-  }
+  // ── Camera position ───────────────────────────────────────────────────────
+  // cx: micro-arc drift — FPV organic feel, imperceptible as intentional pan.
+  const cx = spline(t, [ 0.000,  0.012,  0.022,  0.010,  0.000]);
+  // cy: start at phone bottom edge (−PH/2 = −0.925), fly up, float-overshoot
+  //     at rise peak, then settle to centre during the pull-back.
+  const cy = spline(t, [-0.950, -0.200,  0.450,  0.060,  0.000]);
+  // cz: close enough for FPV intimacy, smooth retreating dolly to full reveal.
+  const cz = spline(t, [ 1.500,  1.800,  2.500,  3.800,  5.200]);
 
-  camera.position.set(0, cy, cz);
-  (camera as THREE.PerspectiveCamera).lookAt(lx, ly, lz);
-  (camera as THREE.PerspectiveCamera).fov  = 36;
+  // ── LookAt — angled up along phone face at start, settles to level ────────
+  // Starting aim: arctan((0.20 − (−0.95)) / 1.5) ≈ 37° upward tilt.
+  // Settles to dead-centre by the reveal.
+  const ly = spline(t, [ 0.200,  0.280,  0.100,  0.000,  0.000]);
+
+  // ── FOV: wide-angle FPV start → compress into the telephoto reveal ────────
+  const fov = spline(t, [52.0, 48.0, 44.0, 40.0, 36.0]);
+
+  camera.position.set(cx, cy, cz);
+  (camera as THREE.PerspectiveCamera).lookAt(0, ly, 0);
+  (camera as THREE.PerspectiveCamera).fov  = fov;
   (camera as THREE.PerspectiveCamera).near = 0.05;
   (camera as THREE.PerspectiveCamera).far  = 40;
   (camera as THREE.PerspectiveCamera).updateProjectionMatrix();

@@ -25,6 +25,14 @@ export type CompMeta = {
   sequences?:       SequenceMeta[];
   /** Optional animation cue sheet for music/SFX export. */
   cues?:            import("@utils/cueTypes").CueEvent[];
+  /** Category ID from the category taxonomy (e.g. "saas") */
+  category?:        string;
+  /** Subcategory IDs this composition demonstrates */
+  subcategories?:   string[];
+  /** Canonical feature playground — highlighted in gold in the Studio UI */
+  playground?:      boolean;
+  /** Style profile from docs/profiles/ (e.g. "dark-tech", "snappy-saas") */
+  profile?:         string;
 };
 
 // ─── Audio ───────────────────────────────────────────────────────────────────
@@ -38,12 +46,14 @@ export type AudioFile = {
 };
 
 export type AudioTrack = {
-  src:       string;
-  startFrom: number;
-  endAt:     number;
-  offset:    number;
-  volume:    number;
-  loop:      boolean;
+  src:             string;
+  startFrom:       number;
+  endAt:           number;
+  offset:          number;
+  volume:          number;
+  loop:            boolean;
+  pitchSemitones?: number;
+  pitchedSrc?:     string;
 };
 
 // ─── Studio state saved to disk ──────────────────────────────────────────────

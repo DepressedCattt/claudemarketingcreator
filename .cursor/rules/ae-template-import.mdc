@@ -1,0 +1,98 @@
+---
+description: When creating compositions, check extracted/ for parameter manifests from After Effects templates. Use extracted ground-truth parameters instead of guessing. Apply whenever a composition is being created from a template reference.
+globs: src/compositions/*.tsx
+alwaysApply: false
+---
+
+# Use Extracted AE Template Parameters
+
+When creating a new Remotion composition that is based on an After Effects template,
+you MUST check `extracted/` for an existing parameter manifest before writing code.
+
+---
+
+## Step 1 — Check for Extracted Manifest
+
+Look in `extracted/` for a `.params.json` file matching the template name.
+
+```
+extracted/
+  <template-name>.params.json   <-- structured parameters from AE source
+```
+
+If a manifest exists, read it. It contains ground-truth animation parameters
+extracted directly from the After Effects source file. There are two extraction methods:
+
+- **ExtendScript** (`extractionMethod: "extendscript"`) — captures ~90-95% of all AE data
+  including expressions, all effects, 3D cameras/lights, text animators, layer styles,
+  time remapping, and detailed temporal easing (speed + influence curves).
+- **Lottie/Bodymovin** (`extractionMethod` absent or `"lottie"`) — captures ~40-60% of data.
+  Missing: expressions, most effects, advanced 3D, text animators, layer styles.
+
+ExtendScript-extracted manifests also contain `expressions[]` and `precompositions[]` arrays
+with rich data that Lottie cannot capture. Always prefer ExtendScript manifests when available.
+
+---
+
+## Step 2 — Use Manifest Data as Source of Truth
+
+The manifest is organized into our L1-L5 taxonomy:
+
+| Section | What it contains | How to use it |
+|---------|-----------------|---------------|
+| `l1_physics` | Spring configs (stiffness/damping/mass), easing curves, stagger patterns | Use these exact spring values in your `spring()` calls. Map `springPreset` to existing presets in `premiumMotion.ts` or `animation.ts` |
+| `l2_visual` | Colors (hex), text styles (font/size/weight), fonts | Apply these exact colors and typography. Don't invent new values |
+| `l3_composition` | Layer hierarchy, parent-child groups, dimensions | Replicate the layer structure using nested divs and Sequence blocks |
+| `l4_temporal` | Scene boundaries (frame ranges), keyframe density, FPS | Use these exact scene durations in your Sequence `from` and `durationInFrames` |
+| `l5_techniques` | Detected patterns (blur-scale-reveal, stagger, 3D camera, parallax) | Implement these specific techniques. Check `docs/recipes/` for implementation guides |
+
+### Spring Config Priority
+
+1. If the manifest has `springPreset` values (e.g. `PREMIUM_SPRING.text`), use that preset directly
+2. If not, use the raw `{ stiffness, damping, mass }` values from the manifest
+3. Never use linear interpolation or simple easing when the manifest shows spring physics
+
+### Color Priority
+
+1. Use exact hex values from `l2_visual.colors`
+2. Map gradients from the `gradient` type entries
+3. Text colors from `textStyles[].fillColor`
+
+---
+
+## Step 3 — Generate Code with generate-composition.js
+
+You can auto-generate a starter composition:
+
+```bash
+node scripts/generate-composition.js extracted/<name>.params.json [comp-id]
+```
+
+This produces a `.tsx` skeleton with correct timing, springs, and colors.
+Use it as a starting point and refine from there.
+
+---
+
+## Step 4 — When Comparison Feedback Arrives
+
+If the composition is later compared against a reference video and receives
+comparison feedback (via the compare pipeline), cross-reference the feedback
+against the extracted ground-truth parameters:
+
+1. If comparison says "colors are wrong" — check `l2_visual.colors` in the manifest
+2. If comparison says "timing is off" — check `l4_temporal.scenes` for exact frame ranges
+3. If comparison says "motion feels wrong" — check `l1_physics.springs` for the exact spring configs
+
+The extracted parameters are the authoritative source. Comparison feedback
+helps identify *where* the implementation diverges from the source.
+
+---
+
+## Step 5 — Register the Composition
+
+After creating or generating a composition, register it in both files:
+
+1. `src/Root.tsx` — add `<Composition>` entry
+2. `studio/src/registry.ts` — add to `REGISTRY` array with sequences
+
+The `generate-composition.js` script prints the exact snippets needed.

@@ -1,0 +1,166 @@
+---
+description: Animation fluidity and motion design rules for Remotion compositions
+globs: src/compositions/**/*.tsx
+alwaysApply: false
+---
+
+# Animation Fluidity & Motion Design Rules
+
+## Rule 1: No Instant Spawn/Despawn
+
+Every visual element MUST have entrance and exit animations. Nothing should ever appear or disappear within 1-2 frames.
+
+- **Entrance**: scale from 0, fade in, slide in, spring pop, blur reveal, or any smooth intro over **8+ frames**
+- **Exit**: scale to 0, fade out, slide out, shrink away, blur out, or any smooth outro over **8+ frames**
+- **Morphing**: interpolate between states over multiple frames — never snap between configurations
+- **New sub-elements**: fade in from `opacity: 0` or `scale: 0` — never pop in at full size
+
+```tsx
+// ❌ BAD — element appears instantly
+if (frame >= 100) return <div style={{ opacity: 1 }}>...</div>;
+
+// ✅ GOOD — element fades/scales in
+const enterP = spring({ frame: frame - 100, fps, config: { damping: 14 } });
+return <div style={{ opacity: enterP, transform: `scale(${enterP})` }}>...</div>;
+```
+
+## Rule 2: Momentum Preservation Between Phases
+
+When an element transitions from one motion phase to another (e.g., flight → drift, drift → convergence), the velocity must be continuous. No halting between phases.
+
+- **Use linear ease-in** (not quadratic) when the element should already be moving: `easeIn = clamp01(df / 4)`
+- **Phase-center displacements**: `pos(f) - pos(startFrame)` ensures zero displacement at the start
+- **Align initial velocity**: set the new phase's initial direction to match the ending direction of the previous phase
+- **Coast phase**: add decelerating push in the prior direction for 0.5–1 seconds while the new motion ramps in
+
+```tsx
+// ❌ BAD — quadratic ease-in after flight (zero initial velocity = visible stall)
+const easeIn = t * t;
+
+// ✅ GOOD — linear ease-in preserves momentum
+const easeIn = clamp01(df / 4);
+```
+
+## Rule 3: Spring Config Guidelines
+
+| Feel | Stiffness | Damping | Mass | Use for |
+|------|-----------|---------|------|---------|
+| Snappy, clean | 140–200 | 16–25 | 0.6–0.8 | UI components, icons, standard text |
+| Bouncy, playful | 60–120 | 9–14 | 0.8–1.4 | Hero text, impact moments, drops |
+| Heavy, cinematic | 30–80 | 12–18 | 1.0–1.5 | Camera zoom, large reveals, settles |
+| Instant snap | 200–300 | 16–20 | 0.4–0.6 | Cursor pickup, reactive feedback |
+
+**Damping < 12 = visible bounce.** Use intentionally for playful/impact elements, never for UI that should feel stable.
+
+## Rule 4: Camera Effects Must Be Tied to Content
+
+Never hardcode camera effect timing independently from the content being filmed.
+
+- Tie pan/drift/tilt strength to zoom level: `panStrength = zoomInP * (1 - zoomOutP)`
+- Drift/breathing should use **2+ sine frequencies** to avoid periodic feel
+- Continuous drift belongs on **ambient/background** scenes, NOT on focused interactions
+- Scale overshoots on small elements (< 100px) look like glitches — reserve for large elements
+
+## Rule 5: Text Spacing for Multi-Direction Entry
+
+When words enter from different directions with spring overshoot, add **30-50% more spacing** than the settled layout requires. Test at the **peak overshoot frame**, not the settled frame.
+
+## Rule 6: Organic Motion Uses Epicycles, Not Lissajous
+
+For floating/drifting elements, use **dual-rotor epicyclic motion** (same-direction layered rotations) instead of independent sin/cos on X and Y. Epicycles produce unique, continuously-varying paths. Sin/cos produces repetitive figure-8 patterns.
+
+Constraint: primary orbit velocity must dominate: `R1 * w1 > 2.5 * R2 * w2`
+
+---
+
+## Training-Derived Rules
+
+Rules below were discovered through animation feedback sessions. Each references the ad where it was learned.
+
+### T1: Arc-Length Parameterization for Constant Speed
+*Source: AnimlyAd S3 blob motion*
+
+When objects must travel along a spline at constant perceived speed, uniform parameter `t` is NOT sufficient (segments have different lengths → speed variation).
+
+**Fix:** Build an arc-length lookup table (LUT) by sampling the spline at high resolution. Use binary search to map uniform distance `u ∈ [0,1]` to the correct spline parameter `t`.
+
+```tsx
+// Build LUT once per path
+const SAMPLES = 200;
+const arcLUT: number[] = [0];
+for (let i = 1; i <= SAMPLES; i++) {
+  const prev = splineAt(pts, (i-1)/SAMPLES);
+  const curr = splineAt(pts, i/SAMPLES);
+  arcLUT.push(arcLUT[i-1] + Math.hypot(curr.x-prev.x, curr.y-prev.y));
+}
+// Map uniform distance to spline t via binary search
+const uniformToT = (lut: number[], u: number) => {
+  const target = u * lut[lut.length - 1];
+  let lo = 0, hi = lut.length - 1;
+  while (lo < hi - 1) {
+    const mid = (lo + hi) >> 1;
+    if (lut[mid] < target) lo = mid; else hi = mid;
+  }
+  const frac = (target - lut[lo]) / (lut[hi] - lut[lo] || 1);
+  return (lo + frac) / (lut.length - 1);
+};
+```
+
+### T2: Velocity-Continuous Phase Handoffs
+*Source: AnimlyAd S3 burst→wander→convergence*
+
+When an element transitions between motion phases, capture the ending velocity and carry it forward. Never stop between phases.
+
+- Capture velocity: `velX = pos(end) - pos(end - 1)`
+- Define inertia path: `inertiaX = startX + velX * cf`
+- Blend inertia → new trajectory using **quadratic** blend: `ct * ct` (not linear)
+
+```tsx
+const cf = frame - CONVERGE_START;
+const ct = clamp01(cf / CONVERGE_DUR);
+// Quadratic blend: starts following inertia, smoothly curves to target
+const x = inertiaX * (1 - ct * ct) + targetX * (ct * ct);
+```
+
+### T3: Gaussian Curves for Sweep/Wash Effects
+*Source: AnimlyAd S3 letter color wash*
+
+Never use triangle waves (linear ramp up/down) for visual sweep effects — they look mechanical.
+Use `Math.exp(-dist * dist * N)` for smooth bell-curve brightness.
+
+```tsx
+const washCenter = 16 + letterIndex * 4;  // stagger per element
+const dist = (frame - washCenter) / spread;
+const brightness = Math.exp(-dist * dist * 2.5);  // smooth Gaussian
+```
+
+Layer two text-shadow levels for cinematic bloom:
+```tsx
+textShadow: `0 0 ${glow}px ${color}80, 0 0 ${glow * 2.5}px ${color}30`
+```
+
+### T4: Camera Shake Tuning
+*Source: AnimlyAd S1 hook*
+
+- **Start subtle:** 2-4px translation, 0.09-0.16deg rotation
+- Use **2+ sine frequencies** with different periods to avoid periodic feel
+- **Ramp strength gradually** (never start at full intensity)
+- Fade with scene energy (tie to content progress variable)
+
+```tsx
+const shakeAmt = rushP * 0.7 + 0.3;
+const shakeX = Math.sin(frame * 0.47) * 4 * shakeAmt + Math.cos(frame * 0.31) * 1.5 * shakeAmt;
+const shakeY = Math.sin(frame * 0.53) * 3.2 * shakeAmt + Math.sin(frame * 0.29) * 1.2 * shakeAmt;
+const shakeRot = Math.sin(frame * 0.37) * 0.16 * shakeAmt;
+```
+
+### T5: Impact Moments Need 4+ Layers
+*Source: AnimlyAd S2 vortex explosion*
+
+A single shockwave ring looks amateur. Minimum layers for an impact:
+
+1. **Screen shake** — decaying exponential: `Math.exp(-t * 0.25) * amplitude`
+2. **White flash** — radial gradient, sharp decay
+3. **4+ staggered rings** — varied size, color, thickness, timing
+4. **Particle debris** — 12-20 circles shooting outward
+5. **Color wash ring** — conic gradient expanding with blur

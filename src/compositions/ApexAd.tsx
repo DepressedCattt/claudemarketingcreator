@@ -1329,36 +1329,36 @@ const SceneCTA: React.FC = () => {
 
 export const ApexAdCues: CueEvent[] = [
   // ── Scene 1: Hook (f0–f120) ──────────────────────────────────────────────
-  { frame: 0,   type: "SCENE_CUT",   label: 'Hook begins — "42%" pain stat on dark',        intensity: "hard",   notes: "Strong impact hit. Orange glow pulses as brand signal from frame 0." },
-  { frame: 0,   type: "TEXT_IMPACT", label: '"42%" dominant stat enters',                    intensity: "hard",   notes: "168px number. Blur-resolve from 12px. Mute-proof hook." },
-  { frame: 15,  type: "TEXT_REVEAL", label: '"of deals die before closing." enters',         intensity: "soft",   notes: "Beat 2. Supporting context. One idea only." },
-  { frame: 30,  type: "WIPE",        label: "Accent gradient rule wipes left→right",          intensity: "medium", notes: "Beat 3. Short directional sweep sound." },
-  { frame: 45,  type: "TEXT_REVEAL", label: '"Not with Apex." pivot',                        intensity: "medium", notes: "Beat 4. Brand resolution of the pain. Orange accent." },
-  { frame: 60,  type: "BEAT_LOCK",   label: "Pipeline funnel bars reveal staggered",          intensity: "medium", notes: "Bar 2. Bars build left-to-right. Closing bar glows orange." },
+  { id: "apex-cue-1",  frame: 0,   duration: 1,  type: "SCENE_CUT",   label: 'Hook begins — "42%" pain stat on dark',        intensity: "hard",   notes: "Strong impact hit. Orange glow pulses as brand signal from frame 0." },
+  { id: "apex-cue-2",  frame: 0,   duration: 15, type: "TEXT_IMPACT", label: '"42%" dominant stat enters',                    intensity: "hard",   notes: "168px number. Blur-resolve from 12px. Mute-proof hook." },
+  { id: "apex-cue-3",  frame: 15,  duration: 15, type: "TEXT_REVEAL", label: '"of deals die before closing." enters',         intensity: "soft",   notes: "Beat 2. Supporting context. One idea only." },
+  { id: "apex-cue-4",  frame: 30,  duration: 15, type: "WIPE",        label: "Accent gradient rule wipes left→right",          intensity: "medium", notes: "Beat 3. Short directional sweep sound." },
+  { id: "apex-cue-5",  frame: 45,  duration: 15, type: "TEXT_REVEAL", label: '"Not with Apex." pivot',                        intensity: "medium", notes: "Beat 4. Brand resolution of the pain. Orange accent." },
+  { id: "apex-cue-6",  frame: 60,  duration: 15, type: "BEAT_LOCK",   label: "Pipeline funnel bars reveal staggered",          intensity: "medium", notes: "Bar 2. Bars build left-to-right. Closing bar glows orange." },
 
   // ── Scene 2: Demo (f120–f240) ─────────────────────────────────────────────
-  { frame: 120, type: "SCENE_CUT",   label: "→ Demo: Deal card arc entry begins",            intensity: "hard",   notes: "Bar 3. Hard cut. Card swoops in from bottom-left. Product becomes hero." },
-  { frame: 120, type: "HERO_ENTRY",  label: "Deal card (Acme Corp $840K) arcs in",           intensity: "hard",   notes: "Rising swoosh + impact on settle (~f150). Blur resolves over 28 frames." },
-  { frame: 135, type: "AMBIENT",     label: "Card blur resolves — rack focus",                intensity: "soft",   notes: "Beat 2 bar 3. Soft shimmer as card sharpens." },
-  { frame: 150, type: "TEXT_REVEAL", label: '"Your next big close" + "Every deal visible."', intensity: "soft",   notes: "Beat 3 bar 3. Text arrives after card settled. Hierarchy is temporal." },
+  { id: "apex-cue-7",  frame: 120, duration: 1,  type: "SCENE_CUT",   label: "→ Demo: Deal card arc entry begins",            intensity: "hard",   notes: "Bar 3. Hard cut. Card swoops in from bottom-left. Product becomes hero." },
+  { id: "apex-cue-8",  frame: 120, duration: 15, type: "HERO_ENTRY",  label: "Deal card (Acme Corp $840K) arcs in",           intensity: "hard",   notes: "Rising swoosh + impact on settle (~f150). Blur resolves over 28 frames." },
+  { id: "apex-cue-9",  frame: 135, duration: 30, type: "AMBIENT",     label: "Card blur resolves — rack focus",                intensity: "soft",   notes: "Beat 2 bar 3. Soft shimmer as card sharpens." },
+  { id: "apex-cue-10", frame: 150, duration: 15, type: "TEXT_REVEAL", label: '"Your next big close" + "Every deal visible."', intensity: "soft",   notes: "Beat 3 bar 3. Text arrives after card settled. Hierarchy is temporal." },
 
   // ── Scene 3: Features (f240–f360) ─────────────────────────────────────────
-  { frame: 240, type: "SCENE_CUT",   label: "→ Features: Card recedes, list enters",         intensity: "hard",   notes: "Bar 5. Hard cut. Card de-emphasises — motion makes room for incoming." },
-  { frame: 240, type: "OBJECT_LAND", label: 'Feature 1: "AI Deal Scoring"',                  intensity: "medium", notes: "Beat 1 bar 5. Left slide + wipe underline. UI click or soft snap." },
-  { frame: 255, type: "OBJECT_LAND", label: 'Feature 2: "Stall Detection"',                  intensity: "medium", notes: "Beat 2. Staggered entrance." },
-  { frame: 270, type: "OBJECT_LAND", label: 'Feature 3: "Revenue Forecast"',                 intensity: "medium", notes: "Beat 3. Final feature of the three." },
-  { frame: 300, type: "TEXT_REVEAL", label: '"Built for closers" headline',                   intensity: "soft",   notes: "Bar 6. Section headline appears after features settled." },
+  { id: "apex-cue-11", frame: 240, duration: 1,  type: "SCENE_CUT",   label: "→ Features: Card recedes, list enters",         intensity: "hard",   notes: "Bar 5. Hard cut. Card de-emphasises — motion makes room for incoming." },
+  { id: "apex-cue-12", frame: 240, duration: 15, type: "OBJECT_LAND", label: 'Feature 1: "AI Deal Scoring"',                  intensity: "medium", notes: "Beat 1 bar 5. Left slide + wipe underline. UI click or soft snap." },
+  { id: "apex-cue-13", frame: 255, duration: 15, type: "OBJECT_LAND", label: 'Feature 2: "Stall Detection"',                  intensity: "medium", notes: "Beat 2. Staggered entrance." },
+  { id: "apex-cue-14", frame: 270, duration: 15, type: "OBJECT_LAND", label: 'Feature 3: "Revenue Forecast"',                 intensity: "medium", notes: "Beat 3. Final feature of the three." },
+  { id: "apex-cue-15", frame: 300, duration: 15, type: "TEXT_REVEAL", label: '"Built for closers" headline',                   intensity: "soft",   notes: "Bar 6. Section headline appears after features settled." },
 
   // ── Scene 4: Metrics (f360–f420) ──────────────────────────────────────────
-  { frame: 360, type: "SCENE_CUT",   label: '→ Metrics: "43%" enters',                       intensity: "hard",   notes: "Bar 7. Hard impact. Proof scene. Each metric gets its beat." },
-  { frame: 360, type: "STAT_BUILD",  label: '"43% Faster Close Rate"',                       intensity: "hard",   notes: "Beat 1. 140px dominant value. Heavy impact + decay." },
-  { frame: 375, type: "STAT_BUILD",  label: '"2.1× More Deals"',                             intensity: "hard",   notes: "Beat 2. Echo of beat 1." },
-  { frame: 390, type: "STAT_BUILD",  label: '"31 Days Saved"',                               intensity: "hard",   notes: "Beat 3. Third and final metric." },
+  { id: "apex-cue-16", frame: 360, duration: 1,  type: "SCENE_CUT",   label: '→ Metrics: "43%" enters',                       intensity: "hard",   notes: "Bar 7. Hard impact. Proof scene. Each metric gets its beat." },
+  { id: "apex-cue-17", frame: 360, duration: 15, type: "STAT_BUILD",  label: '"43% Faster Close Rate"',                       intensity: "hard",   notes: "Beat 1. 140px dominant value. Heavy impact + decay." },
+  { id: "apex-cue-18", frame: 375, duration: 15, type: "STAT_BUILD",  label: '"2.1× More Deals"',                             intensity: "hard",   notes: "Beat 2. Echo of beat 1." },
+  { id: "apex-cue-19", frame: 390, duration: 15, type: "STAT_BUILD",  label: '"31 Days Saved"',                               intensity: "hard",   notes: "Beat 3. Third and final metric." },
 
   // ── Scene 5: CTA (f420–f540) ──────────────────────────────────────────────
-  { frame: 420, type: "SCENE_CUT",   label: "→ CTA: Background warms and deepens",           intensity: "hard",   notes: "Bar 8. Tone shift — resolution. Warmly darker. Feels decisive." },
-  { frame: 435, type: "TEXT_IMPACT", label: '"Close / faster." headline',                    intensity: "medium", notes: "Beat 2. Two-line hero. Cinematic blur-reveal." },
-  { frame: 450, type: "CTA_REVEAL",  label: '"Try Apex free" button + apex.io URL',          intensity: "medium", notes: "Beat 3. Direct CTA. Ad ends at f540." },
+  { id: "apex-cue-20", frame: 420, duration: 1,  type: "SCENE_CUT",   label: "→ CTA: Background warms and deepens",           intensity: "hard",   notes: "Bar 8. Tone shift — resolution. Warmly darker. Feels decisive." },
+  { id: "apex-cue-21", frame: 435, duration: 15, type: "TEXT_IMPACT", label: '"Close / faster." headline',                    intensity: "medium", notes: "Beat 2. Two-line hero. Cinematic blur-reveal." },
+  { id: "apex-cue-22", frame: 450, duration: 15, type: "CTA_REVEAL",  label: '"Try Apex free" button + apex.io URL',          intensity: "medium", notes: "Beat 3. Direct CTA. Ad ends at f540." },
 ];
 
 // ─── Root Export ──────────────────────────────────────────────────────────────

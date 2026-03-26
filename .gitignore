@@ -1,3 +1,6 @@
 node_modules/
 out/
 *.local
+.env
+reference-ads/*.mp4
+scripts/extracted/

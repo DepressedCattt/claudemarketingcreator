@@ -22,6 +22,7 @@
 
 import React from "react";
 import { AbsoluteFill, Sequence, interpolate, useCurrentFrame } from "remotion";
+import { VideoPlate } from "../components/VideoPlate";
 import {
   clamp,
   easeOut3,
@@ -886,6 +887,8 @@ export const HavenAd: React.FC = () => {
 
   return (
     <AbsoluteFill style={{ background: C.bg }}>
+      {/* Video background plate — atmospheric depth layer */}
+      <VideoPlate plateId="haven-warm" scrimColor={C.bg} />
       <div
         style={{
           position: "absolute",
